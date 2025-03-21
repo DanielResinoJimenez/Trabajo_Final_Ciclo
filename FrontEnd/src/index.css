@@ -1,1 +1,39 @@
 /* CSS for all the page */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap');
+
+:root {
+    --coffee-dark: #4B2E1E;
+    --caramel: #9C6846;
+    --card-bg-color: #F3E5AB;
+    --bg-color: #FFF7E1;
+    --golden: #CFAF5C;
+}
+
+
+
+h1,
+h2 {
+    font-family: 'Playfair Display', serif;
+}
+
+body {
+    font-family: 'Lora', serif;
+}
+
+/* Header */
+
+.header {
+    background-color: var(--coffee-dark);
+}
+
+/* Body */
+
+.body {
+    background-color: var(--bg-color);
+}
+
+/* Cards */
+
+.card{
+    background-color: var(--card-bg-color);
+}
