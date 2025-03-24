@@ -1,10 +1,11 @@
 import React from 'react'
 import cabecera from './../../assets/images/cabecera.png';
+import HomeBody from './Home/HomeBody';
 
 const Home = () => {
   return (
-    <div className='flex justify-center relative mt-10'>
-        <div className='m-4 w-[90%] h-[300px] flex justify-left items-center header relative'>
+    <div className='flex flex-col justify-center relative mt-10'>
+        <div className='m-auto w-[90%] h-[300px] flex justify-left items-center header relative'>
           <p className='text-gray-50 m-10 p-10 w-1/2 text-[20px] font-bold z-10 sm:m-20 sm:text-justify sm:text-[30px] lg:text-[45px]'>
             No hay nada como el olor a café por la mañana
           </p>
@@ -18,6 +19,7 @@ const Home = () => {
             }}
           />
         </div>
+        <HomeBody/>
     </div>
   )
 }
