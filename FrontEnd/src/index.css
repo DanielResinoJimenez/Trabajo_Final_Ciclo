@@ -29,6 +29,16 @@ body {
     background-color: var(--coffee-dark);
 }
 
+.userMenu{
+    color: var(--golden);
+    background-color: var(--caramel);
+    transition: transform 0.5s ease-in-out; /* Animación suave */
+}
+
+.animation_menu{
+    transform: translate(-400px); /* Se muestra desde la derecha */
+}
+
 /* Body */
 
 .body {
