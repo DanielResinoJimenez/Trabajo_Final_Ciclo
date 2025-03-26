@@ -41,8 +41,8 @@ Solicitud.init({
     },
     {
         sequelize,
-        modelName: 'Solicitud',
-        tableName: 'Solicitud',
+        modelName: 'solicitud',
+        tableName: 'solicitud',
         timestamps: false
     }
 );

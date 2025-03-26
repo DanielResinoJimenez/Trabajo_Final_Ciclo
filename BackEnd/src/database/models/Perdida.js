@@ -33,7 +33,7 @@ Perdida.init({
     },
 }, {
     sequelize,
-    modelName: "Ganancia",
-    tableName: "Ganancia",
+    modelName: "ganancia",
+    tableName: "ganancia",
     timestamps: false,
 });
