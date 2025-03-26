@@ -1,0 +1,47 @@
+const sequelize = require("../db");
+
+const {Model, DataTypes} = require("sequelize");
+
+class Maquina extends Model {}
+
+Maquina.init({
+    id_maquina: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true
+    },
+    nombre: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    marca: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    descripcion: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    url_imagen: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    precio: {
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    estado: {
+        type: DataTypes.STRING,
+        validate: {
+            isIn: [["En mantenimiento", "En servicio", "En stock"]],
+            msg: "El estado debe ser En mantenimiento o En servicio o En stock",
+        },
+        allowNull: false
+    }
+}, {
+    sequelize,
+    modelName: "maquina",
+    tableName: "maquina",
+    timestamps: false
+});
