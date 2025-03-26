@@ -37,3 +37,5 @@ PedidoProducto.init({
     tableName: 'pedido_producto',
     timestamps: false,
 });
+
+module.exports = PedidoProducto;

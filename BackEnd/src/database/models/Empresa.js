@@ -37,3 +37,5 @@ Empresa.init({
     tableName: "empresa",
     timestamps: false,
 });
+
+module.exports = Empresa;

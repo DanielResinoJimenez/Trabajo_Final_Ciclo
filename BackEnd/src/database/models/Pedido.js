@@ -13,7 +13,7 @@ Pedido.init({
     id_usuario: { // FK
         type: DataTypes.INTEGER,
         references: {
-          model: Usuario, 
+          model: "usuario", 
           key: 'id_usuario',      
         },
       },
@@ -42,3 +42,5 @@ Pedido.init({
     tableName: "pedido",
     timestamps: false
 })
+
+module.exports = Pedido;

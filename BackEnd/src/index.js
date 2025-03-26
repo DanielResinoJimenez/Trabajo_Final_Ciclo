@@ -21,6 +21,24 @@ app.use(cors());
 
 // Importamos el enrutador de la API
 
+const apiRouter = require('./routes/apiRouter');
+
 // Establecemos una ruta inicial para conectar hacer consultas en la api
 
+app.use('/api', apiRouter);
+
 // Hacemos el proceso de conexión con la base de datos
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, async () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    sequelize
+    .sync({ force: false })
+    .then(() => {
+        console.log('Sincronizado con la base de datos MasCoffee');
+    })
+    .catch((error) => {
+        console.log('Se ha producido un error', error);
+    });
+});

@@ -41,3 +41,5 @@ Producto.init({
     tableName: 'producto',
     timestamps: false,
 });
+
+module.exports = Producto;

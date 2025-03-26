@@ -45,3 +45,5 @@ Ganancia.init({
     tableName: "ganancia",
     timestamps: false,
 });
+
+module.exports = Ganancia;

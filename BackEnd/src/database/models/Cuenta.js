@@ -45,3 +45,5 @@ Cuenta.init({
     tableName: "cuenta",
     timestamps: false,
 });
+
+module.exports = Cuenta;

@@ -33,3 +33,5 @@ PedidoMaquina.init({
     tableName: 'pedido_maquina',
     timestamps: false,
 });
+
+module.exports = PedidoMaquina;

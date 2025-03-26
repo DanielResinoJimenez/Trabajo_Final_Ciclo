@@ -46,3 +46,5 @@ Solicitud.init({
         timestamps: false
     }
 );
+
+module.exports = Solicitud;

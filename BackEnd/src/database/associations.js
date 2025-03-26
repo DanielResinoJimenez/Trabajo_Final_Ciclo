@@ -1,17 +1,17 @@
 // Importación de modelos para hacer las asociaciones
-const Usuario = require('../models/Usuario');
-const Solicitud = require('../models/Solicitud');
-const Producto = require('../models/Producto');
-const Perdida = require('../models/Perdida');
-const PedidoProducto = require('../models/PedidoProducto');
-const PedidoMaquina = require('../models/PedidoMaquina');
-const Pedido = require('../models/Pedido');
-const Opinion = require('../models/Opinion');
-const Maquina = require('../models/Maquina');
-const Ganancia = require('../models/Ganancia');
-const Factura = require('../models/Factura');
-const Empresa = require('../models/Empresa');
-const Cuenta = require('../models/Cuenta');
+const Usuario = require('./models/Usuario');
+const Solicitud = require('./models/Solicitud');
+const Producto = require('./models/Producto');
+const Perdida = require('./models/Perdida');
+const PedidoProducto = require('./models/PedidoProducto');
+const PedidoMaquina = require('./models/PedidoMaquina');
+const Pedido = require('./models/Pedido');
+const Opinion = require('./models/Opinion');
+const Maquina = require('./models/Maquina');
+const Ganancia = require('./models/Ganancia');
+const Factura = require('./models/Factura');
+const Empresa = require('./models/Empresa');
+const Cuenta = require('./models/Cuenta');
 
 // Relación Usuario realiza Solicitud 1:N
 

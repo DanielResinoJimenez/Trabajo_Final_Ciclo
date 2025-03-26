@@ -36,3 +36,5 @@ Opinion.init({
     tableName: "opinion",
     timestamps: false
 })
+
+module.exports = Opinion;

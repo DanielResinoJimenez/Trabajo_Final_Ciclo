@@ -13,7 +13,7 @@ Factura.init({
     id_pedido: {
         type: DataTypes.INTEGER,
         references: {
-          model: Pedido, 
+          model: "pedido", 
           key: 'id_pedido',      
         },
     },
@@ -31,3 +31,5 @@ Factura.init({
     tableName: "factura",
     timestamps: false
 })
+
+module.exports = Factura;

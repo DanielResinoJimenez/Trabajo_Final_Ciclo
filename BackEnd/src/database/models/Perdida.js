@@ -37,3 +37,5 @@ Perdida.init({
     tableName: "ganancia",
     timestamps: false,
 });
+
+module.exports = Perdida;

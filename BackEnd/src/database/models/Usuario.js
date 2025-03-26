@@ -53,4 +53,4 @@ Usuario.init({
     timestamps: false
 })
 
-module.exports = User;
+module.exports = Usuario;

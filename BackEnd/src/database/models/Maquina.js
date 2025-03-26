@@ -45,3 +45,5 @@ Maquina.init({
     tableName: "maquina",
     timestamps: false
 });
+
+module.exports = Maquina;
