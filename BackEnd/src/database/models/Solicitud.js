@@ -15,7 +15,7 @@ Solicitud.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Usuario',
+            model: 'usuario',
             key: 'id_usuario'
         }
     },
@@ -23,7 +23,7 @@ Solicitud.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Maquina',
+            model: 'maquina',
             key: 'id_maquina'
         }
     },

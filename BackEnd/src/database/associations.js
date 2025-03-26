@@ -16,7 +16,9 @@ const Cuenta = require('./models/Cuenta');
 // Relación Usuario realiza Solicitud 1:N
 
 Usuario.hasMany(Solicitud, { foreignKey: 'id_usuario'});
+Maquina.hasMany(Solicitud, { foreignKey: 'id_maquina'});
 Solicitud.belongsTo(Usuario, { foreignKey: 'id_usuario'});
+Solicitud.belongsTo(Maquina, { foreignKey: 'id_maquina'});
 
 // Relación Usuario escribe Opinion 1:N
 
@@ -47,11 +49,6 @@ Ganancia.belongsTo(Cuenta, { foreignKey: 'id_cuenta'});
 
 Cuenta.hasMany(Perdida, { foreignKey: 'id_cuenta'});
 Perdida.belongsTo(Cuenta, { foreignKey: 'id_cuenta'});
-
-// Relación Maquina se asocia con Solicitud 1:N
-
-Maquina.hasMany(Solicitud, { foreignKey: 'id_maquina'});
-Solicitud.belongsTo(Maquina, { foreignKey: 'id_maquina'});
 
 // Relación Maquina se asocia con PedidoMaquina 1:N
 

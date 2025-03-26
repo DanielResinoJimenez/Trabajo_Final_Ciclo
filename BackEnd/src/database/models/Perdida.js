@@ -14,7 +14,7 @@ Perdida.init({
     id_cuenta: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Cuenta",
+            model: "cuenta",
             key: "id_cuenta",
         },
         allowNull: false,
@@ -33,8 +33,8 @@ Perdida.init({
     },
 }, {
     sequelize,
-    modelName: "ganancia",
-    tableName: "ganancia",
+    modelName: "perdida",
+    tableName: "perdida",
     timestamps: false,
 });
 

@@ -14,7 +14,7 @@ Ganancia.init({
     id_maquina: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Maquina',
+            model: 'maquina',
             key: 'id_maquina'
         },
         allowNull: true,
@@ -22,7 +22,7 @@ Ganancia.init({
     id_cuenta: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Cuenta",
+            model: "cuenta",
             key: "id_cuenta",
         },
         allowNull: false,
