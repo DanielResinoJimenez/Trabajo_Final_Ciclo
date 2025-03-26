@@ -19,6 +19,14 @@ Ganancia.init({
         },
         allowNull: true,
     },
+    id_cuenta: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "Cuenta",
+            key: "id_cuenta",
+        },
+        allowNull: false,
+    },
     motivo: {
         type: DataTypes.STRING,
         allowNull: false,
