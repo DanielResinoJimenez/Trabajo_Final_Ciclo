@@ -14,8 +14,8 @@ const Home = () => {
             alt="" 
             className='h-full object-cover w-2/3 absolute top-0 right-0' 
             style={{ 
-              maskImage: 'linear-gradient(to right, transparent 20%, #000 100%)', 
-              WebkitMaskImage: 'linear-gradient(to right, transparent 20%, #000 100%)' 
+              maskImage: 'linear-gradient(45deg, transparent 20%, #000 100%)', 
+              WebkitMaskImage: 'linear-gradient(45deg, transparent 20%, #000 100%)' 
             }}
           />
         </div>

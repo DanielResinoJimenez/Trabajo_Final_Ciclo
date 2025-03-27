@@ -43,7 +43,7 @@ const ProductosCard = ({ producto }) => {
 
     return (
       <article className='flex flex-col w-[300px] h-[500px] p-4 border border-yellow-800 rounded-sm shadow-md shadow-yellow-800 m-auto card'>
-        <img src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%]' />
+        <img src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
         <div className='flex flex-col justify-between h-[30%]'>
           <h2 className='text-2xl text-center'>{producto.nombre}</h2>
           <span className='text-right text-xl'>{producto.precio} €</span>
