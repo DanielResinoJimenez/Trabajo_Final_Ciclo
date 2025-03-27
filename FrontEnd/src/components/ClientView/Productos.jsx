@@ -1,6 +1,8 @@
 import React from 'react'
+import ProductosBody from './Productos/ProductosBody'
 
 const Productos = () => {
+
     return (
         <main className=''>
             <div className='p-10 nav__productos'>
@@ -15,7 +17,7 @@ const Productos = () => {
             </div>
             <div>
                 {/* Cuerpo del main con todas las card de productos */}
-
+                <ProductosBody />
             </div>
         </main>
     )
