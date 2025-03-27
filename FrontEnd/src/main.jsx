@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
 import Layout from './components/Layout.jsx'
 import Home from './components/ClientView/Home.jsx'
+import Productos from './components/ClientView/Productos.jsx'
 
 createRoot(document.getElementById('root')).render(
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home/>} />
+            <Route path='productos' element={<Productos />} />
             <Route path='*' element={<h1>404</h1>} />
           </Route>
         </Routes>

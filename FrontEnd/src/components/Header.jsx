@@ -100,9 +100,15 @@ const Header = () => {
                                                         <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
                                                 </li>
                                         </Link>
-                                        <Link>
+                                        <Link to={"productos"}>
                                                 <li className='relative group'>
                                                         Productos
+                                                        <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
+                                                </li>
+                                        </Link>
+                                        <Link to={"maquinas"}>
+                                                <li className='relative group'>
+                                                        Máquinas        
                                                         <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
                                                 </li>
                                         </Link>

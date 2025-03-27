@@ -21,6 +21,7 @@ h2 {
 
 body {
     font-family: 'Lora', serif;
+    background-color: var(--bg-color);
 }
 
 /* Header */
@@ -52,6 +53,13 @@ body {
     color: var(--golden);
     -webkit-text-stroke: 1px var(--coffee-dark); 
     font-weight: bold;
+}
+
+/* Productos */
+
+.nav__productos{
+    color: var(--coffee-dark);
+    background-color: var(--golden);
 }
 
 /* Cards */

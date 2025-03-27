@@ -27,13 +27,17 @@ Producto.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    imagen:{
+    marca:{
         type: DataTypes.STRING,
         allowNull: false,
     },
     categoria:{
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    imagen:{
+        type: DataTypes.STRING,
+        allowNull: true,
     },
 },{
     sequelize,
