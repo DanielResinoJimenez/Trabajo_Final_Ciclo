@@ -23,6 +23,19 @@ const createProducto = async (body) => {
     }
 };
 
+// Subir una nueva imagen
+
+const createProductoImagen = async (imagenData) => {
+    try {
+        return await Producto.update(
+            { imagen: imagenData.imagen, tipo: imagenData.tipo }, // Valores a actualizar
+            { where: { id_producto: imagenData.id_producto } } // Condición para identificar el producto
+        );
+    } catch (error) {
+        throw new Error("Error al actualizar la imagen: " + error.message);
+    }
+}
+
 // Modificar un producto
 
 const putProducto = async (newProducto, id_producto) => {
@@ -49,4 +62,4 @@ const deleteProducto = async (id) => {
 
 // Exportar las funciones
 
-module.exports = { getAllProductos, createProducto, putProducto, deleteProducto };  
+module.exports = { getAllProductos, createProducto, createProductoImagen, putProducto, deleteProducto };  

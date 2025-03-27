@@ -35,10 +35,15 @@ Producto.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    imagen:{
+    imagen: {
+        type: DataTypes.BLOB.apply('long'),
+        allowNull: true
+    },
+    tipo:{
         type: DataTypes.STRING,
         allowNull: true,
-    },
+    }
+
 },{
     sequelize,
     modelName: 'producto',

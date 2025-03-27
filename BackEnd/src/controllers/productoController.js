@@ -24,6 +24,37 @@ const createProducto = async (req, res) => {
     }
 };
 
+// Insertar una nueva imagen
+
+const createProductoImagen = async (req, res) => {
+    try {
+        console.log('req.file:', req.file);  // Agregar log para ver si el archivo está presente
+        console.log('req.body:', req.body);  // Ver el contenido de req.body
+        // Obtener id_muestra desde req.body, ya que lo estás enviando en formData
+        const id_producto = req.body.id_producto;  
+
+        if (!id_producto) {
+            return res.status(400).json({ message: "id_producto no proporcionado" });
+        }
+
+        const imagenBuffer = req.file.buffer;  // Obtener el buffer de la imagen
+        const mimeType = req.file.mimetype;    // Obtener el tipo MIME de la imagen
+
+        const imagenData = {
+            id_producto,  // Asociar la imagen con el id
+            imagen: imagenBuffer,
+            tipo: mimeType,
+        };
+
+        const createdImage = await Services.createProductoImagen(imagenData);
+        res.status(201).json(createdImage);
+        
+    } catch (error) {
+        console.error('Error al crear la imagen:', error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
 // Modificar un producto
 
 const putProducto = async (req, res) => {
@@ -48,4 +79,4 @@ const deleteProducto = async (req, res) => {
 
 // Exportamos las funciones
 
-module.exports = { getAllProductos, createProducto, putProducto, deleteProducto };
+module.exports = { getAllProductos, createProducto, createProductoImagen, putProducto, deleteProducto };
