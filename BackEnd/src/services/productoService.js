@@ -1,4 +1,4 @@
-const Muestra = require("../database/models/Producto");
+const Producto = require("../database/models/Producto");
 
 // Funciones de consultas en la base de datos.
 
