@@ -62,6 +62,43 @@ body {
     background-color: var(--golden);
 }
 
+.button__productos {
+    position: relative;
+    display: inline-block;
+    color: var(--bg-color); /* Color inicial de las letras */
+    background-color: var(--coffee-dark); /* Fondo inicial */
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.3s ease-in-out;
+}
+
+.button__productos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Comienza fuera del botón, a la izquierda */
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color); /* Fondo más clarito */
+    z-index: 0;
+    transition: left 0.2s ease-in-out;
+}
+
+.button__productos:hover::before {
+    left: 0; /* Se mueve desde la izquierda hacia el centro */
+}
+
+.button__productos:hover {
+    color: var(--coffee-dark); /* Cambia el color del texto al hacer hover */
+}
+
+.button__productos span {
+    position: relative;
+    z-index: 1; /* Coloca el texto por encima del fondo animado */
+}
+
 /* Cards */
 
 .card{

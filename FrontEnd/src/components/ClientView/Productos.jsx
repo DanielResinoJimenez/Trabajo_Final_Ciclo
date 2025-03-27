@@ -15,7 +15,7 @@ const Productos = () => {
                     </ul>
                 </nav>
             </div>
-            <div>
+            <div className="flex justify-center items-center w-80% m-20">
                 {/* Cuerpo del main con todas las card de productos */}
                 <ProductosBody />
             </div>
