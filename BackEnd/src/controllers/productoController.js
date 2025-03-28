@@ -13,6 +13,17 @@ const getAllProductos = async (req, res) => {
     }
 };
 
+// Obtener productos por categoría
+
+const getProductByCategory = async (req, res) => {
+    try{
+        const productos = await Services.getProductByCategory(req.params.categoria);
+        res.status(200).json(productos);
+    }catch(error){
+        res.status(500).json({ error: error.message })
+    }
+}
+
 // Insertar un nuevo producto
 
 const createProducto = async (req, res) => {
@@ -79,4 +90,4 @@ const deleteProducto = async (req, res) => {
 
 // Exportamos las funciones
 
-module.exports = { getAllProductos, createProducto, createProductoImagen, putProducto, deleteProducto };
+module.exports = { getAllProductos, getProductByCategory, createProducto, createProductoImagen, putProducto, deleteProducto };

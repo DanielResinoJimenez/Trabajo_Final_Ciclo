@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import useProductos from '../../../services/hooks/useProductos';
 import ProductosCard from './ProductosCard';
+import { useProductosContext } from '../../../services/hooks/productosContext';
 
 const ProductosBody = () => {
-    const { productos, loading, error, getProductos } = useProductos();
+    const { productos, loading, error, getProductos } = useProductosContext();
 
     useEffect(() => {
         getProductos();
-    },[])
+    }, []);
+
 
 
     if (loading) return <p>Cargando...</p>

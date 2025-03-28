@@ -12,6 +12,19 @@ const getAllProductos = async () => {
     }
 }
 
+// Obtener productos por categoría
+
+const getProductByCategory = async (categoria) => {
+    try {
+        return await Producto.findAll({
+            where: {categoria: categoria}
+        })
+    } catch (error) {
+        console.log("Error en getProductByCategory:", error);
+        return error;
+    }
+}
+
 // Insertar un nuevo producto
 
 const createProducto = async (body) => {
@@ -62,4 +75,4 @@ const deleteProducto = async (id) => {
 
 // Exportar las funciones
 
-module.exports = { getAllProductos, createProducto, createProductoImagen, putProducto, deleteProducto };  
+module.exports = { getAllProductos, getProductByCategory, createProducto, createProductoImagen, putProducto, deleteProducto };  

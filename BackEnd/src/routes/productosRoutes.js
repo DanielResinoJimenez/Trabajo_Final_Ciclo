@@ -8,6 +8,7 @@ const multer = require("multer")
 // Rutas de la API de productos
 
 productosRoutes.get("/", productosController.getAllProductos);
+productosRoutes.get("/:categoria", productosController.getProductByCategory);
 productosRoutes.post("/", productosController.createProducto);
 productosRoutes.put("/:id", productosController.putProducto);
 productosRoutes.delete("/:id", productosController.deleteProducto);
