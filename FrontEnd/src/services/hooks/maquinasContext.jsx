@@ -5,6 +5,7 @@ const MaquinasContext = createContext();
 export const useMaquinasContext = () => useContext(MaquinasContext);
 
 export const MaquinasProvider = ({ children }) => {
+    const [maquinasOriginales, setMaquinasOriginales] = useState(null);
     const [maquinas, setMaquinas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -14,6 +15,7 @@ export const MaquinasProvider = ({ children }) => {
             setLoading(true);
             const response = await fetch('http://localhost:3000/api/maquinas');
             const data = await response.json();
+            setMaquinasOriginales(data);
             setMaquinas(data);
         } catch (error) {
             setError(error.message);
@@ -28,6 +30,7 @@ export const MaquinasProvider = ({ children }) => {
             const response = await fetch('http://localhost:3000/api/maquinas/stock');
             const data = await response.json();
             setMaquinas(data);
+            setMaquinasOriginales(data);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -49,7 +52,7 @@ export const MaquinasProvider = ({ children }) => {
     }
 
     return (
-        <MaquinasContext.Provider value={{ maquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca }}>
+        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca }}>
             {children}
         </MaquinasContext.Provider>
     );
