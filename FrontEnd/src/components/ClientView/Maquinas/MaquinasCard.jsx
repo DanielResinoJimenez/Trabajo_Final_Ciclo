@@ -5,6 +5,7 @@ const MaquinasCard = ({maquina}) => {
 
   const {cargarImagen, imagen} = useProductos();
 
+  // Si la máquina no tiene imagen se muestra un mensaje de que está máquina no tiene imagen.
   if(!maquina.imagen){
     return (
       <article className='flex xl:w-[800px] justify-between p-10 border-y border-r border-gray-400 items-center'>

@@ -5,6 +5,10 @@ const ProductosContext = createContext();
 export const useProductosContext = () => useContext(ProductosContext);
 
 export const ProductosProvider = ({ children }) => {
+    // Variable para almacenar los productos originales y que no se modifique el estado al hacer filtros.
+    const [productosOriginales, setProductosOriginales] = useState([]);
+
+    // Variables de estado
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -15,19 +19,7 @@ export const ProductosProvider = ({ children }) => {
             const response = await fetch('http://localhost:3000/api/productos');
             const data = await response.json();
             setProductos(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const getProductoByCategory = async (categoria) => {
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:3000/api/productos/${categoria}`);
-            const data = await response.json();
-            setProductos(data);
+            setProductosOriginales(data);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -36,7 +28,7 @@ export const ProductosProvider = ({ children }) => {
     }
 
     return (
-        <ProductosContext.Provider value={{ productos, loading, error, getProductos, getProductoByCategory }}>
+        <ProductosContext.Provider value={{ productos, setProductos, productosOriginales, setProductosOriginales, loading, error, getProductos }}>
             {children}
         </ProductosContext.Provider>
     );

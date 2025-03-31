@@ -4,13 +4,23 @@ import { useProductosContext } from '../../../services/hooks/productosContext';
 
 const ProductosNav = () => {
 
-    const { getProductos, getProductoByCategory} = useProductosContext();
+    const { getProductos, getProductoByCategory, setProductos, productos, productosOriginales } = useProductosContext();
 
     const filterByCategory = (e) => {
+        if (e.target.value != "") {
+            const filtered = productosOriginales.filter((producto) => producto.categoria === e.target.value);
+            setProductos(filtered);
+        } else {
+            setProductos(productosOriginales);
+        }
+    }
+
+    const filterByMarca = (e) => {
         if(e.target.value != ""){
-            getProductoByCategory(e.target.value);
+            const filtered = productosOriginales.filter((producto) => producto.marca === e.target.value);
+            setProductos(filtered);
         }else{
-            getProductos();
+            setProductos(productosOriginales);
         }
     }
 
@@ -29,8 +39,19 @@ const ProductosNav = () => {
                         <option value="Accesorios"> Accesorios </option>
                     </select>
                 </li>
-                <li>Precio</li>
-                <li>Marca</li>
+                <li>
+                    <select name="select__marca" id="select__marca" onChange={filterByMarca}>
+                        <option value=""> Todas </option>
+                        <option value="BONKA"> Bonka </option>
+                        <option value="SAIMAZA"> Saimaza </option>
+                        <option value="NESCAFE"> Nescafé </option>
+                        <option value="NESTLE"> Nestlé </option>
+                        <option value="SIMAT"> Simat </option>
+                        <option value="NESTEA"> Nestea </option>
+                        <option value="LA AZUCARERA"> La azucarera </option>
+                        <option value="ECOPALET"> EcoPalet </option>
+                    </select>
+                </li>
             </ul>
         </nav>
     )

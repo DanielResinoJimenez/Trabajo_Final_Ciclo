@@ -6,10 +6,12 @@ const useProductos = () => {
 
     const [archivo, setArchivo] = useState(null); // Estado para el archivo
 
+    // Función que adjunta un archivo cuando se hace evento change en el input
     const handleFileChange = (e) => {
         setArchivo(e.target.files[0]); // Guarda el archivo seleccionado
     };
 
+    // Función que se ejecuta al enviar el formulario y carga la imagen en la api
     const handleSubmit = async (e) => {
         e.preventDefault(); // Evita que la página se recargue
 
@@ -43,6 +45,9 @@ const useProductos = () => {
         }
     }
 
+
+    // Variable donde se almacena la imagen de un determinado objeto de la base de datos.
+    // Estos objetos podrían ser tanto máquinas como productos.
     const [imagen, setImagen] = useState([]); // Estado para representar las imagenes correctamente
 
     // Función para cargar las imágenes desde la API
