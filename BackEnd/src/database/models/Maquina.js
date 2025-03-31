@@ -23,10 +23,6 @@ Maquina.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    url_imagen: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     precio: {
         type: DataTypes.FLOAT,
         allowNull: false
@@ -38,6 +34,14 @@ Maquina.init({
             msg: "El estado debe ser En mantenimiento o En servicio o En stock",
         },
         allowNull: false
+    },
+    imagen: {
+        type: DataTypes.BLOB.apply('long'),
+        allowNull: true
+    },
+    tipo:{
+        type: DataTypes.STRING,
+        allowNull: true,
     }
 }, {
     sequelize,
