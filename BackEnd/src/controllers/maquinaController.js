@@ -11,6 +11,17 @@ const getAllMaquinas = async (req, res) => {
     }
 }
 
+// Obtener las máquinas en stock
+
+const getMaquinasStock = async (req, res) => {
+    try {
+        const maquinas = await Service.getMaquinasStock();
+        res.status(200).json(maquinas);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 // Obtener las máquinas por marca
 
 const getMaquinaByMarca = async (req, res) => {
@@ -75,6 +86,7 @@ const deleteMaquina = async (req, res) => {
 module.exports = {
     getAllMaquinas,
     getMaquinaByMarca,
+    getMaquinasStock,
     createMaquina,
     createMaquinaImagen,
     putMaquina,

@@ -4,8 +4,8 @@ const apiRouter = require('express').Router();
 
 // Variables de la API
 
-const productosRoutes = require('./productosRoutes');
-const maquinasRoutes = require('./maquinasRoutes');
+const productosRoutes = require('./productoRoutes');
+const maquinasRoutes = require('./maquinaRoutes');
 
 // Rutas de la API
 

@@ -12,6 +12,17 @@ const getAllMaquinas = async () => {
     }
 }
 
+const getMaquinasStock = async () => {
+    try {
+        return await Maquina.findAll({
+            where: { estado: "En stock" }
+        })
+    } catch (error) {
+        console.log("Error en getMaquinasStock:", error);
+        return error;
+    }
+}
+
 // Obtener productos por categoría
 
 const getMaquinaByMarca = async (marca) => {
@@ -73,4 +84,4 @@ const deleteMaquina = async (id) => {
     }
 };
 
-module.exports = { getAllMaquinas, getMaquinaByMarca, createMaquina, createMaquinaImagen, putMaquina, deleteMaquina };
+module.exports = { getAllMaquinas, getMaquinasStock, getMaquinaByMarca, createMaquina, createMaquinaImagen, putMaquina, deleteMaquina };

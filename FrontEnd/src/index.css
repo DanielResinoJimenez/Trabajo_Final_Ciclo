@@ -57,7 +57,7 @@ body {
 
 /* Productos */
 
-.nav__productos{
+.nav__productos, .nav__maquinas{
     color: var(--coffee-dark);
     background-color: var(--golden);
 }
