@@ -7,7 +7,7 @@ const Maquinas = () => {
   return (
     <MaquinasProvider>
       <div className='flex'>
-        <div className='w-[15%]'>
+        <div className='w-[15%] min-h-screen flex flex-col'>
           <MaquinasNav />
         </div>
         <div className='w-[85%]'>

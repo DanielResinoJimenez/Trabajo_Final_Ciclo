@@ -27,8 +27,10 @@ const ProductosNav = () => {
     return (
         <nav className='w-[100%] justify-center items-center flex'>
             <ul className='flex w-[80%] m-auto text-center justify-around'>
-                <li>
-                    <select name="select__categoria" id="select__categoria" onChange={filterByCategory}>
+                <li className='font-bold'>Filtrar por: </li>
+                <li className='flex gap-2'>
+                    <label htmlFor="select__categoria">Categoría: </label>
+                    <select name="select__categoria" id="select__categoria" className='border-b border-black' onChange={filterByCategory}>
                         <option value=""> Todas </option>
                         <option value="Café"> Café </option>
                         <option value="Lácteos"> Lácteos </option>
@@ -39,8 +41,9 @@ const ProductosNav = () => {
                         <option value="Accesorios"> Accesorios </option>
                     </select>
                 </li>
-                <li>
-                    <select name="select__marca" id="select__marca" onChange={filterByMarca}>
+                <li className='flex gap-2'>
+                    <label htmlFor="select__marca" className=''>Marca: </label>
+                    <select name="select__marca" id="select__marca" className='border-b border-black' onChange={filterByMarca}>
                         <option value=""> Todas </option>
                         <option value="BONKA"> Bonka </option>
                         <option value="SAIMAZA"> Saimaza </option>
