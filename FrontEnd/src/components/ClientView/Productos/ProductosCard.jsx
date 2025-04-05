@@ -30,12 +30,12 @@ const ProductosCard = ({ producto }) => {
             Subir Imagen
           </button>
         </form>
-        <div className='flex flex-col justify-between h-[30%]'>
+        <div className='flex flex-col justify-between h-[30%]' ref={imgRef}>
           <h2 className='text-2xl text-center'>{producto.nombre}</h2>
           <span className='text-right text-xl'>{producto.precio} €</span>
           <span className='text-lg text-right hover:text-yellow-600 font-normal hover:font-bold transition duration-300 ease-in-out cursor-pointer'>Mostrar más</span>
         </div>
-        <button className='h-[10%] border border-yellow-800 bg-yellow-800 button__productos' onClick={() => { }}><span>Añadir al carrito</span></button>
+        <button className='h-[10%] border border-yellow-800 bg-yellow-800 button__productos' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current })}><span>Añadir al carrito</span></button>
       
       </article >
     )
