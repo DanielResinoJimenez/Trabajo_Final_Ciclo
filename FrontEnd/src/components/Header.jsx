@@ -87,7 +87,7 @@ const Header = () => {
 
 
         return (
-                <header className='flex justify-between w-screen p-6 text-gray-100 font-bold text-md header z-10'>
+                <header className='flex justify-between w-screen p-6 text-gray-100 font-bold text-md header z-10 fixed top-0 left-0'>
                         <img src="" alt="Logo" />
                         <div className='md:hidden' id='menu'>
                                 <i className="fa-solid fa-bars"></i>
