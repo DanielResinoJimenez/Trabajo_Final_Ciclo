@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../services/hooks/globalContext';
 
 const Header = () => {
+
+        const { cartRef } = useGlobalContext();
 
         let menuHidden = true;
 
@@ -123,7 +126,7 @@ const Header = () => {
                         <div className='hidden w-[50px] justify-center md:flex' id='icons'>
                                 <ul className='flex justify-between w-full'>
                                         <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300'>
-                                                <i className="fa-solid fa-cart-shopping text-xl" onClick={cartMenu}></i>
+                                                <i className="fa-solid fa-cart-shopping text-xl" onClick={cartMenu} ref={cartRef}></i>
                                         </li>
                                         <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300'>
                                                 <i className="fa-solid fa-user text-xl" onClick={userMenu}></i>
