@@ -76,14 +76,28 @@ const Header = () => {
                                         newP.textContent = 'No hay productos en el carrito';
                                         newArticle.appendChild(newP);
                                 }else{
-                                        
+                                        let total = 0;
                                         cartContent.forEach((item) => {
                                                 const newLi = document.createElement('li');
-                                                newLi.textContent = item.nombre;
-                                                newLi.classList.add('hover:text-yellow-400', 'cursor-pointer');
+                                                const newSpan1 = document.createElement('span');
+                                                const newSpan2 = document.createElement('span');
+                                                newSpan1.textContent = item.nombre;
+                                                newSpan2.textContent = item.precio + ' €';
+                                                total += item.precio;
+                                                newLi.appendChild(newSpan1);
+                                                newLi.appendChild(newSpan2);
+                                                newLi.classList.add('hover:text-yellow-400', 'cursor-pointer', 'flex', 'justify-between', 'items-center', 'gap-4');
                                                 newUl.appendChild(newLi);
                                         });
+                                        const newLi = document.createElement('li');
+                                        newLi.textContent = 'Total: ' + total + ' €';
+                                        newLi.classList.add('font-bold', 'text-xl', 'text-center', 'mt-4');
+                                        newUl.appendChild(newLi);
                                         newArticle.appendChild(newUl);
+                                        const newButton = document.createElement('button');
+                                        newButton.textContent = 'Pagar';
+                                        newButton.classList.add('button__productos', 'w-full', 'mt-4');
+                                        newArticle.appendChild(newButton);
                                 }
                                 userMenu.appendChild(newArticle);
                                 userMenu.classList.toggle('animation_menu');
