@@ -21,7 +21,7 @@ const MaquinasCard = ({maquina}) => {
               <span className='text-xl'>{maquina.precio} €</span>
               <div className='flex gap-4'>
                   <button className='button__productos w-[50%]'>Solicitar</button>
-                  <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current })}>Añadir al carrito</button>
+                  <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
               </div>
           </div>
       </article>
@@ -41,7 +41,7 @@ const MaquinasCard = ({maquina}) => {
               <span className='text-xl'>{maquina.precio} €</span>
               <div className='flex gap-4'>
                   <button className='button__productos w-[50%]'>Solicitar</button>
-                  <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current })}>Añadir al carrito</button>
+                  <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
               </div>
           </div>
       </article>

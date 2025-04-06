@@ -4,7 +4,7 @@ import { useGlobalContext } from '../services/hooks/globalContext';
 
 const Header = () => {
 
-        const { cartRef } = useGlobalContext();
+        const { cartRef, cartContent } = useGlobalContext();
 
         let menuHidden = true;
 
@@ -12,12 +12,12 @@ const Header = () => {
         const userMenu = () => {
                 const userMenu = document.getElementById('userMenu');
 
-                if(menuHidden) {
+                if (menuHidden) {
                         userMenu.classList.toggle('animation_menu');
                         menuHidden = false;
                 }
 
-                if(!menuHidden){
+                if (!menuHidden) {
                         userMenu.classList.toggle('animation_menu');
                         setTimeout(() => {
                                 userMenu.innerHTML = '';
@@ -54,24 +54,37 @@ const Header = () => {
         const cartMenu = () => {
                 const userMenu = document.getElementById('userMenu');
 
-                if(menuHidden) {
+                if (menuHidden) {
                         userMenu.classList.toggle('animation_menu');
                         menuHidden = false;
                 }
 
-                if(!menuHidden){
+                if (!menuHidden) {
                         userMenu.classList.toggle('animation_menu');
                         setTimeout(() => {
+                                console.log(cartContent)
                                 userMenu.innerHTML = '';
                                 const newSpan = document.createElement('span');
                                 const newArticle = document.createElement('article');
+                                const newUl = document.createElement('ul');
                                 const newP = document.createElement('p');
                                 newSpan.classList.add('text-3xl', 'absolute', 'top-[-12px]', 'right-0', 'm-4', 'cursor-pointer');
                                 newSpan.textContent = 'x';
                                 newSpan.addEventListener('click', closeMenu);
                                 userMenu.appendChild(newSpan);
-                                newP.textContent = 'No hay productos en el carrito';
-                                newArticle.appendChild(newP);
+                                if (cartContent.length === 0) {
+                                        newP.textContent = 'No hay productos en el carrito';
+                                        newArticle.appendChild(newP);
+                                }else{
+                                        
+                                        cartContent.forEach((item) => {
+                                                const newLi = document.createElement('li');
+                                                newLi.textContent = item.nombre;
+                                                newLi.classList.add('hover:text-yellow-400', 'cursor-pointer');
+                                                newUl.appendChild(newLi);
+                                        });
+                                        newArticle.appendChild(newUl);
+                                }
                                 userMenu.appendChild(newArticle);
                                 userMenu.classList.toggle('animation_menu');
                         }, 500);
@@ -111,7 +124,7 @@ const Header = () => {
                                         </Link>
                                         <Link to={"maquinas"}>
                                                 <li className='relative group'>
-                                                        Máquinas        
+                                                        Máquinas
                                                         <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
                                                 </li>
                                         </Link>
@@ -125,8 +138,8 @@ const Header = () => {
                         </nav>
                         <div className='hidden w-[50px] justify-center md:flex' id='icons'>
                                 <ul className='flex justify-between w-full'>
-                                        <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300'>
-                                                <i className="fa-solid fa-cart-shopping text-xl" onClick={cartMenu} ref={cartRef}></i>
+                                        <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300' ref={cartRef}>
+                                                <i className="fa-solid fa-cart-shopping text-xl" onClick={cartMenu}></i>
                                         </li>
                                         <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300'>
                                                 <i className="fa-solid fa-user text-xl" onClick={userMenu}></i>

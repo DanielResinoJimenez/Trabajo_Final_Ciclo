@@ -6,16 +6,23 @@ export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }) => {
 
+    const [cartContent, setCartContent] = useState([]);
+
     // Función para animar la introducción de un nuevo producto o máquina al carrito
 
     const cartRef = useRef(null);
 
-    const handleAddToCart = ({ cartRef, imgElement }) => {
+    const handleAddToCart = ({ cartRef, imgElement, producto, maquina }) => {
+
+        if (producto) {
+            setCartContent([...cartContent, producto]);
+        }
+        if (maquina) {
+            setCartContent([...cartContent, maquina]);
+        }
 
         const img = imgElement;
         const cart = cartRef.current;
-
-        console.log(img, cart)
 
         const imgRect = img.getBoundingClientRect();
         const cartRect = cart.getBoundingClientRect();
@@ -57,7 +64,7 @@ export const GlobalProvider = ({ children }) => {
     };
 
     return (
-        <GlobalContext.Provider value={{ cartRef, handleAddToCart }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart }}>
             {children}
         </GlobalContext.Provider>
     );
