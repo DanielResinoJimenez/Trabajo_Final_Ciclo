@@ -58,7 +58,7 @@ export const MaquinasProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id_maquina, id_usuario, estado: 'pendiente' }) 
+                body: JSON.stringify({ id_maquina, id_usuario, estado: 'pendiente', fecha_solicitud: new Date() }) 
             });
             const data = await response.json();
             return data;

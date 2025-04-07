@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useGlobalContext } from '../../../services/hooks/globalContext';
+import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 
 const MaquinasCard = ({maquina}) => {
 
   const {cargarImagen, imagen} = useProductos();
+
+  const { realizarSolicitud } = useMaquinasContext();
 
   const { cartRef, handleAddToCart } = useGlobalContext();
   
@@ -40,7 +43,7 @@ const MaquinasCard = ({maquina}) => {
               <p className='text-lg'>{maquina.descripcion}</p>
               <span className='text-xl'>{maquina.precio} €</span>
               <div className='flex gap-4'>
-                  <button className='button__productos w-[50%]'>Solicitar</button>
+                  <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina, id_usuario)}>Solicitar</button>
                   <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
               </div>
           </div>
