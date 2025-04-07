@@ -41,7 +41,7 @@ export const MaquinasProvider = ({ children }) => {
     const getMaquinaByMarca = async (marca) => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:3000/api/productos/${marca}`);
+            const response = await fetch(`http://localhost:3000/api/maquinas/${marca}`);
             const data = await response.json();
             setMaquinas(data);
         } catch (error) {
@@ -51,8 +51,25 @@ export const MaquinasProvider = ({ children }) => {
         }
     }
 
+    const realizarSolicitud = async ({id_maquina, id_usuario}) => {
+        try{
+            const response = await fetch('http://localhost:3000/api/solicitudes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_maquina, id_usuario, estado: 'pendiente' }) 
+            });
+            const data = await response.json();
+            return data;
+        }catch(error){
+            console.error('Error al realizar la solicitud:', error);
+            throw error;
+        }
+    }
+
     return (
-        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca }}>
+        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, realizarSolicitud }}>
             {children}
         </MaquinasContext.Provider>
     );
