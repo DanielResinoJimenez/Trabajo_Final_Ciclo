@@ -7,6 +7,12 @@ import Layout from './components/Layout.jsx'
 import Home from './components/ClientView/Home.jsx'
 import Productos from './components/ClientView/Productos.jsx'
 import Maquinas from './components/ClientView/Maquinas.jsx'
+import PanelDeControl from './components/AdminView/PanelDeControl.jsx'
+import ProductosAdmin from './components/AdminView/ProductosAdmin.jsx'
+import MaquinasAdmin from './components/AdminView/MaquinasAdmin.jsx'
+import CuentaAdmin from './components/AdminView/CuentaAdmin.jsx'
+import SolicitudesAdmin from './components/AdminView/SolicitudesAdmin.jsx'
+import InfoGeneralAdmin from './components/AdminView/InfoGeneralAdmin.jsx'
 
 createRoot(document.getElementById('root')).render(
 
@@ -22,6 +28,14 @@ createRoot(document.getElementById('root')).render(
             <Route index element={<Home/>} />
             <Route path='productos' element={<Productos />} />
             <Route path='maquinas' element={<Maquinas />} />
+            <Route path='panelControl' element={<PanelDeControl/>}>
+              <Route index/>
+              <Route path='productosAdmin' element={<ProductosAdmin/>}/>
+              <Route path='maquinasAdmin' element={<MaquinasAdmin/>}/>
+              <Route path='cuentaAdmin' element={<CuentaAdmin/>}/>
+              <Route path='solicitudesAdmin' element={<SolicitudesAdmin/>}/>
+              <Route path='infoGeneralAdmin' element={<InfoGeneralAdmin/>}/>
+            </Route>
             <Route path='*' element={<h1>404</h1>} />
           </Route>
         </Routes>

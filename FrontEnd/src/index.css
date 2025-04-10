@@ -105,6 +105,12 @@ body {
     background-color: var(--card-bg-color);
 }
 
+/* Panel de Control */
+
+.panel__control{
+    background-color: var(--golden);
+}
+
 /* Footer */
 
 .footer{
