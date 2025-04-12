@@ -25,7 +25,7 @@ const MaquinasCard = ({ maquina }) => {
           {
             isLoggedIn() && (
               <div className='flex gap-4'>
-                <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina, id_usuario)}>Solicitar</button>
+                <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina)}>Solicitar</button>
                 <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
               </div>
             )
@@ -49,7 +49,7 @@ const MaquinasCard = ({ maquina }) => {
           {
             isLoggedIn() && (
               <div className='flex gap-4'>
-                <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina, id_usuario)}>Solicitar</button>
+                <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina)}>Solicitar</button>
                 <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
               </div>
             )

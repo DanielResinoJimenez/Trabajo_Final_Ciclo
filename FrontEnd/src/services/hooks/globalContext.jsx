@@ -66,13 +66,12 @@ export const GlobalProvider = ({ children }) => {
     // Función para comprobar si un usuario ha iniciado sesión
 
     const isLoggedIn = () => {
+
         const user = localStorage.getItem('user');
         
         if(user){
-            console.log(true);
             return true;
         }else{
-            console.log(false);
             return false;
         }
     }

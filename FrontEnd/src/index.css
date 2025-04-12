@@ -55,6 +55,19 @@ body {
     font-weight: bold;
 }
 
+/* Login */
+
+.login__container{
+    background-color: var(--caramel);
+}
+
+.login__form{
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Productos */
 
 .nav__productos, .nav__maquinas{
