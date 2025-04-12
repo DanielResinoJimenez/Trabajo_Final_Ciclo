@@ -63,8 +63,22 @@ export const GlobalProvider = ({ children }) => {
         });
     };
 
+    // Función para comprobar si un usuario ha iniciado sesión
+
+    const isLoggedIn = () => {
+        const user = localStorage.getItem('user');
+        
+        if(user){
+            console.log(true);
+            return true;
+        }else{
+            console.log(false);
+            return false;
+        }
+    }
+
     return (
-        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn }}>
             {children}
         </GlobalContext.Provider>
     );
