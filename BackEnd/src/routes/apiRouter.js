@@ -6,12 +6,14 @@ const apiRouter = require('express').Router();
 
 const productosRoutes = require('./productoRoutes');
 const maquinasRoutes = require('./maquinaRoutes');
-const solicitudRoutes = require('./solicitudRoutes')
+const solicitudRoutes = require('./solicitudRoutes');
+const userRouter = require('./usuarioRoutes');
 
 // Rutas de la API
 
 apiRouter.use('/productos', productosRoutes);
 apiRouter.use('/maquinas', maquinasRoutes);
 apiRouter.use('/solicitudes', solicitudRoutes);
+apiRouter.use('/usuarios', userRouter);
 
 module.exports = apiRouter;

@@ -9,7 +9,11 @@ const Header = () => {
 
         const { userMenu, cartMenu, closeMenu } = useMenu();
 
+        const user = localStorage.getItem('user');
 
+        const userRol = "";
+
+        if (user) userRol = user.rol;
 
         return (
                 <header className='flex justify-between w-screen p-6 text-gray-100 font-bold text-md header z-10 fixed top-0 left-0'>
@@ -43,12 +47,16 @@ const Header = () => {
                                                         <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
                                                 </li>
                                         </Link>
-                                        <Link to={"panelControl"}>
-                                                <li className='relative group'>
-                                                        Panel de Control
-                                                        <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
-                                                </li>
-                                        </Link>
+                                        {
+                                                userRol == 'admin' ? (
+                                                        <Link to={"panelControl"}>
+                                                                <li className='relative group'>
+                                                                        Panel de Control
+                                                                        <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>
+                                                                </li>
+                                                        </Link>
+                                                ) : null
+                                        }
                                 </ul>
                         </nav>
                         <div className='hidden w-[50px] justify-center md:flex' id='icons'>
