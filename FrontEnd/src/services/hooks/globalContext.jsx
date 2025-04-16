@@ -76,8 +76,13 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    const logOut = () => {
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+    }
+
     return (
-        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut }}>
             {children}
         </GlobalContext.Provider>
     );

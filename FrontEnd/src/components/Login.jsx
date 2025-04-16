@@ -133,6 +133,14 @@ const Login = () => {
                         </>
                     )}
 
+                    {
+                        login && (
+                            <>
+                                <Link to={"/"} className='underline text-yellow-950'>Continuar sin iniciar sesión</Link>
+                            </>
+                        )
+                    }
+
                     {formError && (
                         <span id='error__login' className='text-red-500 text-sm'>
                             {formError}

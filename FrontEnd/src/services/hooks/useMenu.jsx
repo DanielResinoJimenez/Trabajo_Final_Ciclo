@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const useMenu = () => {
 
-        const { cartContent, isLoggedIn } = useGlobalContext();
+        const { cartContent, isLoggedIn, logOut } = useGlobalContext();
 
         let menuHidden = true;
 
@@ -39,6 +39,9 @@ const useMenu = () => {
                                         newLi2.classList.add('hover:text-yellow-400', 'cursor-pointer');
                                         newLi3.classList.add('hover:text-yellow-400', 'cursor-pointer');
                                         newLi4.classList.add('hover:text-yellow-400', 'cursor-pointer');
+                                        newLi4.addEventListener('click', () => {
+                                                logOut();
+                                        });
                                         newUl.classList.add('text-lg', 'text-center', 'flex', 'flex-col', 'gap-10');
                                         newUl.appendChild(newLi);
                                         newUl.appendChild(newLi2);
