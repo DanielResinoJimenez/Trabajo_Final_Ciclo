@@ -125,5 +125,5 @@ module.exports = {
     updateUser,
     updateRolUser,
     updatePassUser,
-    remove
+    removeUsuario
 };

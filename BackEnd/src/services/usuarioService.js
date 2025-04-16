@@ -2,8 +2,8 @@ const Usuario = require('../database/models/Usuario');
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const jwt = require("jwt-simple");
-const generatePassword = require("generate-password-browser");
-const emailService = require('./emailService');
+// const generatePassword = require("generate-password-browser");
+// const emailService = require('./emailService');
 
 // OBTENER TODOS LOS USUARIOS
 const getAllUsers = async () => {
