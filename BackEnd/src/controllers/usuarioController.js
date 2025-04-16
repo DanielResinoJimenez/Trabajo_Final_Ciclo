@@ -43,6 +43,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+        console.log(req.body)
         const result = await Services.login(req);
 
         if (result.ok) {

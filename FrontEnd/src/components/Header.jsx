@@ -9,9 +9,9 @@ const Header = () => {
 
         const { userMenu, cartMenu, closeMenu } = useMenu();
 
-        const user = localStorage.getItem('user');
+        const user = JSON.parse(localStorage.getItem('user'));
 
-        const userRol = "";
+        let userRol = "";
 
         if (user) userRol = user.rol;
 
@@ -21,7 +21,7 @@ const Header = () => {
                         <div className='md:hidden' id='menu'>
                                 <i className="fa-solid fa-bars"></i>
                         </div>
-                        <nav className='hidden w-1/3 justify-center md:flex' id='nav'>
+                        <nav className='hidden min-xl:w-1/3 max-xl:w-[70%] justify-center md:flex' id='nav'>
                                 <ul className='flex justify-between w-full'>
                                         <Link to={"/"}>
                                                 <li className='relative group'>

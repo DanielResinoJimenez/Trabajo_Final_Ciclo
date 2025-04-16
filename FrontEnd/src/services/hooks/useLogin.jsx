@@ -2,10 +2,12 @@ import React from 'react'
 
 import { useState } from 'react';
 
-const API_URL = 'http://localhost:3000'; // Cambia esto si tu backend está en otro puerto o dominio
+const API_URL = 'http://localhost:3000/api'; // Cambia esto si tu backend está en otro puerto o dominio
 
 const useLogin = () => {
 
+    const [login, setLogin] = useState(true);
+    const [formError, setFormError] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -57,8 +59,7 @@ const useLogin = () => {
 
             if (!response.ok) throw new Error(data.message || 'Error al iniciar sesión');
 
-            // Puedes guardar el token si tu API lo envía:
-            // localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user)); // Guarda el usuario en localStorage
 
             return data; // Retorna los datos del usuario o token
         } catch (err) {
@@ -95,6 +96,68 @@ const useLogin = () => {
         }
     };
 
+    const validateLogin = () => {
+        if (!loginData.email || !loginData.password) {
+            setFormError('Todos los campos son obligatorios para iniciar sesión.');
+            return false;
+        }
+        return true;
+    };
+
+    const validateRegister = () => {
+        const { email_user, password_user, nombre, apellidos, direccion, telefono } = registerData;
+        if (!email_user || !password_user || !nombre || !apellidos || !direccion || !telefono) {
+            setFormError('Todos los campos son obligatorios para registrarse.');
+            return false;
+        }
+        return true;
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setFormError('');
+
+        if (!validateLogin()) return;
+
+        const result = await loginUser({
+            email: loginData.email,
+            password: loginData.password
+        });
+
+        if (result) {
+            console.log('Login exitoso:', result);
+            window.location.href = '/'; // Redirige a la página principal o dashboard
+        } else {
+            setFormError('Correo o contraseña incorrectos.');
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setFormError('');
+
+        if (!validateRegister()) return;
+
+        const newUser = {
+            email_user: registerData.email_user,
+            password_user: registerData.password_user,
+            nombre: registerData.nombre,
+            apellidos: registerData.apellidos,
+            direccion: registerData.direccion,
+            telefono: registerData.telefono
+        };
+
+        const result = await registerUser(newUser);
+
+        if (result) {
+            console.log('Registro exitoso:', result);
+            setLogin(true);
+
+        } else {
+            setFormError('Error al registrar. Intenta de nuevo.');
+        }
+    };
+
     return {
         loginUser,
         registerUser,
@@ -104,6 +167,14 @@ const useLogin = () => {
         handleRegisterChange,
         loginData,
         registerData,
+        validateLogin,
+        validateRegister,
+        handleLogin,
+        handleRegister,
+        formError,
+        setFormError,
+        login,
+        setLogin,
     };
 };
 
