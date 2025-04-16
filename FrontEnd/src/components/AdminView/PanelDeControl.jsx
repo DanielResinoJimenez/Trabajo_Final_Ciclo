@@ -39,7 +39,7 @@ const PanelDeControl = () => {
             <div className='w-[1200px] grid grid-cols-4 gap-4 m-auto p-10 panel__control rounded-lg shadow-lg shadow-yellow-950' id='panelControl'>
                 <Link
                     to={'productosAdmin'}
-                    className='relative col-span-2 cursor-pointer bg-[#FDF8E5] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden'
+                    className='relative col-span-2 cursor-pointer bg-[#FDF8E5] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                     onClick={openElement}
                 >
                     <span className='absolute top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-yellow-950 text-[50px] font-semibold z-10'>
@@ -54,7 +54,7 @@ const PanelDeControl = () => {
                 </Link>
                 <Link
                     to={'maquinasAdmin'}
-                    className='relative col-span-2 cursor-pointer bg-[#98ADA6] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden'
+                    className='relative col-span-2 cursor-pointer bg-[#98ADA6] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                     onClick={openElement}
                 >
                     <span className='absolute text-white text-[50px] font-bold top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10'>
@@ -65,7 +65,7 @@ const PanelDeControl = () => {
 
                 <Link
                     to={'cuentaAdmin'}
-                    className='relative col-span-3 cursor-pointer bg-[#DEE3E6] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden'
+                    className='relative col-span-3 cursor-pointer bg-[#DEE3E6] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                     onClick={openElement}
                 >
                     <span className='absolute text-gray-800 text-[50px] font-bold top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10'>
@@ -76,7 +76,7 @@ const PanelDeControl = () => {
 
                 <Link
                     to={'solicitudesAdmin'}
-                    className='relative col-span-1 cursor-pointer bg-[#FBDDB9] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden'
+                    className='relative col-span-1 cursor-pointer bg-[#FBDDB9] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                     onClick={openElement}
                 >
                     <span className='absolute text-yellow-950 text-[50px] font-bold top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center'>
@@ -84,7 +84,7 @@ const PanelDeControl = () => {
                     </span>
                     <img src={solicitudIcono} className='object-contain opacity-50' alt="Icono Solicitudes" />
                 </Link>
-                <Link to={'infoGeneralAdmin'} className='col-span-4 cursor-pointer text-center p-10 bg-green-300 shadow-md rounded-4xl' onClick={openElement}>
+                <Link to={'infoGeneralAdmin'} className='col-span-4 cursor-pointer text-center p-10 bg-green-300 shadow-md rounded-4xl transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2' onClick={openElement}>
 
                     <span className='text-[100px] h-full w-full text-yellow-950'>Información General</span>
 
