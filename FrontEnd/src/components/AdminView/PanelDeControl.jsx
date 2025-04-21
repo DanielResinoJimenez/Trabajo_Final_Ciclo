@@ -16,6 +16,7 @@ const PanelDeControl = () => {
     const openElement = () => {
         if (panelOpen) {
             let panel = document.getElementById('panelControl');
+            let outletContainer = document.getElementById('outlet_container');
             let volverPanel = document.getElementById('volverPanel');
             panel.classList.add('hidden');
             volverPanel.classList.remove('hidden');
@@ -25,10 +26,11 @@ const PanelDeControl = () => {
     }
 
     const volverPanel = () => {
-        console.log()
         if (!panelOpen) {
             let panel = document.getElementById('panelControl');
+            let outletContainer = document.getElementById('outlet_container');
             let volverPanel = document.getElementById('volverPanel');
+            outletContainer.innerHTML = '';
             volverPanel.classList.add('hidden');
             panel.classList.remove('hidden');
             setPanelOpen(true);
@@ -39,7 +41,7 @@ const PanelDeControl = () => {
         <ProductosProvider>
             <MaquinasProvider>
                 <div>
-                    <button className='p-5 border rounded hidden' id='volverPanel' onClick={volverPanel}>Volver</button>
+                    <button className='hidden fixed top-26 right-4 z-50 bg-green-500 hover:bg-green-700 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-all' id='volverPanel' onClick={volverPanel}>Volver</button>
                     <div className='max-w-[1200px] max-lg:grid-cols-1 grid grid-cols-4 gap-4 m-auto p-10 panel__control rounded-lg shadow-lg shadow-yellow-950' id='panelControl'>
                         <Link
                             to={'productosAdmin'}
@@ -94,7 +96,7 @@ const PanelDeControl = () => {
 
                         </Link>
                     </div>
-                    <div>
+                    <div id='outlet_container'>
                         <Outlet />
                     </div>
                 </div>
