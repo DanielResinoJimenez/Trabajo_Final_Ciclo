@@ -14,9 +14,6 @@ const ProductosAdmin = () => {
   return (
     <div>
       <div className='w-[90%] m-auto mt-10 flex gap-4'>
-        <button className="cursor-pointer bg-green-700 p-3 rounded-xl text-white font-bold shadow-none hover:shadow-md hover:shadow-black transition-shadow duration-300">
-          Añadir nuevo producto
-        </button>
         <button className="cursor-pointer bg-red-700 p-3 rounded-xl text-white font-bold shadow-none hover:shadow-md hover:shadow-black transition-shadow duration-300">
           Borrar productos seleccionados
         </button>
@@ -39,6 +36,11 @@ const ProductosAdmin = () => {
               <ProductosAdminCard key={producto.id_producto} producto={producto} />
             ))
           }
+          <tr className=''>
+            <td colSpan={7} className='text-center p-6 text-white text-2xl font-bold border-t border-gray-400'>
+              <span className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
