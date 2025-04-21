@@ -16,7 +16,6 @@ const PanelDeControl = () => {
     const openElement = () => {
         if (panelOpen) {
             let panel = document.getElementById('panelControl');
-            let outletContainer = document.getElementById('outlet_container');
             let volverPanel = document.getElementById('volverPanel');
             panel.classList.add('hidden');
             volverPanel.classList.remove('hidden');

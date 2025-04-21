@@ -62,6 +62,10 @@ const useProductos = () => {
         }
     };
 
+    
+
+
+
     // Retornamos los valores que necesitamos para la implementación
 
     return { handleFileChange, handleSubmit, cargarImagen, imagen };

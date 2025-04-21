@@ -12,6 +12,7 @@ export const ProductosProvider = ({ children }) => {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectProd, setSelectProd] = useState([]);
 
     const getProductos = async () => {
         try {
@@ -27,8 +28,82 @@ export const ProductosProvider = ({ children }) => {
         }
     }
 
+    // Función para almacenar los checkbox seleccionados en un array
+
+    const handleCheckboxChange = (id_producto) => {
+        setSelectProd((prevSelected) => {
+            if (prevSelected.includes(id_producto)) {
+                return prevSelected.filter((id) => id !== id_producto);
+            } else {
+                return [...prevSelected, id_producto];
+            }
+        });
+    }
+
+    // Función para eliminar los productos seleccionados en el array de checkbox
+
+    const eliminarProductosSeleccionados = async () => {
+
+        if (selectProd.length === 0) {
+            alert("No hay productos seleccionados para eliminar.");
+            return;
+        }
+
+        try {
+            for (const id of selectProd) {
+                const response = await fetch(`http://localhost:3000/api/productos/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error al eliminar producto con ID ${id}`);
+                }
+
+                // Actualizar la lista de productos después de eliminar uno
+                setProductos((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id));
+                setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id));
+            }
+
+            alert("Productos eliminados correctamente.");
+            // Aquí puedes limpiar el array o actualizar tu estado/UI si usas React/Vue/etc.
+            selectProd.length = 0;
+        } catch (error) {
+            console.error("Hubo un error al eliminar los productos:", error);
+            alert("Hubo un error al eliminar uno o más productos.");
+        }
+
+    }
+
+    // Función para eliminar un producto
+
+    const eliminarProducto = async (id_producto) => {
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/productos/${id_producto}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar el producto');
+            }
+
+            const data = await response.json();
+            console.log('Producto eliminado con éxito:', data);
+            alert("Producto eliminado con éxito!");
+            // Actualizar la lista de productos después de eliminar uno
+            setProductos((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
+            setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+    }
+
+    // Función para modificar un producto
+
     return (
-        <ProductosContext.Provider value={{ productos, setProductos, productosOriginales, setProductosOriginales, loading, error, getProductos }}>
+        <ProductosContext.Provider value={{ productos, setProductos, productosOriginales, setProductosOriginales, loading, error, getProductos, eliminarProducto, handleCheckboxChange, eliminarProductosSeleccionados }}>
             {children}
         </ProductosContext.Provider>
     );
