@@ -62,13 +62,78 @@ const useProductos = () => {
         }
     };
 
-    
+    // Función para abrir una nueva fila y que se pueda insertar un nuevo producto en administración
+
+    const nuevoProducto = () => {
+        console.log("Nuevo producto");
+
+        // Referencias
+        const tbody = document.getElementById("productosTBody");
+        const filaBoton = document.getElementById("fila-boton");
+
+        // Creo el <tr> con su estilo
+        const newTr = document.createElement("tr");
+        newTr.className = "bg-yellow-50 hover:bg-yellow-100 text-brown-900";
+
+        // 1. Celda “Nuevo producto”
+        const newTd1 = document.createElement("td");
+        newTd1.textContent = "Nuevo producto";
+        newTd1.className = "px-4 py-2 border-b border-brown-800";
+        newTr.appendChild(newTd1);
+
+        // Helper para crear celdas con input
+        const makeTdWithInput = (type, placeholder, id) => {
+            const td = document.createElement("td");
+            td.className = "px-4 py-2 border-b border-brown-800";
+            const input = document.createElement(type === "textarea" ? "textarea" : "input");
+            if (type !== "textarea") input.type = type;
+            input.placeholder = placeholder;
+            input.id = id;
+            input.className = `
+            w-full
+            bg-yellow-50
+            border border-brown-300
+            text-brown-800
+            px-3 py-2
+            rounded-md
+            focus:outline-none focus:ring-2 focus:ring-green-400
+          `.trim().replace(/\s+/g, ' ');
+            td.appendChild(input);
+            return td;
+        };
+
+        newTr.appendChild(makeTdWithInput("text", "Nombre del producto", "nombre_producto"));
+        newTr.appendChild(makeTdWithInput("textarea", "Descripción del producto", "desc_prod"));
+        newTr.appendChild(makeTdWithInput("number", "Precio", "precio_producto"));
+        newTr.appendChild(makeTdWithInput("text", "Marca", "marca_producto"));
+        newTr.appendChild(makeTdWithInput("number", "Stock", "stock_producto"));
+
+        // Botón “Añadir producto”
+        const newTd7 = document.createElement("td");
+        newTd7.className = "px-4 py-2 border-b border-brown-800 text-center";
+        const button = document.createElement("button");
+        button.textContent = "Añadir producto";
+        button.className = `
+          bg-green-500 hover:bg-green-600
+          text-white
+          px-4 py-2
+          rounded-lg
+          transition
+          duration-150
+        `.trim().replace(/\s+/g, ' ');
+        newTd7.appendChild(button);
+        newTr.appendChild(newTd7);
+
+        // Inserto antes de la fila del botón
+        const parent = filaBoton.parentNode;
+        parent.insertBefore(newTr, filaBoton)
+    };
 
 
 
     // Retornamos los valores que necesitamos para la implementación
 
-    return { handleFileChange, handleSubmit, cargarImagen, imagen };
+    return { handleFileChange, handleSubmit, cargarImagen, imagen, nuevoProducto };
 
 }
 

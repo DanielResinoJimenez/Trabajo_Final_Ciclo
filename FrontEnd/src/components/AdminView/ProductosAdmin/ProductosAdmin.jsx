@@ -2,10 +2,13 @@ import React, { useEffect } from 'react'
 import usePanelControl from '../../../services/hooks/usePanelControl'
 import ProductosAdminCard from './ProductosAdminCard'
 import { useProductosContext } from '../../../services/hooks/productosContext'
+import useProductos from '../../../services/hooks/useProductos'
 
 const ProductosAdmin = () => {
 
   const { productos, loading, error, getProductos, eliminarProductosSeleccionados } = useProductosContext();
+
+  const { nuevoProducto } = useProductos();
 
   useEffect(() => {
     getProductos();
@@ -18,10 +21,9 @@ const ProductosAdmin = () => {
           Borrar productos seleccionados
         </button>
       </div>
-      <table className='w-[90%] m-auto mt-10 mb-20 border-[1px] border-yellow-950 border-separate border-spacing-0 text-left'>
+      <table className='w-[90%] m-auto mt-10 mb-20 border-[1px] border-yellow-950 border-separate border-spacing-0 text-left' id='productosTable'>
         <thead className=''>
           <tr className="bg-yellow-950 text-white rounded-xl">
-            <th className="px-4 py-3 border-b border-gray-300"></th>
             <th className="px-4 py-3 border-b border-gray-300">ID Producto</th>
             <th className="px-4 py-3 border-b border-gray-300">Nombre</th>
             <th className="px-4 py-3 border-b border-gray-300">Descripción</th>
@@ -31,15 +33,15 @@ const ProductosAdmin = () => {
             <th className="px-4 py-3 border-b border-gray-300">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id='productosTBody'>
           {
             productos.map((producto) => (
               <ProductosAdminCard key={producto.id_producto} producto={producto} />
             ))
           }
-          <tr className=''>
+          <tr className='' id='fila-boton'>
             <td colSpan={8} className='text-center p-6 text-white text-2xl font-bold border-t border-gray-400'>
-              <span className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>
+              <span onClick={nuevoProducto} className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>
             </td>
           </tr>
         </tbody>
