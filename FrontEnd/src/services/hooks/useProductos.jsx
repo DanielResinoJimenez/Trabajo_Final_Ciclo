@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useProductosContext } from './productosContext';
 
 const useProductos = () => {
+
+    const { aniadirNuevoProd } = useProductosContext();
 
     // Variable de estado que contiene la imagen
 
@@ -79,7 +82,9 @@ const useProductos = () => {
         const newTd1 = document.createElement("td");
         newTd1.textContent = "Nuevo producto";
         newTd1.className = "px-4 py-2 border-b border-brown-800";
+        newTd1.colSpan = 2;
         newTr.appendChild(newTd1);
+        
 
         // Helper para crear celdas con input
         const makeTdWithInput = (type, placeholder, id) => {
@@ -121,19 +126,58 @@ const useProductos = () => {
           transition
           duration-150
         `.trim().replace(/\s+/g, ' ');
+        button.onclick = () => {
+            crearNuevoProducto();
+        }
         newTd7.appendChild(button);
         newTr.appendChild(newTd7);
 
         // Inserto antes de la fila del botón
         const parent = filaBoton.parentNode;
+
         parent.insertBefore(newTr, filaBoton)
     };
 
+    const crearNuevoProducto = () => {
+        const nombre_producto = document.getElementById("nombre_producto").value;
+        const desc_prod = document.getElementById("desc_prod").value;
+        const precio_producto = document.getElementById("precio_producto").value;
+        const marca_producto = document.getElementById("marca_producto").value;
+        const stock_producto = document.getElementById("stock_producto").value;
 
+        // Validar que los campos no estén vacíos
+        if (!nombre_producto || !desc_prod || !precio_producto || !marca_producto || !stock_producto) {
+            alert("Por favor, completa todos los campos.");
+            return;
+        }
+
+        // Crear el nuevo producto
+        const nuevoProducto = {
+            nombre: nombre_producto,
+            precio: precio_producto,
+            stock: stock_producto,
+            descripcion: desc_prod,
+            marca: marca_producto,
+            categoria: "No asignada"
+        };
+
+        // Llamar a la función para añadir el nuevo producto
+        aniadirNuevoProd(nuevoProducto);
+
+        // Borrar la fila de añadir un nuevo producto
+
+        const filaBoton = document.getElementById("fila-boton");
+
+        const deleteRow = filaBoton.previousElementSibling;
+        deleteRow.remove();
+        
+
+
+    }
 
     // Retornamos los valores que necesitamos para la implementación
 
-    return { handleFileChange, handleSubmit, cargarImagen, imagen, nuevoProducto };
+    return { handleFileChange, handleSubmit, cargarImagen, imagen, nuevoProducto, crearNuevoProducto };
 
 }
 

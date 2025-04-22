@@ -100,10 +100,51 @@ export const ProductosProvider = ({ children }) => {
 
     }
 
+    // Añadir un nuevo producto
+
+    const aniadirNuevoProd = async (producto) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/productos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(producto),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al añadir el producto');
+            }
+
+            const data = await response.json();
+            console.log('Producto añadido con éxito:', data);
+            alert("Producto añadido con éxito!");
+
+            // Actualiza estado:
+            setProductos(prev => [...prev, data]);
+            setProductosOriginales(prev => [...prev, data]);
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     // Función para modificar un producto
 
     return (
-        <ProductosContext.Provider value={{ productos, setProductos, productosOriginales, setProductosOriginales, loading, error, getProductos, eliminarProducto, handleCheckboxChange, eliminarProductosSeleccionados }}>
+        <ProductosContext.Provider value={{
+            productos,
+            setProductos,
+            productosOriginales,
+            setProductosOriginales,
+            loading,
+            error,
+            getProductos,
+            eliminarProducto,
+            handleCheckboxChange,
+            eliminarProductosSeleccionados,
+            aniadirNuevoProd
+        }}>
             {children}
         </ProductosContext.Provider>
     );
