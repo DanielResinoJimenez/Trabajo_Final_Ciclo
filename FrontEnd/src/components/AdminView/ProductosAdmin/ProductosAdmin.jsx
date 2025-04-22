@@ -8,7 +8,7 @@ const ProductosAdmin = () => {
 
   const { productos, loading, error, getProductos, eliminarProductosSeleccionados } = useProductosContext();
 
-  const { nuevoProducto } = useProductos();
+  const { nuevoProducto, mostrarModal, cerrarModal } = useProductos();
 
   useEffect(() => {
     getProductos();
@@ -49,9 +49,20 @@ const ProductosAdmin = () => {
       </table>
 
       {/* Modal para mostrar una vista detallada del producto requerido */}
-      <div >
+      <div className="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id='modalProductos'>
+        <div className="bg-white rounded-2xl shadow-2xl w-11/12 max-w-lg p-6 relative">
+          <button
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            onClick={() => cerrarModal()}
+          >
+            ✕
+          </button>
+          <div className="mt-4" id='modalProductosContent'>
 
+          </div>
+        </div>
       </div>
+
 
     </div>
   )

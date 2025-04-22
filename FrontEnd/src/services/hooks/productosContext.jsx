@@ -131,6 +131,29 @@ export const ProductosProvider = ({ children }) => {
 
     // Función para modificar un producto
 
+    const modificarProducto = async (id_producto, producto) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/productos/${id_producto}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(producto),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al modificar el producto');
+            }
+
+            const data = await response.json();
+            console.log('Producto modificado con éxito:', data);
+            alert("Producto modificado con éxito!");
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     return (
         <ProductosContext.Provider value={{
             productos,
@@ -143,7 +166,8 @@ export const ProductosProvider = ({ children }) => {
             eliminarProducto,
             handleCheckboxChange,
             eliminarProductosSeleccionados,
-            aniadirNuevoProd
+            aniadirNuevoProd,
+            modificarProducto,
         }}>
             {children}
         </ProductosContext.Provider>

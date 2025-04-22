@@ -3,7 +3,7 @@ import { useProductosContext } from './productosContext';
 
 const useProductos = () => {
 
-    const { aniadirNuevoProd } = useProductosContext();
+    const { aniadirNuevoProd, modificarProducto } = useProductosContext();
 
     // Variable de estado que contiene la imagen
 
@@ -84,7 +84,7 @@ const useProductos = () => {
         newTd1.className = "px-4 py-2 border-b border-brown-800";
         newTd1.colSpan = 2;
         newTr.appendChild(newTd1);
-        
+
 
         // Helper para crear celdas con input
         const makeTdWithInput = (type, placeholder, id) => {
@@ -170,14 +170,177 @@ const useProductos = () => {
 
         const deleteRow = filaBoton.previousElementSibling;
         deleteRow.remove();
-        
+
+    }
+
+    // Función para mostrar un modal con información del producto
+
+    const mostrarModalInfo = (producto) => {
+        const modal = document.getElementById("modalProductos");
+        const modalContent = document.getElementById("modalProductosContent");
+
+        // Limpiar el contenido del modal
+        modalContent.innerHTML = ""; // Limpiar contenido previo
+
+        // Crear el contenido del modal
+        const nombre = document.createElement("h2");
+        nombre.textContent = `Nombre: ${producto.nombre}`;
+        nombre.className = "text-2xl font-bold mb-4";
+
+        const descripcion = document.createElement("p");
+        descripcion.textContent = `Descripcion: ${producto.descripcion}`;
+        descripcion.className = "mb-4";
+
+        const precio = document.createElement("p");
+        precio.textContent = `Precio: ${producto.precio} €`;
+        precio.className = "mb-4";
+
+        const marca = document.createElement("p");
+        marca.textContent = `Marca: ${producto.marca}`;
+        marca.className = "mb-4";
+
+        const stock = document.createElement("p");
+        stock.textContent = `Stock: ${producto.stock} unidades`;
+        stock.className = "mb-4";
+
+        // Añadir los elementos al contenido del modal
+        modalContent.appendChild(nombre);
+        modalContent.appendChild(descripcion);
+        modalContent.appendChild(precio);
+        modalContent.appendChild(marca);
+        modalContent.appendChild(stock);
+
+        // Mostrar el modal
+        modal.classList.remove("hidden");
+
+    }
+
+    // Función para mostrar un modal con formulario de edición
+    const mostrarModalEditar = (producto) => {
+        const modal = document.getElementById("modalProductos");
+        const modalContent = document.getElementById("modalProductosContent");
+
+        // Limpiar contenido previo
+        modalContent.innerHTML = "";
+
+        // Crear el <form>
+        const form = document.createElement("form");
+        form.id = "formEditarProducto";
+
+        // Helper para cada campo
+        const makeField = (labelText, type, name, value) => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "mb-4";
+
+            const label = document.createElement("label");
+            label.htmlFor = name;
+            label.textContent = labelText;
+            label.className = "block text-gray-700 font-medium mb-1";
+
+            let input;
+            if (type === "textarea") {
+                input = document.createElement("textarea");
+                input.rows = 3;
+            } else {
+                input = document.createElement("input");
+                input.type = type;
+            }
+            input.id = name;
+            input.name = name;
+            input.value = value;
+            input.className = `
+        w-full
+        bg-yellow-50
+        border border-brown-300
+        text-brown-800
+        px-3 py-2
+        rounded-md
+        focus:outline-none focus:ring-2 focus:ring-green-400
+      `.trim().replace(/\s+/g, ' ');
+
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+            return wrapper;
+        };
+
+        // Agregar campos
+        form.appendChild(makeField("Nombre", "text", "nombre", producto.nombre));
+        form.appendChild(makeField("Descripción", "textarea", "descripcion", producto.descripcion));
+        form.appendChild(makeField("Precio (€)", "number", "precio", producto.precio));
+        form.appendChild(makeField("Marca", "text", "marca", producto.marca));
+        form.appendChild(makeField("Stock", "number", "stock", producto.stock));
+
+        // Botón Modificar
+        const btnWrapper = document.createElement("div");
+        btnWrapper.className = "text-right";
+
+        const btnModificar = document.createElement("button");
+        btnModificar.type = "submit";
+        btnModificar.textContent = "Modificar";
+        btnModificar.className = `
+      bg-yellow-500 hover:bg-yellow-600
+      text-white font-bold
+      px-4 py-2 rounded-md
+      transition duration-150
+    `.trim().replace(/\s+/g, ' ');
+
+        btnWrapper.appendChild(btnModificar);
+        form.appendChild(btnWrapper);
+
+        // Manejador submit
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
 
 
+            const actualizado = {
+                ...producto,
+                nombre: form.nombre.value,
+                descripcion: form.descripcion.value,
+                precio: form.precio.value,
+                marca: form.marca.value,
+                stock: form.stock.value,
+            };
+            modificarProducto(producto.id_producto, actualizado);
+
+            // Actualizar la fila en el DOM sin recargar la página
+            actualizarFilaProducto(actualizado);
+
+            modal.classList.add("hidden");
+        });
+
+        // Insertar form en el modal y mostrarlo
+        modalContent.appendChild(form);
+
+        modal.classList.remove("hidden");
+    };
+
+    const actualizarFilaProducto = (productoActualizado) => {
+        // Encontrar la fila correspondiente al producto que fue actualizado
+        const fila = document.getElementById(`producto-${productoActualizado.id_producto}`);
+
+        if (fila) {
+            // Suponiendo que la fila tiene celdas para nombre, descripción, precio, marca y stock
+            if (fila) {
+                // Actualizar las celdas con los nuevos valores
+                fila.querySelector("td:nth-child(3)").textContent = productoActualizado.nombre;
+                fila.querySelector("td:nth-child(4)").textContent = productoActualizado.descripcion;
+                fila.querySelector("td:nth-child(5)").textContent = `${productoActualizado.precio} €`;
+                fila.querySelector("td:nth-child(6)").textContent = productoActualizado.marca;
+                fila.querySelector("td:nth-child(7)").textContent = productoActualizado.stock;
+            }
+        }
+    }
+
+
+    // Función para cerrar el modal
+    const cerrarModal = () => {
+        const modal = document.getElementById("modalProductos");
+        modal.classList.add("hidden"); // Ocultar el modal
     }
 
     // Retornamos los valores que necesitamos para la implementación
 
-    return { handleFileChange, handleSubmit, cargarImagen, imagen, nuevoProducto, crearNuevoProducto };
+    return { handleFileChange, handleSubmit, cargarImagen, imagen, nuevoProducto, crearNuevoProducto, mostrarModalInfo, mostrarModalEditar, cerrarModal };
 
 }
 
