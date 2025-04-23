@@ -3,7 +3,7 @@ import { useProductosContext } from './productosContext';
 
 const useProductos = () => {
 
-    const { getProductos, aniadirNuevoProd, modificarProducto } = useProductosContext();
+    const { getProductos, aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
 
     // Variable de estado que contiene la imagen
 
@@ -13,7 +13,7 @@ const useProductos = () => {
     const handleFileChange = (e) => {
         console.log(e.target.files[0])
         setArchivo(e.target.files[0]); // Guarda el archivo seleccionado
-        
+
     };
 
     // Función que se ejecuta al enviar el formulario y carga la imagen en la api
@@ -22,22 +22,21 @@ const useProductos = () => {
 
         let id_producto_buscado = "";
 
-        if(!id_producto){
+        if (!id_producto) {
             id_producto_buscado = e.target.parentElement.firstChild.textContent;
         }
 
         if (!archivo) {
-            alert("Por favor, selecciona una imagen");
             return;
         }
 
         const formData = new FormData();
-        if(!id_producto){
+        if (!id_producto) {
             formData.append('id_producto', id_producto_buscado);
-        }else{
+        } else {
             formData.append('id_producto', id_producto);
         }
-        
+
         formData.append('imagen', archivo); // Adjunta la imagen con el nombre del campo 'imagen'
 
         try {
@@ -52,6 +51,7 @@ const useProductos = () => {
 
             const data = await response.json();
             console.log('Imagen subida con éxito:', data);
+
             alert("Imagen subida con éxito!");
         } catch (error) {
             console.error('Error:', error);
@@ -82,10 +82,10 @@ const useProductos = () => {
             imagen: null,
             tipo: null
         };
-    
+
         try {
             console.log("Borrando imagen para el producto con id:", id_producto);
-    
+
             const response = await fetch(`http://localhost:3000/api/productos/${id_producto}`, {
                 method: 'PUT',
                 headers: {
@@ -93,13 +93,14 @@ const useProductos = () => {
                 },
                 body: JSON.stringify(delImg), // Envía los datos con los campos null
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al borrar la imagen');
             }
-    
+
             const data = await response.json();
             console.log('Imagen borrada con éxito:', data);
+
             alert("Imagen borrada con éxito!");
         } catch (error) {
             console.error("Error al borrar la imagen:", error);
@@ -155,7 +156,7 @@ const useProductos = () => {
         newTr.appendChild(makeTdWithInput("text", "Marca", "marca_producto"));
         newTr.appendChild(makeTdWithInput("number", "Stock", "stock_producto"));
 
-        
+
 
         // Botón “Añadir producto”
         const newTd7 = document.createElement("td");
@@ -251,7 +252,7 @@ const useProductos = () => {
         categoria.textContent = `Categoria: ${producto.categoria}`;
         categoria.className = "mb-4";
 
-        
+
 
         // Añadir los elementos al contenido del modal
         modalContent.appendChild(nombre);
@@ -261,12 +262,12 @@ const useProductos = () => {
         modalContent.appendChild(stock);
         modalContent.appendChild(categoria);
 
-        if(producto.imagen){
+        if (producto.imagen) {
             cargarImagen(producto);
             const newImg = document.createElement("img");
             newImg.src = imagen;
             modalContent.appendChild(newImg)
-        }else{
+        } else {
             const newP = document.createElement("p");
             newP.textContent = "No hay imagen disponible";
             modalContent.appendChild(newP);
@@ -308,8 +309,8 @@ const useProductos = () => {
                 input.type = type;
             }
 
-            if(type === "number"){
-                input.step= "0.01";
+            if (type === "number") {
+                input.step = "0.01";
             }
 
             input.id = name;
@@ -340,57 +341,48 @@ const useProductos = () => {
 
         const newDiv = document.createElement("div");
         newDiv.className = "mb-4";
+
         const newLabel = document.createElement("label");
         newLabel.htmlFor = "categoria_producto";
         newLabel.textContent = "Categoría";
         newLabel.className = "block text-gray-700 font-medium mb-1";
+
         const newSelect = document.createElement("select");
-        newSelect.value = producto.categoria;
-        const option1 = document.createElement("option");
-        option1.value = "";
-        option1.textContent = "No asignada";
-        const option2 = document.createElement("option");
-        option2.value = "Café";
-        option2.textContent = "Café";
-        const option3 = document.createElement("option");
-        option3.value = "Lácteos";
-        option3.textContent = "Lácteos";
-        const option4 = document.createElement("option");
-        option4.value = "Chocolate";
-        option4.textContent = "Chocolate";
-        const option5 = document.createElement("option");
-        option5.value = "Capuchino";
-        option5.textContent = "Capuchino";
-        const option6 = document.createElement("option");
-        option6.value = "Té frío";
-        option6.textContent = "Té frío";
-        const option7 = document.createElement("option");
-        option7.value = "Edulcorantes";
-        option7.textContent = "Edulcorantes";
-        const option8 = document.createElement("option");
-        option8.value = "Accesorios";
-        option8.textContent = "Accesorios";
-        newSelect.appendChild(option1);
-        newSelect.appendChild(option2);
-        newSelect.appendChild(option3);
-        newSelect.appendChild(option4);
-        newSelect.appendChild(option5);
-        newSelect.appendChild(option6);
-        newSelect.appendChild(option7);
-        newSelect.appendChild(option8);
-        newSelect.className = `w-full
-        bg-yellow-50
-        border border-brown-300
-        text-brown-800
-        px-3 py-2
-        rounded-md
-        focus:outline-none focus:ring-2 focus:ring-green-400`
         newSelect.id = "categoria_producto";
+        newSelect.className = `w-full
+    bg-yellow-50
+    border border-brown-300
+    text-brown-800
+    px-3 py-2
+    rounded-md
+    focus:outline-none focus:ring-2 focus:ring-green-400`;
+
+        const categorias = [
+            "No asignada",
+            "Café",
+            "Lácteos",
+            "Chocolate",
+            "Capuchino",
+            "Té frío",
+            "Edulcorantes",
+            "Accesorios"
+        ];
+
+        categorias.forEach(cat => {
+            const option = document.createElement("option");
+            option.value = cat === "No asignada" ? "" : cat;
+            option.textContent = cat;
+            if (producto.categoria === option.value) {
+                option.selected = true;
+            }
+            newSelect.appendChild(option);
+        });
+
         newDiv.appendChild(newLabel);
         newDiv.appendChild(newSelect);
         form.appendChild(newDiv);
-        
-        if(producto.imagen){
+
+        if (producto.imagen) {
             cargarImagen(producto);
             const newDiv = document.createElement("div");
             newDiv.className = "mb-4";
@@ -410,7 +402,7 @@ const useProductos = () => {
             newDiv.appendChild(newImg);
             newDiv.appendChild(newButton);
             form.appendChild(newDiv);
-        }else{
+        } else {
             const newDiv = document.createElement("div");
             newDiv.className = "mb-4";
             const newLabel = document.createElement("label");
@@ -459,8 +451,8 @@ const useProductos = () => {
                 stock: form.stock.value,
                 categoria: form.categoria_producto.value,
             };
-            
-            if(archivo) {
+
+            if (archivo) {
                 actualizado.imagen = archivo;
             }
 
@@ -493,7 +485,7 @@ const useProductos = () => {
                 fila.querySelector("td:nth-child(5)").textContent = `${productoActualizado.precio} €`;
                 fila.querySelector("td:nth-child(6)").textContent = productoActualizado.marca;
                 fila.querySelector("td:nth-child(7)").textContent = productoActualizado.stock;
-                
+
             }
         }
     }

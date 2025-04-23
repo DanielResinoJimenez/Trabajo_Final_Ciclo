@@ -64,7 +64,6 @@ export const ProductosProvider = ({ children }) => {
                 setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id));
             }
 
-            alert("Productos eliminados correctamente.");
             // Aquí puedes limpiar el array o actualizar tu estado/UI si usas React/Vue/etc.
             selectProd.length = 0;
         } catch (error) {
@@ -89,7 +88,7 @@ export const ProductosProvider = ({ children }) => {
 
             const data = await response.json();
             console.log('Producto eliminado con éxito:', data);
-            alert("Producto eliminado con éxito!");
+
             // Actualizar la lista de productos después de eliminar uno
             setProductos((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
             setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
@@ -118,7 +117,6 @@ export const ProductosProvider = ({ children }) => {
 
             const data = await response.json();
             console.log('Producto añadido con éxito:', data);
-            alert("Producto añadido con éxito!");
 
             // Actualiza estado:
             setProductos(prev => [...prev, data]);
@@ -150,15 +148,13 @@ export const ProductosProvider = ({ children }) => {
 
             // Actualizar productos en el estado productos (suponiendo que data contiene el producto actualizado)
             setProductos(prevProductos =>
-                prevProductos.map(p => p.id === id_producto ? { ...p, ...producto } : p)
+                prevProductos.map(p => p.id_producto === id_producto ? { ...p, ...producto } : p)
             );
 
             // Actualizar productosOriginales si es necesario (en caso de que lo necesites reflejar en los datos originales)
             setProductosOriginales(prevProductosOriginales =>
-                prevProductosOriginales.map(p => p.id === id_producto ? { ...p, ...producto } : p)
+                prevProductosOriginales.map(p => p.id_producto === id_producto ? { ...p, ...producto } : p)
             );
-
-            alert("Producto modificado con éxito!");
 
         } catch (error) {
             console.error('Error:', error);
