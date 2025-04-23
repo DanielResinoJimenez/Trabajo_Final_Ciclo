@@ -3,7 +3,7 @@ import { useProductosContext } from './productosContext';
 
 const useProductos = () => {
 
-    const { aniadirNuevoProd, modificarProducto } = useProductosContext();
+    const { getProductos, aniadirNuevoProd, modificarProducto } = useProductosContext();
 
     // Variable de estado que contiene la imagen
 
@@ -11,14 +11,20 @@ const useProductos = () => {
 
     // Función que adjunta un archivo cuando se hace evento change en el input
     const handleFileChange = (e) => {
+        console.log(e.target.files[0])
         setArchivo(e.target.files[0]); // Guarda el archivo seleccionado
+        
     };
 
     // Función que se ejecuta al enviar el formulario y carga la imagen en la api
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, id_producto) => {
         e.preventDefault(); // Evita que la página se recargue
 
-        const id_producto = e.target.parentElement.firstChild.textContent;
+        let id_producto_buscado = "";
+
+        if(!id_producto){
+            id_producto_buscado = e.target.parentElement.firstChild.textContent;
+        }
 
         if (!archivo) {
             alert("Por favor, selecciona una imagen");
@@ -26,7 +32,12 @@ const useProductos = () => {
         }
 
         const formData = new FormData();
-        formData.append('id_producto', id_producto);
+        if(!id_producto){
+            formData.append('id_producto', id_producto_buscado);
+        }else{
+            formData.append('id_producto', id_producto);
+        }
+        
         formData.append('imagen', archivo); // Adjunta la imagen con el nombre del campo 'imagen'
 
         try {
@@ -64,6 +75,37 @@ const useProductos = () => {
             console.error("Error al cargar la imagen:", error);
         }
     };
+
+    // Función para borrar una imagen
+    const borrarImagen = async (id_producto) => {
+        const delImg = {
+            imagen: null,
+            tipo: null
+        };
+    
+        try {
+            console.log("Borrando imagen para el producto con id:", id_producto);
+    
+            const response = await fetch(`http://localhost:3000/api/productos/${id_producto}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',  // Asegúrate de enviar los datos como JSON
+                },
+                body: JSON.stringify(delImg), // Envía los datos con los campos null
+            });
+    
+            if (!response.ok) {
+                throw new Error('Error al borrar la imagen');
+            }
+    
+            const data = await response.json();
+            console.log('Imagen borrada con éxito:', data);
+            alert("Imagen borrada con éxito!");
+        } catch (error) {
+            console.error("Error al borrar la imagen:", error);
+        }
+    };
+
 
     // Función para abrir una nueva fila y que se pueda insertar un nuevo producto en administración
 
@@ -112,6 +154,8 @@ const useProductos = () => {
         newTr.appendChild(makeTdWithInput("number", "Precio", "precio_producto"));
         newTr.appendChild(makeTdWithInput("text", "Marca", "marca_producto"));
         newTr.appendChild(makeTdWithInput("number", "Stock", "stock_producto"));
+
+        
 
         // Botón “Añadir producto”
         const newTd7 = document.createElement("td");
@@ -203,12 +247,30 @@ const useProductos = () => {
         stock.textContent = `Stock: ${producto.stock} unidades`;
         stock.className = "mb-4";
 
+        const categoria = document.createElement("p");
+        categoria.textContent = `Categoria: ${producto.categoria}`;
+        categoria.className = "mb-4";
+
+        
+
         // Añadir los elementos al contenido del modal
         modalContent.appendChild(nombre);
         modalContent.appendChild(descripcion);
         modalContent.appendChild(precio);
         modalContent.appendChild(marca);
         modalContent.appendChild(stock);
+        modalContent.appendChild(categoria);
+
+        if(producto.imagen){
+            cargarImagen(producto);
+            const newImg = document.createElement("img");
+            newImg.src = imagen;
+            modalContent.appendChild(newImg)
+        }else{
+            const newP = document.createElement("p");
+            newP.textContent = "No hay imagen disponible";
+            modalContent.appendChild(newP);
+        }
 
         // Mostrar el modal
         modal.classList.remove("hidden");
@@ -245,6 +307,11 @@ const useProductos = () => {
                 input = document.createElement("input");
                 input.type = type;
             }
+
+            if(type === "number"){
+                input.step= "0.01";
+            }
+
             input.id = name;
             input.name = name;
             input.value = value;
@@ -269,6 +336,97 @@ const useProductos = () => {
         form.appendChild(makeField("Precio (€)", "number", "precio", producto.precio));
         form.appendChild(makeField("Marca", "text", "marca", producto.marca));
         form.appendChild(makeField("Stock", "number", "stock", producto.stock));
+
+
+        const newDiv = document.createElement("div");
+        newDiv.className = "mb-4";
+        const newLabel = document.createElement("label");
+        newLabel.htmlFor = "categoria_producto";
+        newLabel.textContent = "Categoría";
+        newLabel.className = "block text-gray-700 font-medium mb-1";
+        const newSelect = document.createElement("select");
+        newSelect.value = producto.categoria;
+        const option1 = document.createElement("option");
+        option1.value = "";
+        option1.textContent = "No asignada";
+        const option2 = document.createElement("option");
+        option2.value = "Café";
+        option2.textContent = "Café";
+        const option3 = document.createElement("option");
+        option3.value = "Lácteos";
+        option3.textContent = "Lácteos";
+        const option4 = document.createElement("option");
+        option4.value = "Chocolate";
+        option4.textContent = "Chocolate";
+        const option5 = document.createElement("option");
+        option5.value = "Capuchino";
+        option5.textContent = "Capuchino";
+        const option6 = document.createElement("option");
+        option6.value = "Té frío";
+        option6.textContent = "Té frío";
+        const option7 = document.createElement("option");
+        option7.value = "Edulcorantes";
+        option7.textContent = "Edulcorantes";
+        const option8 = document.createElement("option");
+        option8.value = "Accesorios";
+        option8.textContent = "Accesorios";
+        newSelect.appendChild(option1);
+        newSelect.appendChild(option2);
+        newSelect.appendChild(option3);
+        newSelect.appendChild(option4);
+        newSelect.appendChild(option5);
+        newSelect.appendChild(option6);
+        newSelect.appendChild(option7);
+        newSelect.appendChild(option8);
+        newSelect.className = `w-full
+        bg-yellow-50
+        border border-brown-300
+        text-brown-800
+        px-3 py-2
+        rounded-md
+        focus:outline-none focus:ring-2 focus:ring-green-400`
+        newSelect.id = "categoria_producto";
+        newDiv.appendChild(newLabel);
+        newDiv.appendChild(newSelect);
+        form.appendChild(newDiv);
+        
+        if(producto.imagen){
+            cargarImagen(producto);
+            const newDiv = document.createElement("div");
+            newDiv.className = "mb-4";
+            const newLabel = document.createElement("label");
+            newLabel.htmlFor = "imagen_producto";
+            newLabel.textContent = "Imagen";
+            newLabel.className = "block text-gray-700 font-medium mb-1";
+            const newImg = document.createElement("img");
+            newImg.src = imagen;
+            const newButton = document.createElement("button");
+            newButton.textContent = "Borrar imagen";
+            newButton.onclick = (e) => {
+                e.preventDefault();
+                borrarImagen(producto.id_producto);
+            }
+            newDiv.appendChild(newLabel);
+            newDiv.appendChild(newImg);
+            newDiv.appendChild(newButton);
+            form.appendChild(newDiv);
+        }else{
+            const newDiv = document.createElement("div");
+            newDiv.className = "mb-4";
+            const newLabel = document.createElement("label");
+            newLabel.htmlFor = "imagen_producto";
+            newLabel.textContent = "Imagen";
+            newLabel.className = "block text-gray-700 font-medium mb-1";
+            const newInput = document.createElement("input");
+            newInput.type = "file";
+            newInput.id = "imagen_producto";
+            newInput.name = "imagen_producto";
+            newInput.accept = "image/*"; // Aceptar solo imágenes
+            newInput.onchange = handleFileChange;
+            newDiv.appendChild(newLabel);
+            newDiv.appendChild(newInput);
+            form.appendChild(newDiv);
+        }
 
         // Botón Modificar
         const btnWrapper = document.createElement("div");
@@ -299,7 +457,15 @@ const useProductos = () => {
                 precio: form.precio.value,
                 marca: form.marca.value,
                 stock: form.stock.value,
+                categoria: form.categoria_producto.value,
             };
+            
+            if(archivo) {
+                actualizado.imagen = archivo;
+            }
+
+            handleSubmit(e, producto.id_producto);
+
             modificarProducto(producto.id_producto, actualizado);
 
             // Actualizar la fila en el DOM sin recargar la página
@@ -327,6 +493,7 @@ const useProductos = () => {
                 fila.querySelector("td:nth-child(5)").textContent = `${productoActualizado.precio} €`;
                 fila.querySelector("td:nth-child(6)").textContent = productoActualizado.marca;
                 fila.querySelector("td:nth-child(7)").textContent = productoActualizado.stock;
+                
             }
         }
     }

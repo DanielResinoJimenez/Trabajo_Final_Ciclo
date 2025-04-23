@@ -53,6 +53,8 @@ const createProductoImagen = async (imagenData) => {
 
 const putProducto = async (newProducto, id_producto) => {
     try {
+        console.log(id_producto)
+        console.log(newProducto)
         const updated = await Producto.update(newProducto, { where: { id_producto } });
         return updated[0] ? "Producto actualizado correctamente" : "No se encontró el producto";
     } catch (error) {

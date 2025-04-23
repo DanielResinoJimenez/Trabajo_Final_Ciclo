@@ -70,6 +70,7 @@ const createProductoImagen = async (req, res) => {
 
 const putProducto = async (req, res) => {
     try {
+        console.log(req.body)
         const updated = await Services.putProducto(req.body, req.params.id);
         res.status(200).json(updated);
     } catch (error) {

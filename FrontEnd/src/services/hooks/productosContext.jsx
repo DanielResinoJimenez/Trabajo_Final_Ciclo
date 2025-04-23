@@ -147,6 +147,17 @@ export const ProductosProvider = ({ children }) => {
 
             const data = await response.json();
             console.log('Producto modificado con éxito:', data);
+
+            // Actualizar productos en el estado productos (suponiendo que data contiene el producto actualizado)
+            setProductos(prevProductos =>
+                prevProductos.map(p => p.id === id_producto ? { ...p, ...producto } : p)
+            );
+
+            // Actualizar productosOriginales si es necesario (en caso de que lo necesites reflejar en los datos originales)
+            setProductosOriginales(prevProductosOriginales =>
+                prevProductosOriginales.map(p => p.id === id_producto ? { ...p, ...producto } : p)
+            );
+
             alert("Producto modificado con éxito!");
 
         } catch (error) {
