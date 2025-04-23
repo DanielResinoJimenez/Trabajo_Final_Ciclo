@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import TabsCuenta from './CuentaAdmin/TabsCuenta';
 
 const CuentaAdmin = () => {
+  
+
   return (
-    <div>CuentaAdmin</div>
-  )
+    <div className="w-[90%] m-auto">
+      <TabsCuenta/>
+    </div>
+  );
 }
 
 export default CuentaAdmin
