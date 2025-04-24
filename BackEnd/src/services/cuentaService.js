@@ -14,7 +14,7 @@ const getAllCuentas = async () => {
 
 const getOneCuenta = async(id) => {
     try {
-        return await Cuenta.findOne({where: {id_cuenta: id}});
+        return await Cuenta.findOne({where: {id_empresa: id}});
     } catch (error) {
         console.log("Error en getOneCuenta:", error);
         throw error;

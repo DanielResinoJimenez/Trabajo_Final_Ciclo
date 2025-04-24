@@ -11,6 +11,8 @@ export const CuentaProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // Función para recoger la cuenta de un usuario y posteriormente utilizarla para recoger sus ingresos y gastos
+
     const getCuentas = async () => {
         setLoading(true);
         try {
