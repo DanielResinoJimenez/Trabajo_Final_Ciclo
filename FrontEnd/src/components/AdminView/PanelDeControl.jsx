@@ -17,6 +17,8 @@ const PanelDeControl = () => {
 
     // Función para manejar el clic en el botón "Volver"
     const volverPanel = () => {
+        const btnVolver = document.getElementById("volverPanel");
+        btnVolver.classList.add("hidden"); // Mostrar el botón "Volver"
         // Navegar a la ruta inicial (o a la ruta que quieras)
         navigate('/panelControl'); // Redirige a la ruta principal
         setMostrarOutlet(false); // Opcionalmente, puedes ocultar el outlet también
