@@ -10,6 +10,7 @@ const solicitudRoutes = require('./solicitudRoutes');
 const userRouter = require('./usuarioRoutes');
 const cuentaRoutes = require('./cuentaRoutes');
 const gananciaRoutes = require('./gananciaRoutes');
+const perdidaRoutes = require('./perdidaRoutes')
 
 // Rutas de la API
 
@@ -19,5 +20,6 @@ apiRouter.use('/solicitudes', solicitudRoutes);
 apiRouter.use('/usuarios', userRouter);
 apiRouter.use('/cuenta', cuentaRoutes);
 apiRouter.use('/ganancias', gananciaRoutes);
+apiRouter.use('/perdidas', perdidaRoutes);
 
 module.exports = apiRouter;
