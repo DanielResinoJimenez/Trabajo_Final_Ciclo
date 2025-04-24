@@ -8,14 +8,14 @@ const HistorialAccionesShow = ({ accion }) => {
                 {
                     accion.id_ganancia && (
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full">
-                            Ganancia
+                            Ingreso
                         </span>
                     )
                 }
                 {
                     accion.id_perdida && (
                         <span className="bg-red-500 text-white px-2 py-1 rounded-full">
-                            Perdida
+                            Gasto
                         </span>
                     )
                 }
