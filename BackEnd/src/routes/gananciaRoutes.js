@@ -3,7 +3,7 @@ const gananciaController = require("../controllers/gananciaController");
 
 // Rutas de la API de productos
 
-gananciaRouter.get("/", gananciaController.getAllMaquinas);
+gananciaRouter.get("/", gananciaController.getAllGanancias);
 gananciaRouter.post("/", gananciaController.createGanancia);
 gananciaRouter.put("/:id", gananciaController.putGanancia);
 gananciaRouter.delete("/:id", gananciaController.deleteGanancia);

@@ -49,7 +49,7 @@ const deleteGanancia = async (req, res) => {
 }
 
 module.exports = {
-    getAllMaquinas,
+    getAllGanancias,
     createGanancia,
     putGanancia,
     deleteGanancia

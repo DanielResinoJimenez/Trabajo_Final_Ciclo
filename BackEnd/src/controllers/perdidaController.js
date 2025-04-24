@@ -49,7 +49,7 @@ const deletePerdida = async (req, res) => {
 }
 
 module.exports = {
-    getAllMaquinas,
+    getAllPerdidas,
     createPerdida,
     putPerdida,
     deletePerdida

@@ -3,10 +3,10 @@ const perdidaController = require("../controllers/perdidaController");
 
 // Rutas de la API de productos
 
-perdidaRoutes.get("/", perdidaController.getAllMaquinas);
-perdidaRoutes.post("/", perdidaController.createGanancia);
-perdidaRoutes.put("/:id", perdidaController.putGanancia);
-perdidaRoutes.delete("/:id", perdidaController.deleteGanancia);
+perdidaRoutes.get("/", perdidaController.getAllPerdidas);
+perdidaRoutes.post("/", perdidaController.createPerdida);
+perdidaRoutes.put("/:id", perdidaController.putPerdida);
+perdidaRoutes.delete("/:id", perdidaController.deletePerdida);
 
 // Exportamos el router de productos
 
