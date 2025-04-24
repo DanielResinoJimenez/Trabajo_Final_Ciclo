@@ -11,6 +11,21 @@ const getAllGanancias = async (req, res) => {
     }
 }
 
+// Obtener ganancia por id cuenta
+
+const getAllGananciasByIdCuenta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ganancia = await Service.getAllGananciasByIdCuenta(id);
+        if (!ganancia) {
+            return res.status(404).send('No se encontró la ganancia');
+        }
+        res.status(200).json(ganancia);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 // Crear una nueva máquina
 
 const createGanancia = async (req, res) => {
@@ -50,6 +65,7 @@ const deleteGanancia = async (req, res) => {
 
 module.exports = {
     getAllGanancias,
+    getAllGananciasByIdCuenta,
     createGanancia,
     putGanancia,
     deleteGanancia

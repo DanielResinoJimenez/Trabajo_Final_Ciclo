@@ -2,7 +2,7 @@ const Perdida = require("../database/models/Perdida");
 
 // Funciones de consultas en la base de datos.
 
-// Obtener todos los productos
+// Obtener todas las pérdidas
 const getAllPerdidas = async () => {
     try {
         return await Perdida.findAll();
@@ -12,7 +12,18 @@ const getAllPerdidas = async () => {
     }
 }
 
-// Insertar un nuevo producto
+// Obtener las perdidas de una cuenta
+
+const getPerdidasByIdCuenta = async (id) => {
+    try {
+        return await Perdida.findAll({ where: { id_cuenta: id } });
+    } catch (error) {
+        console.log("Error en getPerdidasByIdCuenta:", error);
+        throw error;
+    }
+}
+
+// Insertar un nuevo perdida
 
 const createPerdida = async (body) => {
     try {
@@ -23,7 +34,7 @@ const createPerdida = async (body) => {
     }
 };
 
-// Modificar un producto
+// Modificar un perdida
 
 const putPerdida = async (newPerdida, id_perdida) => {
     try {
@@ -35,7 +46,7 @@ const putPerdida = async (newPerdida, id_perdida) => {
     }
 };
 
-// Eliminar un producto
+// Eliminar un perdida
 
 const deletePerdida = async (id) => {
     try {
@@ -47,4 +58,4 @@ const deletePerdida = async (id) => {
     }
 };
 
-module.exports = { getAllPerdidas, createPerdida, putPerdida, deletePerdida };
+module.exports = { getAllPerdidas, getPerdidasByIdCuenta, createPerdida, putPerdida, deletePerdida };

@@ -12,4 +12,13 @@ const getAllCuentas = async () => {
     }
 }
 
-module.exports = { getAllCuentas };
+const getOneCuenta = async(id) => {
+    try {
+        return await Cuenta.findOne({where: {id_cuenta: id}});
+    } catch (error) {
+        console.log("Error en getOneCuenta:", error);
+        throw error;
+    }
+}
+
+module.exports = { getAllCuentas, getOneCuenta };

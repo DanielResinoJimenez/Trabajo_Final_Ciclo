@@ -11,6 +11,22 @@ const getAllPerdidas = async (req, res) => {
     }
 }
 
+// Obtener perdida por id
+
+const getPerdidaByIdCuenta = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const perdida = await Service.getPerdidaByIdCuenta(id);
+        if (perdida) {
+            res.status(200).json(perdida);
+        } else {
+            res.status(404).send("Perdida no encontrada");
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 // Crear una nueva máquina
 
 const createPerdida = async (req, res) => {
@@ -50,6 +66,7 @@ const deletePerdida = async (req, res) => {
 
 module.exports = {
     getAllPerdidas,
+    getPerdidaByIdCuenta,
     createPerdida,
     putPerdida,
     deletePerdida

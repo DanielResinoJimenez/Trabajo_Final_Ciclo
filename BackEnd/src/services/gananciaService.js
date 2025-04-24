@@ -12,6 +12,18 @@ const getAllGanancias = async () => {
     }
 }
 
+// Obtener ganancia por id 
+
+const getGananciaByIdCuenta = async (id) => {
+    try {
+        const ganancia = await Ganancia.findOne({ where: { id_cuenta: id } });
+        return ganancia;
+    } catch (error) {
+        console.error("Error obteniendo la ganancia por ID de cuenta:", error);
+        throw error;
+    }
+}
+
 // Insertar un nuevo producto
 
 const createGanancia = async (body) => {
@@ -47,4 +59,4 @@ const deleteGanancia = async (id) => {
     }
 };
 
-module.exports = { getAllGanancias, createGanancia, putGanancia, deleteGanancia };
+module.exports = { getAllGanancias, getGananciaByIdCuenta, createGanancia, putGanancia, deleteGanancia };
