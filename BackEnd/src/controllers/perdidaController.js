@@ -15,8 +15,8 @@ const getAllPerdidas = async (req, res) => {
 
 const getPerdidaByIdCuenta = async (req, res) => {
     try {
-        const { id } = req.params;
-        const perdida = await Service.getPerdidaByIdCuenta(id);
+        const id = req.params.id;
+        const perdida = await Service.getPerdidasByIdCuenta(id);
         if (perdida) {
             res.status(200).json(perdida);
         } else {

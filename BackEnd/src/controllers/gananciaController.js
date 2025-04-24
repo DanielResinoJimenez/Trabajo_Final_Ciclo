@@ -15,13 +15,14 @@ const getAllGanancias = async (req, res) => {
 
 const getAllGananciasByIdCuenta = async (req, res) => {
     try {
-        const { id } = req.params;
-        const ganancia = await Service.getAllGananciasByIdCuenta(id);
+        const id = req.params.id;
+        const ganancia = await Service.getGananciaByIdCuenta(id);
         if (!ganancia) {
             return res.status(404).send('No se encontró la ganancia');
         }
         res.status(200).json(ganancia);
     } catch (error) {
+        console.error(error)
         res.status(500).send(error.message);
     }
 }
@@ -34,6 +35,7 @@ const createGanancia = async (req, res) => {
         const ganancia = await Service.createGanancia(body);
         res.status(201).json(ganancia);
     } catch (error) {
+        
         res.status(500).send(error.message);
     }
 }

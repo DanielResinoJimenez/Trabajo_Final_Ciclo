@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { CuentaProvider } from '../../../services/hooks/cuentaContext';
+import HistorialAcciones from './HistorialAcciones';
 
 // Efecto pestaña para la ventana cuenta
 
@@ -23,21 +25,26 @@ const TabsCuenta = () => {
                 </button>
             </div>
 
+            {/* Llamamos al provider de nuestro contexto para poder utilizarle dentro de nuestros componentes */}
+            <CuentaProvider>
 
-            <div className="mt-4">
-                {activeTab === 1 && (
-                    <div>
-                        <h2 className="text-3xl">Historial de Acciones</h2>
-                        <p>Contenido del historial de acciones...</p>
-                    </div>
-                )}
-                {activeTab === 2 && (
-                    <div>
-                        <h2 className="text-3xl">Realizar Acción</h2>
-                        <p>Contenido para realizar una acción...</p>
-                    </div>
-                )}
-            </div>
+                <div className="mt-4">
+                    {activeTab === 1 && (
+                        <div>
+                            <h2 className="text-3xl">Historial de Acciones</h2>
+                            <HistorialAcciones />
+                        </div>
+                    )}
+                    {activeTab === 2 && (
+                        <div>
+                            <h2 className="text-3xl">Realizar Acción</h2>
+                            <p>Contenido para realizar una acción...</p>
+                        </div>
+                    )}
+                </div>
+
+            </CuentaProvider>
+
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const CuentaContext = createContext();
 
@@ -6,64 +6,90 @@ export const useCuentaContext = () => useContext(CuentaContext);
 
 export const CuentaProvider = ({ children }) => {
 
-    const [cuentas, setCuentas] = useState([]);
+    const [empresa, setEmpresa] = useState(null);  // Inicialmente null
+    const [cuentas, setCuentas] = useState(null);  // Inicialmente null
     const [acciones, setAcciones] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);  // Mostrar loading hasta que todo esté cargado
     const [error, setError] = useState(null);
 
-    // Función para recoger la cuenta de un usuario y posteriormente utilizarla para recoger sus ingresos y gastos
-
-    const getCuentas = async () => {
+    const getEmpresa = async () => {
         setLoading(true);
+        const email = JSON.parse(localStorage.getItem('user')).email;
         try {
-            const response = await fetch('http://localhost:3000/api/cuentas');
+            const response = await fetch('http://localhost:3000/api/empresas/' + email);
+            if (!response.ok) {
+                throw new Error('Error fetching empresa');
+            }
+            const data = await response.json();
+            setEmpresa(data);
+            await getCuentas(data.id_empresa);
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    const getCuentas = async (id) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/cuenta/' + id);
             if (!response.ok) {
                 throw new Error('Error fetching cuentas');
             }
             const data = await response.json();
             setCuentas(data);
+            await getDatos(data.id_cuenta);
         } catch (error) {
             setError(error);
-        } finally {
-            setLoading(false);
         }
     }
 
-    const getGanancias = async () => {
+    const getDatos = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/ganancias');
-            if (!response.ok) {
-                throw new Error('Error fetching ganancias');
+            const [gananciasRes, perdidasRes] = await Promise.all([
+                fetch('http://localhost:3000/api/ganancias/' + id),
+                fetch('http://localhost:3000/api/perdidas/' + id)
+            ]);
+
+            if (!gananciasRes.ok || !perdidasRes.ok) {
+                throw new Error('Error fetching datos');
             }
-            const data = await response.json();
+
+            const ganancias = await gananciasRes.json();
+            const perdidas = await perdidasRes.json();
+
+            console.log('Ganancias:', ganancias);  // Verifica las ganancias
+            console.log('Pérdidas:', perdidas);    // Verifica las pérdidas
+
+            // Si ganancias no es un array, lo convertimos en un array
+            const gananciasArray = Array.isArray(ganancias) ? ganancias : [ganancias];
+            const perdidasArray = Array.isArray(perdidas) ? perdidas : [perdidas];
+
+            // Ahora podemos combinar y ordenar como antes
+            const accionesCombinadas = [...gananciasArray, ...perdidasArray].sort(
+                (a, b) => new Date(b.fecha) - new Date(a.fecha)
+            );
+
+            console.log('Acciones Combinadas:', accionesCombinadas);  // Verifica las acciones combinadas
+
+            setAcciones(accionesCombinadas);  // Guarda las acciones combinadas
 
         } catch (error) {
+            console.error('Error en getDatos:', error);  // Verifica si hay algún error
             setError(error);
         } finally {
             setLoading(false);
         }
-    }
+    };
 
-    const getPerdidas = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('http://localhost:3000/api/perdidas');
-            if (!response.ok) {
-                throw new Error('Error fetching perdidas');
-            }
-            const data = await response.json();
-            
-        } catch (error) {
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    // UseEffect para ejecutar la función `getEmpresa` al montar el componente
+    useEffect(() => {
+        getEmpresa();
+    }, []);
 
     return (
-        <CuentaContext.Provider value={{getCuentas, getGanancias, getPerdidas}}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading }}>
             {children}
         </CuentaContext.Provider>
     );
 }
+

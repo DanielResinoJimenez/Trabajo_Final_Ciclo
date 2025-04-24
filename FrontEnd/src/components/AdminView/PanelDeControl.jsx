@@ -32,7 +32,7 @@ const PanelDeControl = () => {
     return (
         <ProductosProvider>
             <MaquinasProvider>
-                <div>
+                <div className='mb-10'>
                     <button onClick={volverPanel} className='hidden fixed top-26 right-4 z-50 bg-green-500 hover:bg-green-700 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-all' id='volverPanel'>Volver</button>
 
                     {!mostrarOutlet && (
