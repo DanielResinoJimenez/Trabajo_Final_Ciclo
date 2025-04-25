@@ -1,8 +1,11 @@
 import React from 'react'
+import { useGlobalContext } from '../../../services/hooks/globalContext';
 
 const HistorialAccionesShow = ({ accion }) => {
 
-    const fechaFormat = accion.fecha.substring(0, accion.fecha.indexOf("T"));
+    const {formatearFecha} = useGlobalContext();
+
+    const fechaFormat = formatearFecha(accion.fecha);
 
     return (
         <tr className={`text-justify transition-colors ${accion.id_ganancia ? 'hover:bg-green-100' : 'hover:bg-red-100'}`}>

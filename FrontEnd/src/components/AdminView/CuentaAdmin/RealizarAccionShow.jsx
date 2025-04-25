@@ -2,12 +2,15 @@ import React from 'react'
 import { useProductosContext } from '../../../services/hooks/productosContext';
 import useProductos from '../../../services/hooks/useProductos';
 import useCuenta from '../../../services/hooks/useCuenta';
+import { useGlobalContext } from '../../../services/hooks/globalContext';
 
 const RealizarAccionShow = ({ accion }) => {
-    
+
     const { turnToModify, nuevaAccion } = useCuenta();
 
-    const fechaFormat = accion.fecha.substring(0, accion.fecha.indexOf("T"));
+    const { formatearFecha } = useGlobalContext();
+
+    const fechaFormat = formatearFecha(accion.fecha);
 
     return (
         <tr className={`transition-colors ${accion.id_ganancia ? 'hover:bg-green-100' : 'hover:bg-red-100'}`}>
@@ -33,7 +36,7 @@ const RealizarAccionShow = ({ accion }) => {
             <td className="px-4 py-3 text-right">{accion.monto} €</td>
             <td className="px-4 py-3 flex gap-4 justify-end items-center">
                 <i
-                    onClick={(e) => {turnToModify(e)}}
+                    onClick={(e) => { turnToModify(e) }}
                     className="fa-solid fa-pen-to-square text-yellow-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"
                 ></i>
                 <i onClick={() => { eliminarAccion(accion.id_ganancia ? accion.id_ganancia : accion.id_perdida) }} className="fa-solid fa-trash text-red-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"></i>
