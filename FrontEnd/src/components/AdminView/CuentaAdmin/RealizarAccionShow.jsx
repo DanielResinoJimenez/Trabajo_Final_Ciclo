@@ -6,7 +6,7 @@ import { useGlobalContext } from '../../../services/hooks/globalContext';
 
 const RealizarAccionShow = ({ accion }) => {
 
-    const { turnToModify, nuevaAccion } = useCuenta();
+    const { turnToModify, nuevaAccion, eliminarAccion } = useCuenta();
 
     const { formatearFecha } = useGlobalContext();
 
@@ -39,7 +39,7 @@ const RealizarAccionShow = ({ accion }) => {
                     onClick={(e) => { turnToModify(e) }}
                     className="fa-solid fa-pen-to-square text-yellow-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"
                 ></i>
-                <i onClick={() => { eliminarAccion(accion.id_ganancia ? accion.id_ganancia : accion.id_perdida) }} className="fa-solid fa-trash text-red-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"></i>
+                <i onClick={() => { eliminarAccion(accion) }} className="fa-solid fa-trash text-red-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"></i>
             </td>
         </tr>
     )

@@ -151,8 +151,51 @@ export const CuentaProvider = ({ children }) => {
     
         setSaldo(aux);
     };
+
+    const deleteAccion = async (accion) => {
+        try {
+          let url = "";
+      
+          // Detectamos si es una ganancia o una pérdida
+          if (accion.id_ganancia) {
+            url = `http://localhost:3000/api/ganancias/${accion.id_ganancia}`;
+          } else if (accion.id_perdida) {
+            url = `http://localhost:3000/api/perdidas/${accion.id_perdida}`;
+          } else {
+            console.error("No se pudo determinar el tipo de acción.");
+            return;
+          }
+      
+          const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+      
+          if (!response.ok) {
+            throw new Error("Error al eliminar la acción.");
+          }
+      
+          console.log("Acción eliminada correctamente.");
+
+          setAcciones((prevAcciones) =>
+            prevAcciones.filter((a) =>
+              accion.id_ganancia
+                ? a.id_ganancia !== accion.id_ganancia
+                : a.id_perdida !== accion.id_perdida
+            )
+          );
+
+          calcularSaldo();
+          
+        } catch (error) {
+          console.error("Error eliminando acción:", error);
+        }
+      };
+
     return (
-        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos, calcularSaldo, saldo }}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos, calcularSaldo, saldo, deleteAccion }}>
             {children}
         </CuentaContext.Provider>
     );

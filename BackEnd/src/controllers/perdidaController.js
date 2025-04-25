@@ -56,8 +56,8 @@ const putPerdida = async (req, res) => {
 
 const deletePerdida = async (req, res) => {
     try {
-        const { id_perdida } = req.params;
-        const deleted = await Service.deletePerdida(id_perdida);
+        const { id } = req.params;
+        const deleted = await Service.deletePerdida(id);
         res.status(200).send(deleted);
     } catch (error) {
         res.status(500).send(error.message);

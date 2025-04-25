@@ -57,8 +57,8 @@ const putGanancia = async (req, res) => {
 
 const deleteGanancia = async (req, res) => {
     try {
-        const { id_ganancia } = req.params;
-        const deleted = await Service.deleteGanancia(id_ganancia);
+        const { id } = req.params;
+        const deleted = await Service.deleteGanancia(id);
         res.status(200).send(deleted);
     } catch (error) {
         res.status(500).send(error.message);

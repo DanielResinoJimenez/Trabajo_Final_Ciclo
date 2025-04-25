@@ -3,7 +3,7 @@ import { useCuentaContext } from './cuentaContext';
 
 const useCuenta = () => {
 
-    const { cuentas, aniadirNuevaAccion, modifyDatos } = useCuentaContext();
+    const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion } = useCuentaContext();
 
      window.turnToModify = function(e) {
         const fila = e.target.closest('tr');
@@ -261,7 +261,13 @@ const useCuenta = () => {
 
     }
 
-    return { turnToModify, nuevaAccion };
+    // Función para eliminar una acción
+
+    const eliminarAccion = (accion) => {
+        deleteAccion(accion);
+    }
+
+    return { turnToModify, nuevaAccion, eliminarAccion };
 
 }
 
