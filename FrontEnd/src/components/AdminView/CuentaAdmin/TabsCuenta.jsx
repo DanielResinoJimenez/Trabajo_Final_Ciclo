@@ -33,13 +33,13 @@ const TabsCuenta = () => {
                     {activeTab === 1 && (
                         <div>
                             <h2 className="text-3xl">Historial de Acciones</h2>
-                            <HistorialAcciones />
+                            <HistorialAcciones activeTab={activeTab}/>
                         </div>
                     )}
                     {activeTab === 2 && (
                         <div>
                             <h2 className="text-3xl">Realizar Acción</h2>
-                            <RealizarAccion />
+                            <RealizarAccion activeTab={activeTab}/>
                         </div>
                     )}
                 </div>
