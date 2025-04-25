@@ -18,19 +18,16 @@ const RealizarAccion = ({activeTab}) => {
   }
 
   return (
-    <div className='w-[90%] m-auto mt-10 mb-20 border-[1px] border-yellow-950 border-separate border-spacing-0 text-left'>
-
-    {/* Header de la tabla */}
-      <HeaderTable columnas={["Tipo de Acción", "Fecha", "Motivo", "Monto", "Acciones"]}/>
-
-    {/* Body de la tabla */}
-      <BodyTable acciones={acciones} activeTab={activeTab}/>
-
-    {/* Footer de la tabla */}
-      <FooterTable tipo={"Realizar"} saldo={saldo}/>
-     
+    <div className="w-[90%] m-auto mt-10 mb-20">
+      <div className="max-h-[400px] overflow-y-auto">
+        <table className="w-full border-[1px] border-yellow-950 border-separate border-spacing-0 text-left">
+          <HeaderTable columnas={["Tipo de Acción", "Fecha", "Motivo", "Monto", "Acciones"]} />
+          <BodyTable acciones={acciones} activeTab={activeTab} />
+          <FooterTable saldo={saldo} tipo={activeTab === 2 ? "Realizar" : "Historial"} />
+        </table>
+      </div>
     </div>
-  )
+  );
 }
 
 export default RealizarAccion
