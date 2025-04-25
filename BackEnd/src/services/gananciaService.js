@@ -16,7 +16,7 @@ const getAllGanancias = async () => {
 
 const getGananciaByIdCuenta = async (id) => {
     try {
-        const ganancia = await Ganancia.findOne({ where: { id_cuenta: id } });
+        const ganancia = await Ganancia.findAll({ where: { id_cuenta: id } });
         return ganancia;
     } catch (error) {
         console.error("Error obteniendo la ganancia por ID de cuenta:", error);

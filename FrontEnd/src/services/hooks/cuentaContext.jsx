@@ -86,8 +86,40 @@ export const CuentaProvider = ({ children }) => {
         getEmpresa();
     }, []);
 
+    const modifyDatos = async (id) => {
+
+    }
+
+    // Añadir un nuevo accion
+
+    const aniadirNuevaAccion = async (accion, tipo) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/${tipo == 'ganancia' ? 'ganancias' : 'perdidas'}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(accion),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al añadir la accion');
+            }
+
+            const data = await response.json();
+            console.log('Accion añadida con éxito:', data);
+
+            // Actualiza estado:
+            setAcciones(prev => [...prev, data]);
+            
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     return (
-        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading }}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion }}>
             {children}
         </CuentaContext.Provider>
     );

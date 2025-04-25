@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CuentaProvider } from '../../../services/hooks/cuentaContext';
 import HistorialAcciones from './HistorialAcciones';
+import RealizarAccion from './RealizarAccion';
 
 // Efecto pestaña para la ventana cuenta
 
@@ -38,7 +39,7 @@ const TabsCuenta = () => {
                     {activeTab === 2 && (
                         <div>
                             <h2 className="text-3xl">Realizar Acción</h2>
-                            <p>Contenido para realizar una acción...</p>
+                            <RealizarAccion />
                         </div>
                     )}
                 </div>

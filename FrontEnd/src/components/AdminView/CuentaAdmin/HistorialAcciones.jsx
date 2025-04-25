@@ -25,7 +25,7 @@ const HistorialAcciones = () => {
         <tbody id="productosTBody">
           {acciones.length > 0 ? (
             acciones.map((accion) => (
-              <HistorialAccionesShow key={accion.id_ganancia ? accion.id_ganancia : accion.id_perdida} accion={accion} />
+              <HistorialAccionesShow key={accion.id_ganancia ? accion.id_ganancia + "ganancia" : accion.id_perdida + "perdida"} accion={accion} />
             ))
           ) : (
             <tr>
