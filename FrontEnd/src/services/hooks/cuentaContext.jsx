@@ -9,6 +9,7 @@ export const CuentaProvider = ({ children }) => {
     const [empresa, setEmpresa] = useState(null);  // Inicialmente null
     const [cuentas, setCuentas] = useState(null);  // Inicialmente null
     const [acciones, setAcciones] = useState([]);
+    const [saldo, setSaldo] = useState(0);
     const [loading, setLoading] = useState(true);  // Mostrar loading hasta que todo esté cargado
     const [error, setError] = useState(null);
 
@@ -140,8 +141,18 @@ export const CuentaProvider = ({ children }) => {
         }
     }
 
+    const calcularSaldo = () => {
+        let aux = 0;
+    
+        acciones.forEach((accion) => {
+            const monto = parseFloat(accion.monto);
+            aux = accion.id_ganancia ? aux + monto : aux - monto;
+        });
+    
+        setSaldo(aux);
+    };
     return (
-        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos }}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos, calcularSaldo, saldo }}>
             {children}
         </CuentaContext.Provider>
     );

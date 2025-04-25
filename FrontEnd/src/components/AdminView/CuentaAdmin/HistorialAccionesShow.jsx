@@ -24,7 +24,7 @@ const HistorialAccionesShow = ({ accion }) => {
             </td>
             <td className="px-4 py-3">{fechaFormat}</td>
             <td className="px-4 py-3">{accion.motivo}</td>
-            <td className="px-4 py-3">{accion.monto} €</td>
+            <td className="px-4 py-3 text-right">{accion.monto} €</td>
         </tr>
     )
 

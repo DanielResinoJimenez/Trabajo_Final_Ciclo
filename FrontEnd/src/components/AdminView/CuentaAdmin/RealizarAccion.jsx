@@ -26,11 +26,15 @@ const RealizarAccion = () => {
           </tr>
         </thead>
         <tbody id='accionesTBody'>
-          {
+        {acciones.length > 0 ? (
             acciones.map((accion) => (
               <RealizarAccionShow key={accion.id_ganancia ? accion.id_ganancia + "ganancia" : accion.id_perdida + "perdida"} accion={accion} />
             ))
-          }
+          ) : (
+            <tr>
+              <td colSpan="4">No hay acciones disponibles</td>
+            </tr>
+          )}
           <tr className='' id='fila-boton'>
             <td colSpan={8} className='text-center p-6 text-white text-2xl font-bold border-t border-gray-400'>
               <span onClick={nuevaAccion} className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>

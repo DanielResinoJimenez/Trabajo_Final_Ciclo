@@ -4,12 +4,19 @@ import HistorialAccionesShow from './HistorialAccionesShow';
 
 
 const HistorialAcciones = () => {
-  const { getEmpresa, getCuentas, getDatos, acciones, loading } = useCuentaContext();
+  const { getEmpresa, getCuentas, getDatos, acciones, loading, saldo, calcularSaldo } = useCuentaContext();
+
+  useEffect(() => {
+    console.log("Calculando saldo...")
+    calcularSaldo();
+  }, [acciones])
 
   // Comprobar si aún se están cargando los datos
   if (loading) {
     return <div>Loading...</div>;  // Mostrar un mensaje de carga mientras los datos se obtienen
   }
+
+  
 
   return (
     <div>
@@ -19,7 +26,7 @@ const HistorialAcciones = () => {
             <th className="px-4 py-3 border-b border-gray-300">Tipo de acción</th>
             <th className="px-4 py-3 border-b border-gray-300">Fecha</th>
             <th className="px-4 py-3 border-b border-gray-300">Motivo</th>
-            <th className="px-4 py-3 border-b border-gray-300">Monto</th>
+            <th className="px-4 py-3 border-b border-gray-300 text-right">Monto</th>
           </tr>
         </thead>
         <tbody id="productosTBody">
@@ -32,6 +39,14 @@ const HistorialAcciones = () => {
               <td colSpan="4">No hay acciones disponibles</td>
             </tr>
           )}
+          <tr className="text-black rounded-xl text-right">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td className='px-4 py-3'> 
+              {saldo} €
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

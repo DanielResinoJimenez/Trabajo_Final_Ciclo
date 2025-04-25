@@ -3,7 +3,7 @@ import { useProductosContext } from './productosContext';
 
 const useProductos = () => {
 
-    const { getProductos, aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
+    const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
 
     // Variable de estado que contiene la imagen
 

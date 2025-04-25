@@ -175,6 +175,7 @@ export const ProductosProvider = ({ children }) => {
             eliminarProductosSeleccionados,
             aniadirNuevoProd,
             modificarProducto,
+            aniadirNuevoProd
         }}>
             {children}
         </ProductosContext.Provider>
