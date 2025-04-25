@@ -86,9 +86,31 @@ export const CuentaProvider = ({ children }) => {
         getEmpresa();
     }, []);
 
-    const modifyDatos = async (id) => {
-
-    }
+    const modifyDatos = async (id, nuevosValores, tipo) => {
+        try {
+            // Hacer la solicitud PUT al servidor con los nuevos valores
+            const response = await fetch(`http://localhost:3000/api/${tipo === 'Ingreso' ? 'ganancias' : 'perdidas'}/${id}`, {
+                method: 'PUT', // Utilizamos PUT para actualizar los datos
+                headers: {
+                    'Content-Type': 'application/json', // Indicamos que los datos son en formato JSON
+                },
+                body: JSON.stringify(nuevosValores), // Enviamos los nuevos valores como JSON
+            });
+    
+            // Verificar si la solicitud fue exitosa
+            if (!response.ok) {
+                throw new Error('Error al actualizar los datos');
+            }
+    
+            // Si la actualización fue exitosa, podemos manejar la respuesta si es necesario
+            const data = await response.json();
+            console.log('Datos actualizados correctamente:', data);
+    
+        } catch (error) {
+            console.error('Error al modificar los datos:', error);
+        }
+    };
+    
 
     // Añadir un nuevo accion
 
@@ -119,7 +141,7 @@ export const CuentaProvider = ({ children }) => {
     }
 
     return (
-        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion }}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos }}>
             {children}
         </CuentaContext.Provider>
     );

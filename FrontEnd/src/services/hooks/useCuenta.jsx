@@ -3,13 +3,145 @@ import { useCuentaContext } from './cuentaContext';
 
 const useCuenta = () => {
 
-    const {cuentas, aniadirNuevaAccion} = useCuentaContext();
-  
-    const turnToModify = (e) => {
-        const fila = e.target.parentElement.parentElement;
-        console.log(fila)
-        
-    }
+    const { cuentas, aniadirNuevaAccion, modifyDatos } = useCuentaContext();
+
+     window.turnToModify = function(e) {
+        const fila = e.target.closest('tr');
+        const celdas = fila.querySelectorAll('td');
+        let tipo = "";
+
+        // Marcar visualmente la fila que se está editando
+        fila.style.backgroundColor = '#f0f8ff';
+
+        celdas.forEach((celda, index) => {
+            // Evitar modificar ID (index 0) y columna de acciones (última)
+            if (index === 0 || index === celdas.length - 1) return;
+
+            if (index === 1) tipo = celda.textContent; // Guardamos el tipo (Ingreso/Perdida)
+
+            const valorOriginal = celda.textContent.trim();
+            let nuevoElemento;
+
+            if (index === 2 && !isNaN(Date.parse(valorOriginal))) {
+                // Input de tipo fecha
+                nuevoElemento = document.createElement('input');
+                nuevoElemento.type = 'date';
+                nuevoElemento.value = new Date(valorOriginal).toISOString().split('T')[0];
+            } else if (index === 3) {
+                // Motivo como input de texto
+                nuevoElemento = document.createElement('input');
+                nuevoElemento.type = 'text';
+                nuevoElemento.value = valorOriginal;
+                nuevoElemento.id = "motivo";
+            } else if (index === 4) {
+                // Monto como input de numero
+                nuevoElemento = document.createElement('input');
+                nuevoElemento.type = 'number';
+                nuevoElemento.value = parseFloat(valorOriginal.replace('€', '').trim()); // Convertir a número, sin el símbolo €
+                nuevoElemento.id = "monto";
+            } else {
+                return;
+            }
+
+            // Estilos para el input/select
+            nuevoElemento.style.padding = '4px 6px';
+            nuevoElemento.style.border = '1px solid #007bff';
+            nuevoElemento.style.borderRadius = '4px';
+            nuevoElemento.style.backgroundColor = '#fff';
+            nuevoElemento.style.width = '100%';
+
+            celda.textContent = '';
+            celda.appendChild(nuevoElemento);
+        });
+
+        // Última celda para el botón de guardar
+        const ultimaCelda = celdas[celdas.length - 1];
+
+        if (!ultimaCelda.querySelector('.btn-guardar')) {
+            const botonGuardar = document.createElement('button');
+            botonGuardar.textContent = 'Guardar';
+            botonGuardar.className = 'btn-guardar';
+            botonGuardar.style.backgroundColor = '#28a745';
+            botonGuardar.style.color = '#fff';
+            botonGuardar.style.border = 'none';
+            botonGuardar.style.borderRadius = '4px';
+            botonGuardar.style.padding = '6px 10px';
+            botonGuardar.style.cursor = 'pointer';
+            botonGuardar.style.transition = '0.3s';
+
+            botonGuardar.addEventListener('mouseenter', () => {
+                botonGuardar.style.backgroundColor = '#218838';
+            });
+            botonGuardar.addEventListener('mouseleave', () => {
+                botonGuardar.style.backgroundColor = '#28a745';
+            });
+
+            botonGuardar.addEventListener('click', () => {
+                const valores = {};  // Objeto donde almacenaremos los nuevos valores
+
+                celdas.forEach((celda, index) => {
+                    // Evitar modificar ID (index 0) y columna de acciones (última)
+                    if (index === 0 || index === celdas.length - 1) return;
+
+                    // Obtener el input dentro de la celda (si existe)
+                    const input = celda.querySelector('input, select');
+
+                    // Si hay un input, almacenamos su valor en el objeto
+                    if (input) {
+                        if (input.type === 'date') {
+                            // Si es un input de tipo fecha (Fecha)
+                            valores['fecha'] = input.value;
+                        } else if (input.type === 'text') {
+                            // Si es un input de texto (Motivo)
+                            valores['motivo'] = input.value;
+                        } else if (input.type === 'number') {
+                            // Si es un input de número (Monto)
+                            valores['monto'] = input.value;
+                        }
+                    }
+                });
+
+                // Obtener el id de la acción de la primera columna (ID de la acción)
+                const id_accion = celdas[0].textContent.trim();
+                console.log('Guardando cambios para ID:', id_accion);
+                console.log('Nuevos valores:', valores);
+
+                // Llamamos a la función modifyDatos pasando el ID, los nuevos valores y el tipo de acción
+                modifyDatos(id_accion, valores, tipo);
+
+                // Una vez que los datos se han guardado, actualizamos la fila visualmente
+                celdas.forEach((celda, index) => {
+                    // Evitar modificar ID (index 0) y columna de acciones (última)
+                    if (index === 0 || index === celdas.length - 1) return;
+
+                    const input = celda.querySelector('input, select');
+                    if (input) {
+                        // Actualizar el texto de la celda con el nuevo valor
+                        if(input.type != "number"){
+                            celda.textContent = input.value;
+                        }else{
+                            celda.textContent = input.value + " €";
+                        }
+                        
+                    }
+                });
+
+                ultimaCelda.innerHTML = `
+    <i class="fa-solid fa-pen-to-square text-yellow-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"></i>
+    <i onClick="eliminarAccion(${id_accion})" class="fa-solid fa-trash text-red-500 text-xl cursor-pointer w-6 h-6 flex items-center justify-center transition-transform hover:scale-125"></i>
+`;
+
+                const editarIcono = ultimaCelda.querySelector('.fa-pen-to-square');
+                editarIcono.addEventListener('click', (e) => turnToModify(e));
+
+                // Revertir el fondo visual de la fila
+                fila.style.backgroundColor = ''; // Quitar el color de fondo
+            });
+
+            ultimaCelda.textContent = '';
+            ultimaCelda.appendChild(botonGuardar);
+        }
+    };
 
     // Función para abrir una nueva fila y que se pueda insertar un nuevo acción en administración
 
@@ -68,7 +200,7 @@ const useCuenta = () => {
         newTr.appendChild(makeTdWithInput("date", "Fecha", "fecha_accion"));
         newTr.appendChild(makeTdWithInput("text", "Motivo", "motivo_accion"));
         newTr.appendChild(makeTdWithInput("number", "Monto", "monto_accion"));
-        
+
 
 
 

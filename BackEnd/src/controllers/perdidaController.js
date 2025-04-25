@@ -43,9 +43,9 @@ const createPerdida = async (req, res) => {
 
 const putPerdida = async (req, res) => {
     try {
-        const { id_perdida } = req.params;
+        const { id } = req.params;
         const newPerdida = req.body;
-        const updated = await Service.putPerdida(newPerdida, id_perdida);
+        const updated = await Service.putPerdida(newPerdida, id);
         res.status(200).send(updated);
     } catch (error) {
         res.status(500).send(error.message);

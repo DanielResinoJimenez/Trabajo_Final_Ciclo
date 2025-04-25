@@ -44,9 +44,9 @@ const createGanancia = async (req, res) => {
 
 const putGanancia = async (req, res) => {
     try {
-        const { id_ganancia } = req.params;
+        const { id } = req.params;
         const newGanancia = req.body;
-        const updated = await Service.putGanancia(newGanancia, id_ganancia);
+        const updated = await Service.putGanancia(newGanancia, id);
         res.status(200).send(updated);
     } catch (error) {
         res.status(500).send(error.message);
