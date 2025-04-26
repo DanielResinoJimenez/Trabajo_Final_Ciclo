@@ -89,7 +89,7 @@ const PanelDeControl = () => {
                                 className='relative max-lg:col-span-1 col-span-1 cursor-pointer bg-[#FBDDB9] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                                 onClick={mostrarOutletFunc}
                             >
-                                <span className="absolute top-2 right-2 bg-red-500 text-white text-xl font-bold px-2 py-1 rounded-full z-20">
+                                <span className={`${solicitudes.length <= 0 ? 'hidden' : ''} absolute top-2 right-2 bg-red-500 text-white text-xl font-bold px-2 py-1 rounded-full z-20`}>
                                     {solicitudes.length}
                                 </span>
                                 <span className='absolute text-yellow-950 text-[50px] font-bold top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center'>
