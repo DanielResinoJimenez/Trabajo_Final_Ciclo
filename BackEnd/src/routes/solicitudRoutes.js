@@ -6,7 +6,8 @@ const solicitudController = require("../controllers/solicitudController");
 solicitudRoutes.get("/", solicitudController.getAllSolicitudes);
 solicitudRoutes.post("/", solicitudController.createSolicitud);
 solicitudRoutes.put("/:id", solicitudController.updateSolicitud);
-
+solicitudRoutes.get("/pendientes", solicitudController.getSolicitudesPendientes);
+solicitudRoutes.get("/denegadas", solicitudController.getSolicitudesDenegadas);
 
 // Exportamos el router de productos
 

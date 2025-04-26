@@ -11,6 +11,28 @@ const getAllSolicitudes = async (req, res) => {
     }
 };
 
+// Obtener todas las solicitudes
+const getSolicitudesPendientes = async (req, res) => {
+    try {
+        const solicitudes = await Service.getSolicitudesPendientes();
+        res.status(200).json(solicitudes);
+    } catch (error) {
+        console.error("Error en getSolicitudesPendientes:", error);
+        res.status(500).json({ message: "Error al obtener las solicitudes" });
+    }
+};
+
+// Obtener todas las solicitudes
+const getSolicitudesDenegadas = async (req, res) => {
+    try {
+        const solicitudes = await Service.getSolicitudesDenegadas();
+        res.status(200).json(solicitudes);
+    } catch (error) {
+        console.error("Error en getSolicitudesDenegadas:", error);
+        res.status(500).json({ message: "Error al obtener las solicitudes" });
+    }
+};
+
 // Crear una nueva solicitud
 const createSolicitud = async (req, res) => {
     try {
@@ -40,5 +62,7 @@ const updateSolicitud = async (req, res) => {
 module.exports = {
     getAllSolicitudes,
     createSolicitud,
-    updateSolicitud
+    updateSolicitud,
+    getSolicitudesPendientes,
+    getSolicitudesDenegadas
 };

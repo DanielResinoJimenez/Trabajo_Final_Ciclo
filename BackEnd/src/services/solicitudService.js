@@ -14,6 +14,28 @@ const getAllSolicitudes = async () => {
     }
 }
 
+// Obtener todas las solicitudes
+
+const getSolicitudesPendientes = async () => {
+    try {
+        return await Solicitud.findAll({where: {estado: "pendiente"}});
+    } catch (error) {
+        console.log("Error en getAllSolicitudes:", error);
+        throw error;
+    }
+}
+
+// Obtener todas las solicitudes
+
+const getSolicitudesDenegadas = async () => {
+    try {
+        return await Solicitud.findAll({where: {estado: "rechazada"}});
+    } catch (error) {
+        console.log("Error en getAllSolicitudes:", error);
+        throw error;
+    }
+}
+
 // Crear una nueva solicitud
 
 const createSolicitud = async (body) => {
@@ -37,4 +59,4 @@ const upadateSolicitud = async (id_solicitud, estado) => {
 
 // Exportar las funciones
 
-module.exports = { getAllSolicitudes, createSolicitud, upadateSolicitud };  
+module.exports = { getAllSolicitudes, createSolicitud, upadateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas };  
