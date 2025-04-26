@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import usePanelControl from '../../services/hooks/usePanelControl'
 import maquinaIcono from './../../assets/images/maquina_panel_control.jpeg';
@@ -7,6 +7,7 @@ import solicitudIcono from './../../assets/images/solicitud_panel_control.jpeg';
 import cuentaIcono from './../../assets/images/cuenta_panel_control.jpeg';
 import { ProductosProvider } from '../../services/hooks/productosContext';
 import { MaquinasProvider } from '../../services/hooks/maquinasContext';
+import { useSolicitudesContext } from '../../services/hooks/solicitudesContext';
 
 const PanelDeControl = () => {
 
@@ -14,6 +15,13 @@ const PanelDeControl = () => {
 
     const navigate = useNavigate(); // Hook para navegar programáticamente
     const [mostrarOutlet, setMostrarOutlet] = useState(false); // Estado para manejar la visibilidad del <Outlet>
+
+    const { solicitudes, getSolicitudesPendientes } = useSolicitudesContext();
+
+    useEffect(() => {
+        console.log("Obteniendo todas las solicitudes pendientes")
+        getSolicitudesPendientes();
+    }, []);
 
     // Función para manejar el clic en el botón "Volver"
     const volverPanel = () => {
@@ -81,6 +89,9 @@ const PanelDeControl = () => {
                                 className='relative max-lg:col-span-1 col-span-1 cursor-pointer bg-[#FBDDB9] flex justify-center items-center p-4 shadow-md rounded-4xl overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-yellow-950 transform hover:-translate-y-2'
                                 onClick={mostrarOutletFunc}
                             >
+                                <span className="absolute top-2 right-2 bg-red-500 text-white text-xl font-bold px-2 py-1 rounded-full z-20">
+                                    {solicitudes.length}
+                                </span>
                                 <span className='absolute text-yellow-950 text-[50px] font-bold top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center'>
                                     Solicitudes
                                 </span>

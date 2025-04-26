@@ -31,18 +31,18 @@ Solicitud.init({
         type: DataTypes.DATE,
         allowNull: false
     },
-    nombre_solicitante: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    direccion_establecimiento: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    telefono_solicitante: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
+    // nombre_solicitante: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    // },
+    // direccion_establecimiento: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    // },
+    // telefono_solicitante: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    // },
     estado: {
         type: DataTypes.STRING,
         allowNull: false,
