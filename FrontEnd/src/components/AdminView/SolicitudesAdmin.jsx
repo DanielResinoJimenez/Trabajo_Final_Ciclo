@@ -2,7 +2,9 @@ import React from 'react'
 
 const SolicitudesAdmin = () => {
   return (
-    <div>SolicitudesAdmin</div>
+    <div>
+      
+    </div>
   )
 }
 
