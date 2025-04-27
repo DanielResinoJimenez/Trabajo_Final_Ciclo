@@ -2,9 +2,9 @@ import React from 'react'
 import RealizarAccionShow from './RealizarAccionShow'
 import { useCuentaContext } from '../../../services/hooks/cuentaContext'
 import useCuenta from '../../../services/hooks/useCuenta';
-import HeaderTable from './HeaderTable';
-import BodyTable from './BodyTable';
-import FooterTable from './FooterTable';
+import HeaderTable from './../HeaderTable';
+import BodyTable from './../BodyTable';
+import FooterTable from './../FooterTable';
 
 const RealizarAccion = ({activeTab}) => {
 

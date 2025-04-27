@@ -1,9 +1,11 @@
 import React from 'react'
-import HistorialAccionesShow from "./HistorialAccionesShow";
-import RealizarAccionShow from "./RealizarAccionShow";
+import HistorialAccionesShow from "./CuentaAdmin/HistorialAccionesShow";
+import RealizarAccionShow from "./CuentaAdmin/RealizarAccionShow";
+import SolicitudesShow from './SolicitudesAdmin/SolicitudesShow';
 
-const BodyTable = ({ acciones, activeTab }) => {
-    if (acciones.length === 0) {
+const BodyTable = ({ acciones, activeTab, solicitudes }) => {
+
+    if (!acciones && !solicitudes) {
         return (
             <tbody>
                 <tr>
@@ -11,6 +13,18 @@ const BodyTable = ({ acciones, activeTab }) => {
                         No hay acciones disponibles
                     </td>
                 </tr>
+            </tbody>
+        );
+    }
+
+    if (solicitudes) {
+        return (
+            <tbody>
+                {
+                    solicitudes.map((solicitud) => (
+                        <SolicitudesShow key={solicitud.id_solicitud} solicitud={solicitud}/>
+                    ))
+                }
             </tbody>
         );
     }

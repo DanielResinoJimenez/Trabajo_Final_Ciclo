@@ -1,5 +1,5 @@
 import React from 'react';
-import useCuenta from '../../../services/hooks/useCuenta';
+import useCuenta from '../../services/hooks/useCuenta';
 
 const FooterTable = ({ saldo, tipo }) => {
     const { nuevaAccion } = useCuenta();

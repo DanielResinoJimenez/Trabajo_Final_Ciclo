@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useCuentaContext } from '../../../services/hooks/cuentaContext';
-import HeaderTable from './HeaderTable';
-import BodyTable from './BodyTable';
-import FooterTable from './FooterTable';
+import HeaderTable from './../HeaderTable';
+import BodyTable from './../BodyTable';
+import FooterTable from './../FooterTable';
 
 
 const HistorialAcciones = ({ activeTab }) => {
