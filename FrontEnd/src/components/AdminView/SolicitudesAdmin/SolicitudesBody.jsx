@@ -5,7 +5,7 @@ import BodyTable from '../BodyTable';
 
 const SolicitudesBody = ({activeTab}) => {
 
-    const { getSolicitudes, getSolicitudesPendientes, getSolicitudesRechazadas, solicitudes } = useSolicitudesContext();
+    const { getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, solicitudes, setSolicitudes } = useSolicitudesContext();
 
     useEffect(() => {
         if (activeTab === 1) {
@@ -13,7 +13,8 @@ const SolicitudesBody = ({activeTab}) => {
         } else if (activeTab === 2) {
             getSolicitudesRechazadas();
         } else if (activeTab === 3) {
-            getSolicitudes(); 
+            getSolicitudesAceptadas();
+            
         }
     }, [activeTab]);
 

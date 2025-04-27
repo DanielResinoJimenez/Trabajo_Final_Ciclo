@@ -10,12 +10,14 @@ export const SolicitudesProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const getSolicitudes = async () => {
+    const getSolicitudesAceptadas = async () => {
         try {
             setLoading(true);
             const response = await fetch('http://localhost:3000/api/solicitudes');
             const data = await response.json();
-            setSolicitudes(data);
+
+            // En este caso cojo solo las aceptadas
+            setSolicitudes(data.filter((solicitud) => solicitud.estado === "aceptada"))
         } catch (error) {
             setError(error.message);
         } finally {
@@ -51,7 +53,7 @@ export const SolicitudesProvider = ({ children }) => {
     }
 
     return (
-        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudes, getSolicitudesPendientes, getSolicitudesRechazadas }}>
+        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes }}>
             {children}
         </SolicitudesContext.Provider>
     );
