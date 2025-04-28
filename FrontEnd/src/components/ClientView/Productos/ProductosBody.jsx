@@ -10,11 +10,13 @@ const ProductosBody = () => {
         getProductos();
     }, []);
 
-
+    console.log(productos);
 
     if (loading) return <p>Cargando...</p>
 
     if (error) return <p>Ha ocurrido un error: {error}</p>
+
+    if(productos.length <= 0) return <p className='text-xl'>No hay productos disponibles</p>
 
     if (productos) {
         return (

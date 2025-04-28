@@ -18,7 +18,7 @@ const MaquinasBody = () => {
   }
 
   if(maquinas.length === 0){
-    return <p>No hay máquinas operativas en este momento</p>
+    return <p className='m-10 text-xl'>No hay máquinas operativas en este momento</p>
   }
 
   if(maquinas.length > 0){
