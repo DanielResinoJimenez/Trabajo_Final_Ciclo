@@ -33,6 +33,17 @@ const getSolicitudesDenegadas = async (req, res) => {
     }
 };
 
+// Obtener solicitud existente
+const getSolicitudExistente = async(req, res) => {
+    try {
+        const solicitudes = await Service.getSolicitudExistente(req.body);
+        res.status(200).json(solicitudes);
+    } catch (error) {
+        console.error("Error en getSolicitudExistente:", error);
+        res.status(500).json({ message: "Error al obtener las solicitudes" });
+    }
+}
+
 // Crear una nueva solicitud
 const createSolicitud = async (req, res) => {
     try {
@@ -64,5 +75,6 @@ module.exports = {
     createSolicitud,
     updateSolicitud,
     getSolicitudesPendientes,
-    getSolicitudesDenegadas
+    getSolicitudesDenegadas,
+    getSolicitudExistente
 };

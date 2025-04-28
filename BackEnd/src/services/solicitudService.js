@@ -36,6 +36,17 @@ const getSolicitudesDenegadas = async () => {
     }
 }
 
+// Obtener solicitud por id_usuario e id_maquina
+
+const getSolicitudExistente = async (solicitud) => {
+    try {
+        return await Solicitud.findAll({where: {id_maquina: solicitud.id_maquina, id_usuario: solicitud.id_usuario}});
+    } catch (error) {
+        console.log("Error en getSolicitudExistente:", error);
+        throw error;
+    }
+}
+
 // Crear una nueva solicitud
 
 const createSolicitud = async (body) => {
@@ -59,4 +70,4 @@ const upadateSolicitud = async (id_solicitud, estado) => {
 
 // Exportar las funciones
 
-module.exports = { getAllSolicitudes, createSolicitud, upadateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas };  
+module.exports = { getAllSolicitudes, createSolicitud, upadateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente };  

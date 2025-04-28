@@ -99,6 +99,7 @@ const login = async (req) => {
             ok: true, 
             success: token, 
             user: {
+                id: user.id_usuario,
                 email: user.email,
                 rol: user.rol,
                 token: token

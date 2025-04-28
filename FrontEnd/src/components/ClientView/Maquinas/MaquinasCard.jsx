@@ -2,12 +2,15 @@ import React, { useEffect, useRef } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useGlobalContext } from '../../../services/hooks/globalContext';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
+import useMaquinas from '../../../services/hooks/useMaquinas';
 
 const MaquinasCard = ({ maquina }) => {
 
   const { cargarImagen, imagen } = useProductos();
 
-  const { realizarSolicitud } = useMaquinasContext();
+  const { gestionarSolicitud } = useMaquinasContext();
+
+  const { openModalSolicitud, cerrarModal } = useMaquinas();
 
   const { cartRef, handleAddToCart, isLoggedIn } = useGlobalContext();
 
@@ -29,7 +32,7 @@ const MaquinasCard = ({ maquina }) => {
                 if (!isLoggedIn()) {
                   alert('Debes iniciar sesión para solicitar una máquina');
                 } else {
-                  realizarSolicitud(maquina.id_maquina)
+                  openModalSolicitud(maquina.id_maquina)
                 }
               }}
             >
@@ -64,14 +67,34 @@ const MaquinasCard = ({ maquina }) => {
           <h2 className='text-4xl'>{maquina.nombre}</h2>
           <p className='text-lg'>{maquina.descripcion}</p>
           <span className='text-xl'>{maquina.precio} €</span>
-          {
-            isLoggedIn() && (
-              <div className='flex gap-4'>
-                <button className='button__productos w-[50%]' onClick={realizarSolicitud(maquina.id_maquina)}>Solicitar</button>
-                <button className='button__productos w-[50%]' onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina })}>Añadir al carrito</button>
-              </div>
-            )
-          }
+
+          <div className='flex gap-5'>
+            <button
+              className="button__productos w-[50%]"
+              onClick={() => {
+                if (!isLoggedIn()) {
+                  alert('Debes iniciar sesión para solicitar una máquina');
+                } else {
+                  openModalSolicitud(maquina.id_maquina)
+                }
+              }}
+            >
+              <span>Solicitar</span>
+            </button>
+            <button
+              className="button__productos w-[50%]"
+              onClick={() => {
+                if (!isLoggedIn()) {
+                  alert('Debes iniciar sesión para añadir una máquina al carrito');
+                } else {
+                  handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina });
+                }
+              }}
+            >
+              <span>Añadir al carrito</span>
+            </button>
+          </div>
+
         </div>
       </article>
     )

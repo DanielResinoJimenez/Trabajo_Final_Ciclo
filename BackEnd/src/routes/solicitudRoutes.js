@@ -8,6 +8,7 @@ solicitudRoutes.post("/", solicitudController.createSolicitud);
 solicitudRoutes.put("/:id", solicitudController.updateSolicitud);
 solicitudRoutes.get("/pendientes", solicitudController.getSolicitudesPendientes);
 solicitudRoutes.get("/denegadas", solicitudController.getSolicitudesDenegadas);
+solicitudRoutes.post("/existente", solicitudController.getSolicitudExistente);
 
 // Exportamos el router de productos
 
