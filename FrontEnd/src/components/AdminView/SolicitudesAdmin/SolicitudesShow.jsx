@@ -8,7 +8,7 @@ const SolicitudesShow = ({ solicitud }) => {
 
     const { formatearFecha } = useGlobalContext();
 
-    const { modifyEstadoSolicitud } = useSolicitudesContext();
+    const { modifyEstadoSolicitud, deleteSolicitud } = useSolicitudesContext();
 
     const fechaFormat = formatearFecha(solicitud.fecha_solicitud);
 
@@ -30,7 +30,7 @@ const SolicitudesShow = ({ solicitud }) => {
                         <i className="fas fa-times cursor-pointer font-bold text-xl hover:text-red-500" onClick={() => {modifyEstadoSolicitud(solicitud.id_solicitud, "rechazada")}}></i>
                     )}
                     {solicitud.estado !== "pendiente" && (
-                        <i className="fas fa-trash cursor-pointer font-bold text-xl hover:text-red-700"></i>
+                        <i className="fas fa-trash cursor-pointer font-bold text-xl hover:text-red-700" onClick={() => {deleteSolicitud(solicitud.id_solicitud)}}></i>
                     )}
                 </div>
             </td>

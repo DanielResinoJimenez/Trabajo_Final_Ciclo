@@ -58,6 +58,8 @@ const createSolicitud = async (body) => {
     }
 };
 
+// Modificar estado de una solicitud
+
 const updateSolicitud = async (id_solicitud, estado) => {
     try {
         return await Solicitud.update({ estado: estado },          
@@ -68,6 +70,18 @@ const updateSolicitud = async (id_solicitud, estado) => {
     }
 }
 
+// Borrar una solicitud
+
+const deleteSolicitud = async (id_solicitud) => {
+    try {
+        return await Solicitud.destroy(         
+            { where: { id_solicitud: id_solicitud } }) 
+    } catch (error) {
+        console.error("Error eliminando la solicitud:", error);
+        throw error;
+    }
+}
+
 // Exportar las funciones
 
-module.exports = { getAllSolicitudes, createSolicitud, updateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente };  
+module.exports = { getAllSolicitudes, createSolicitud, updateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente, deleteSolicitud };  

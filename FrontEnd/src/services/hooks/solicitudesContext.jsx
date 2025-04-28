@@ -77,9 +77,33 @@ export const SolicitudesProvider = ({ children }) => {
         }
     };
 
+    const deleteSolicitud = async (id_solicitud) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/solicitudes/${id_solicitud}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al borrar la solicitud');
+            }
+
+            const data = await response.json();
+            const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id_solicitud !== id_solicitud);
+            setSolicitudes(nuevasSolicitudes);
+
+            return data;
+        } catch (error) {
+            console.error('Error en deleteSolicitud:', error);
+            throw error;
+        }
+    };
+
 
     return (
-        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes, modifyEstadoSolicitud }}>
+        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes, modifyEstadoSolicitud, deleteSolicitud }}>
             {children}
         </SolicitudesContext.Provider>
     );

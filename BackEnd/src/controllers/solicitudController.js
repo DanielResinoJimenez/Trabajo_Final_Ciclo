@@ -68,6 +68,19 @@ const updateSolicitud = async (req, res) => {
     }
 };
 
+// Borrar una solicitud
+
+const deleteSolicitud = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const deletedSolicitud = await Service.deleteSolicitud(id);
+        res.status(200).json(deletedSolicitud);
+    } catch (error) {
+        console.error("Error borrando la solicitud:", error);
+        res.status(500).json({ message: "Error al borrar la solicitud" });
+    }
+}
+
 // Exportar los controladores
 module.exports = {
     getAllSolicitudes,
@@ -75,5 +88,6 @@ module.exports = {
     updateSolicitud,
     getSolicitudesPendientes,
     getSolicitudesDenegadas,
-    getSolicitudExistente
+    getSolicitudExistente,
+    deleteSolicitud
 };
