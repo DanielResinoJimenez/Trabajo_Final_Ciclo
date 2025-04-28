@@ -5,7 +5,7 @@ import SolicitudesShow from './SolicitudesAdmin/SolicitudesShow';
 
 const BodyTable = ({ acciones, activeTab, solicitudes }) => {
 
-    if (!acciones && !solicitudes) {
+    if ((!acciones || acciones.length === 0) && (!solicitudes || solicitudes.length === 0)) {
         return (
             <tbody>
                 <tr>

@@ -57,11 +57,10 @@ const createSolicitud = async (req, res) => {
 
 // Actualizar una solicitud
 const updateSolicitud = async (req, res) => {
-    const { id_solicitud } = req.params;
-    const { estado } = req.body;
-
+    const {id} = req.params;
+    const {estado} = req.body;
     try {
-        const updatedSolicitud = await Service.updateSolicitud(id_solicitud, estado);
+        const updatedSolicitud = await Service.updateSolicitud(id, estado);
         res.status(200).json(updatedSolicitud);
     } catch (error) {
         console.error("Error actualizando la solicitud:", error);

@@ -8,6 +8,8 @@ const SolicitudesShow = ({ solicitud }) => {
 
     const { formatearFecha } = useGlobalContext();
 
+    const { modifyEstadoSolicitud } = useSolicitudesContext();
+
     const fechaFormat = formatearFecha(solicitud.fecha_solicitud);
 
     return (
@@ -22,10 +24,10 @@ const SolicitudesShow = ({ solicitud }) => {
                     <i className="fas fa-file-alt cursor-pointer font-bold text-xl hover:text-blue-500"></i>
 
                     {solicitud.estado === "pendiente" && (
-                        <i className="fas fa-check cursor-pointer font-bold text-xl hover:text-green-500"></i>
+                        <i className="fas fa-check cursor-pointer font-bold text-xl hover:text-green-500" onClick={() => {modifyEstadoSolicitud(solicitud.id_solicitud, "aprobada")}}></i>
                     )}
                     {solicitud.estado === "pendiente" && (
-                        <i className="fas fa-times cursor-pointer font-bold text-xl hover:text-red-500"></i>
+                        <i className="fas fa-times cursor-pointer font-bold text-xl hover:text-red-500" onClick={() => {modifyEstadoSolicitud(solicitud.id_solicitud, "rechazada")}}></i>
                     )}
                     {solicitud.estado !== "pendiente" && (
                         <i className="fas fa-trash cursor-pointer font-bold text-xl hover:text-red-700"></i>

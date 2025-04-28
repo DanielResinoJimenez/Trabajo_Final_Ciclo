@@ -17,7 +17,7 @@ export const SolicitudesProvider = ({ children }) => {
             const data = await response.json();
 
             // En este caso cojo solo las aceptadas
-            setSolicitudes(data.filter((solicitud) => solicitud.estado === "aceptada"))
+            setSolicitudes(data.filter((solicitud) => solicitud.estado === "aprobada"))
         } catch (error) {
             setError(error.message);
         } finally {
@@ -52,8 +52,34 @@ export const SolicitudesProvider = ({ children }) => {
         }
     }
 
+    const modifyEstadoSolicitud = async (id_solicitud, estado) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/solicitudes/${id_solicitud}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ estado })  // Enviamos el nuevo estado
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al modificar el estado de la solicitud');
+            }
+
+            const data = await response.json();
+            const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id_solicitud !== id_solicitud);
+            setSolicitudes(nuevasSolicitudes);
+
+            return data;
+        } catch (error) {
+            console.error('Error en modifyEstadoSolicitud:', error);
+            throw error;
+        }
+    };
+
+
     return (
-        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes }}>
+        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes, modifyEstadoSolicitud }}>
             {children}
         </SolicitudesContext.Provider>
     );

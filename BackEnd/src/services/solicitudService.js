@@ -18,7 +18,7 @@ const getAllSolicitudes = async () => {
 
 const getSolicitudesPendientes = async () => {
     try {
-        return await Solicitud.findAll({where: {estado: "pendiente"}});
+        return await Solicitud.findAll({ where: { estado: "pendiente" } });
     } catch (error) {
         console.log("Error en getAllSolicitudes:", error);
         throw error;
@@ -29,7 +29,7 @@ const getSolicitudesPendientes = async () => {
 
 const getSolicitudesDenegadas = async () => {
     try {
-        return await Solicitud.findAll({where: {estado: "rechazada"}});
+        return await Solicitud.findAll({ where: { estado: "rechazada" } });
     } catch (error) {
         console.log("Error en getAllSolicitudes:", error);
         throw error;
@@ -40,7 +40,7 @@ const getSolicitudesDenegadas = async () => {
 
 const getSolicitudExistente = async (solicitud) => {
     try {
-        return await Solicitud.findAll({where: {id_maquina: solicitud.id_maquina, id_usuario: solicitud.id_usuario}});
+        return await Solicitud.findAll({ where: { id_maquina: solicitud.id_maquina, id_usuario: solicitud.id_usuario } });
     } catch (error) {
         console.log("Error en getSolicitudExistente:", error);
         throw error;
@@ -58,10 +58,10 @@ const createSolicitud = async (body) => {
     }
 };
 
-const upadateSolicitud = async (id_solicitud, estado) => {
+const updateSolicitud = async (id_solicitud, estado) => {
     try {
-        return await Solicitud.update({estado: estado,
-        where: {id_solicitud: id_solicitud}});
+        return await Solicitud.update({ estado: estado },          
+            { where: { id_solicitud: id_solicitud } }) 
     } catch (error) {
         console.error("Error actualizando la solicitud:", error);
         throw error;
@@ -70,4 +70,4 @@ const upadateSolicitud = async (id_solicitud, estado) => {
 
 // Exportar las funciones
 
-module.exports = { getAllSolicitudes, createSolicitud, upadateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente };  
+module.exports = { getAllSolicitudes, createSolicitud, updateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente };  
