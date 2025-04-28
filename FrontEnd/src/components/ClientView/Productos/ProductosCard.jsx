@@ -10,64 +10,44 @@ const ProductosCard = ({ producto }) => {
 
   const imgRef = useRef(null);
 
-  if (producto.imagen == null) {
-    return (
-      <article className='flex flex-col w-[300px] h-[500px] p-4 border border-yellow-800 rounded-sm shadow-md shadow-yellow-800 m-auto card overflow-hidden'>
-        <span className='hidden'>{producto.id_producto}</span>
-        <form
-          onSubmit={handleSubmit}
-          className='flex flex-col p-4 border border-yellow-800 h-[60%] justify-center'
+
+  // UseEffect para convertir las imagenes y hacerlas visibles
+
+  useEffect(() => {
+    cargarImagen(producto);
+  }, [])
+
+  return (
+    <article className='flex flex-col w-[300px] h-[500px] p-4 border border-yellow-800 rounded-sm shadow-md shadow-yellow-800 m-auto card'>
+      {
+        producto.image ? <img ref={imgRef} src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
+          :
+          <p className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply'>No hay imagen disponible</p>
+      }
+      <div className='flex flex-col justify-between h-[30%]'>
+        <h2 className='text-2xl text-center'>{producto.nombre}</h2>
+        <span className='text-right text-xl'>{producto.precio} €</span>
+        <span className='text-lg text-right hover:text-yellow-600 font-normal hover:font-bold transition duration-300 ease-in-out cursor-pointer'>Mostrar más</span>
+      </div>
+      {
+
+        <button
+          className="h-[10%] border border-yellow-800 bg-yellow-800 button__productos"
+          onClick={() => {
+            if (!isLoggedIn()) {
+              alert('Debes iniciar sesión para añadir un producto al carrito');
+            } else {
+              handleAddToCart({ cartRef, imgElement: imgRef.current, producto: producto });
+            }
+          }}
         >
-          <input
-            type="file"
-            className='flex h-full cursor-pointer'
-            onChange={handleFileChange}
-          />
-          <button
-            type="submit"
-            className='mt-4 p-2 bg-yellow-800 text-white'
-          >
-            Subir Imagen
-          </button>
-        </form>
-        <div className='flex flex-col justify-between h-[30%]' ref={imgRef}>
-          <h2 className='text-2xl text-center'>{producto.nombre}</h2>
-          <span className='text-right text-xl'>{producto.precio} €</span>
-          <span className='text-lg text-right hover:text-yellow-600 font-normal hover:font-bold transition duration-300 ease-in-out cursor-pointer'>Mostrar más</span>
-        </div>
-        {
-          isLoggedIn() && (
-            <button className={`h-[10%] border border-yellow-800 bg-yellow-800 button__productos ${!isLoggedIn() ? 'hidden' : ''}`} onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, producto: producto })}><span>Añadir al carrito</span></button>
-          )
-        }
+          <span>Añadir al carrito</span>
+        </button>
 
+      }
+    </article>
+  )
 
-      </article >
-    )
-  } else {
-
-    // UseEffect para convertir las imagenes y hacerlas visibles
-
-    useEffect(() => {
-      cargarImagen(producto);
-    }, [])
-
-    return (
-      <article className='flex flex-col w-[300px] h-[500px] p-4 border border-yellow-800 rounded-sm shadow-md shadow-yellow-800 m-auto card'>
-        <img ref={imgRef} src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
-        <div className='flex flex-col justify-between h-[30%]'>
-          <h2 className='text-2xl text-center'>{producto.nombre}</h2>
-          <span className='text-right text-xl'>{producto.precio} €</span>
-          <span className='text-lg text-right hover:text-yellow-600 font-normal hover:font-bold transition duration-300 ease-in-out cursor-pointer'>Mostrar más</span>
-        </div>
-        {
-          isLoggedIn() && (
-            <button className={`h-[10%] border border-yellow-800 bg-yellow-800 button__productos ${!isLoggedIn() ? 'hidden' : ''}`} onClick={() => handleAddToCart({ cartRef, imgElement: imgRef.current, producto: producto })}><span>Añadir al carrito</span></button>
-          )
-        }
-      </article>
-    )
-  }
 
 
 }
