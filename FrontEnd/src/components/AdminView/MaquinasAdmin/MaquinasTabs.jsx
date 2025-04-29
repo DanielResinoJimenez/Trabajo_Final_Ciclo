@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import MaquinasShow from './MaquinasShow';
 
 const MaquinasTabs = () => {
     const [activeTab, setActiveTab] = useState(1); // Estado para controlar la pestaña activa
@@ -38,19 +39,19 @@ const MaquinasTabs = () => {
             <div className="mt-4">
                 {activeTab === 1 && (
                     <div>
-                        <p>1</p>
+                        <MaquinasShow activeTab={activeTab}/>
                     </div>
                 )}
                 {activeTab === 2 && (
                     <div>
-                        <p>2</p>
+                        <MaquinasShow activeTab={activeTab}/>
                     </div>
                 )}
                 {activeTab === 3 && (
-                    <p>3</p>
+                    <MaquinasShow activeTab={activeTab}/>
                 )}
                 {activeTab === 4 && (
-                    <p>4</p>
+                    <MaquinasShow activeTab={activeTab}/>
                 )}
             </div>
 
