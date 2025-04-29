@@ -101,9 +101,13 @@ export const SolicitudesProvider = ({ children }) => {
         }
     };
 
+    const verPDF = (id) => {
+        window.open(`http://localhost:3000/api/solicitudes/${id}/pdf`, '_blank');
+    };
+
 
     return (
-        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes, modifyEstadoSolicitud, deleteSolicitud }}>
+        <SolicitudesContext.Provider value={{ solicitudes, getSolicitudesAceptadas, getSolicitudesPendientes, getSolicitudesRechazadas, setSolicitudes, modifyEstadoSolicitud, deleteSolicitud, verPDF }}>
             {children}
         </SolicitudesContext.Provider>
     );

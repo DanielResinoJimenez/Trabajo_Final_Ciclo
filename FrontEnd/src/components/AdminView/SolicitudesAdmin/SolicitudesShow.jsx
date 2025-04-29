@@ -8,7 +8,7 @@ const SolicitudesShow = ({ solicitud }) => {
 
     const { formatearFecha } = useGlobalContext();
 
-    const { modifyEstadoSolicitud, deleteSolicitud } = useSolicitudesContext();
+    const { modifyEstadoSolicitud, deleteSolicitud, verPDF } = useSolicitudesContext();
 
     const fechaFormat = formatearFecha(solicitud.fecha_solicitud);
 
@@ -21,7 +21,7 @@ const SolicitudesShow = ({ solicitud }) => {
             <td className="px-4 py-3">{solicitud.estado}</td>
             <td className="px-4 py-3 text-right">
                 <div className="flex justify-end gap-6">
-                    <i className="fas fa-file-alt cursor-pointer font-bold text-xl hover:text-blue-500"></i>
+                    <i className="fas fa-file-alt cursor-pointer font-bold text-xl hover:text-blue-500" onClick={() => {verPDF(solicitud.id_solicitud)}}></i>
 
                     {solicitud.estado === "pendiente" && (
                         <i className="fas fa-check cursor-pointer font-bold text-xl hover:text-green-500" onClick={() => {modifyEstadoSolicitud(solicitud.id_solicitud, "aprobada")}}></i>

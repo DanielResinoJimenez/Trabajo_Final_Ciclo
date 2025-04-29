@@ -1,4 +1,5 @@
 const Service = require('../services/solicitudService');
+const PDFDocument = require('pdfkit');
 
 // Obtener todas las solicitudes
 const getAllSolicitudes = async (req, res) => {
@@ -68,12 +69,12 @@ const getSolicitudPDF = async (req, res) => {
 };
 
 // Crear una nueva solicitud
+
 const createSolicitud = async (req, res) => {
     try {
         const { body } = req;
 
-        // Crear el PDF
-        const doc = new PDFDocument();
+        const doc = new PDFDocument({ margin: 50 });
         const buffers = [];
 
         doc.on('data', buffers.push.bind(buffers));
@@ -82,27 +83,58 @@ const createSolicitud = async (req, res) => {
 
             const solicitudData = {
                 ...body,
-                documento: pdfBuffer, // Aquí metes el PDF generado
+                documento: pdfBuffer,
             };
 
             const solicitud = await Service.createSolicitud(solicitudData);
             res.status(201).json(solicitud);
         });
 
-        doc.fontSize(18).text('Solicitud de máquina', { align: 'center' });
-        doc.moveDown();
-        doc.fontSize(12).text(`Nombre solicitante: ${body.nombre_solicitante}`);
-        doc.text(`Dirección: ${body.direccion_establecimiento}`);
-        doc.text(`Teléfono: ${body.telefono_solicitante}`);
-        doc.text(`Fecha: ${new Date().toLocaleDateString()}`);
+        // Creación del PDF
 
-        doc.end(); 
+        doc
+            .fontSize(22)
+            .fillColor('#2c3e50')
+            .text('Formulario de Solicitud de Máquina', { align: 'center' })
+            .moveDown(0.5);
 
+        doc
+            .strokeColor('#aaaaaa')
+            .lineWidth(1)
+            .moveTo(doc.page.margins.left, doc.y)
+            .lineTo(doc.page.width - doc.page.margins.right, doc.y)
+            .stroke()
+            .moveDown();
+
+        doc.fontSize(12).fillColor('black');
+
+        const renderField = (label, value) => {
+            doc.font('Helvetica-Bold').text(`${label}:`, { continued: true });
+            doc.font('Helvetica').text(` ${value || 'N/A'}`);
+        };
+
+        renderField('Nombre del solicitante', body.nombre_solicitante);
+        renderField('Dirección del establecimiento', body.direccion_establecimiento);
+        renderField('Teléfono', body.telefono_solicitante);
+        renderField('Fecha de solicitud', new Date(body.fecha_solicitud || Date.now()).toLocaleDateString());
+        renderField('ID del Usuario', body.id_usuario);
+        renderField('ID de la Máquina', body.id_maquina);
+        renderField('Estado', body.estado);
+
+        // Pie de página
+        doc.moveDown(2);
+        doc.fontSize(10).fillColor('gray').text('Este documento fue generado automáticamente.', {
+            align: 'center',
+        });
+
+        doc.end();
+        
     } catch (error) {
         console.error("Error creando la solicitud:", error);
         res.status(500).json({ message: "Error al crear la solicitud" });
     }
 };
+
 
 // Actualizar una solicitud
 const updateSolicitud = async (req, res) => {
