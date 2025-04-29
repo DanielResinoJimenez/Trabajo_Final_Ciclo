@@ -35,6 +35,16 @@ const getSolicitudesDenegadas = async () => {
     }
 }
 
+// Obtener solicitud por id
+const getSolicitudById = async (id_solicitud) => {
+    try {
+        return await Solicitud.findByPk(id_solicitud);
+    } catch (error) {
+        console.error("Error en getSolicitudById:", error);
+        throw error;
+    }
+};
+
 // Obtener solicitud por id_usuario e id_maquina
 
 const getSolicitudExistente = async (solicitud) => {
@@ -83,4 +93,4 @@ const deleteSolicitud = async (id_solicitud) => {
 
 // Exportar las funciones
 
-module.exports = { getAllSolicitudes, createSolicitud, updateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente, deleteSolicitud };  
+module.exports = { getAllSolicitudes, createSolicitud, updateSolicitud, getSolicitudesPendientes, getSolicitudesDenegadas, getSolicitudExistente, deleteSolicitud, getSolicitudById };  

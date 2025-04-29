@@ -44,18 +44,60 @@ const getSolicitudExistente = async (req, res) => {
     }
 }
 
+// Obtener PDF por ID de solicitud
+const getSolicitudPDF = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const solicitud = await Service.getSolicitudById(id);
+
+        if (!solicitud || !solicitud.documento) {
+            return res.status(404).json({ message: "Documento no encontrado." });
+        }
+
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'inline; filename="solicitud.pdf"', // cambia a 'attachment;' si quieres forzar descarga
+        });
+
+        res.send(solicitud.documento);
+    } catch (error) {
+        console.error("Error obteniendo el PDF:", error);
+        res.status(500).json({ message: "Error al obtener el PDF" });
+    }
+};
+
 // Crear una nueva solicitud
 const createSolicitud = async (req, res) => {
     try {
-        const { body, file } = req;
+        const { body } = req;
 
-        const solicitudData = {
-            ...body,
-            documento: file ? file.buffer : null, // Aquí se guarda el binario
-        };
+        // Crear el PDF
+        const doc = new PDFDocument();
+        const buffers = [];
 
-        const solicitud = await Service.createSolicitud(solicitudData);
-        res.status(201).json(solicitud);
+        doc.on('data', buffers.push.bind(buffers));
+        doc.on('end', async () => {
+            const pdfBuffer = Buffer.concat(buffers);
+
+            const solicitudData = {
+                ...body,
+                documento: pdfBuffer, // Aquí metes el PDF generado
+            };
+
+            const solicitud = await Service.createSolicitud(solicitudData);
+            res.status(201).json(solicitud);
+        });
+
+        doc.fontSize(18).text('Solicitud de máquina', { align: 'center' });
+        doc.moveDown();
+        doc.fontSize(12).text(`Nombre solicitante: ${body.nombre_solicitante}`);
+        doc.text(`Dirección: ${body.direccion_establecimiento}`);
+        doc.text(`Teléfono: ${body.telefono_solicitante}`);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()}`);
+
+        doc.end(); 
+
     } catch (error) {
         console.error("Error creando la solicitud:", error);
         res.status(500).json({ message: "Error al crear la solicitud" });
@@ -96,5 +138,6 @@ module.exports = {
     getSolicitudesPendientes,
     getSolicitudesDenegadas,
     getSolicitudExistente,
-    deleteSolicitud
+    deleteSolicitud,
+    getSolicitudPDF
 };

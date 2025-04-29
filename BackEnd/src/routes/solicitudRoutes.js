@@ -14,6 +14,7 @@ solicitudRoutes.post("/", upload.single('documento'), solicitudController.create
 solicitudRoutes.put("/:id", solicitudController.updateSolicitud);
 solicitudRoutes.get("/pendientes", solicitudController.getSolicitudesPendientes);
 solicitudRoutes.get("/denegadas", solicitudController.getSolicitudesDenegadas);
+solicitudRoutes.get("/:id/pdf", solicitudController.getSolicitudPDF);
 solicitudRoutes.post("/existente", solicitudController.getSolicitudExistente);
 solicitudRoutes.delete("/:id", solicitudController.deleteSolicitud);
 
