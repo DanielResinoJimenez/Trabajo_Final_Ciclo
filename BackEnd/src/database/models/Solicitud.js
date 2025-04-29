@@ -1,8 +1,8 @@
 const sequelize = require("../db");
 
-const {Model, DataTypes} = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
-class Solicitud extends Model {}
+class Solicitud extends Model { }
 
 Solicitud.init({
     id_solicitud: {
@@ -19,7 +19,7 @@ Solicitud.init({
             key: 'id_usuario'
         }
     },
-    id_maquina:{
+    id_maquina: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -43,6 +43,10 @@ Solicitud.init({
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    documento: {
+        type: DataTypes.BLOB('long'), 
+        allowNull: false
+    },
     estado: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -50,7 +54,7 @@ Solicitud.init({
             isIn: [['pendiente', 'aprobada', 'rechazada']]
         }
     },
-    },
+},
     {
         sequelize,
         modelName: 'solicitud',

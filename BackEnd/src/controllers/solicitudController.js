@@ -34,7 +34,7 @@ const getSolicitudesDenegadas = async (req, res) => {
 };
 
 // Obtener solicitud existente
-const getSolicitudExistente = async(req, res) => {
+const getSolicitudExistente = async (req, res) => {
     try {
         const solicitudes = await Service.getSolicitudExistente(req.body);
         res.status(200).json(solicitudes);
@@ -47,7 +47,14 @@ const getSolicitudExistente = async(req, res) => {
 // Crear una nueva solicitud
 const createSolicitud = async (req, res) => {
     try {
-        const solicitud = await Service.createSolicitud(req.body);
+        const { body, file } = req;
+
+        const solicitudData = {
+            ...body,
+            documento: file ? file.buffer : null, // Aquí se guarda el binario
+        };
+
+        const solicitud = await Service.createSolicitud(solicitudData);
         res.status(201).json(solicitud);
     } catch (error) {
         console.error("Error creando la solicitud:", error);
@@ -57,8 +64,8 @@ const createSolicitud = async (req, res) => {
 
 // Actualizar una solicitud
 const updateSolicitud = async (req, res) => {
-    const {id} = req.params;
-    const {estado} = req.body;
+    const { id } = req.params;
+    const { estado } = req.body;
     try {
         const updatedSolicitud = await Service.updateSolicitud(id, estado);
         res.status(200).json(updatedSolicitud);
@@ -71,7 +78,7 @@ const updateSolicitud = async (req, res) => {
 // Borrar una solicitud
 
 const deleteSolicitud = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     try {
         const deletedSolicitud = await Service.deleteSolicitud(id);
         res.status(200).json(deletedSolicitud);

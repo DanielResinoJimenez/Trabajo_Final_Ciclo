@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const Solicitud = require("../database/models/Solicitud");
 
 // Funciones de consultas en la base de datos.
