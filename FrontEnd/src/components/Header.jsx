@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../services/hooks/globalContext';
 import useMenu from '../services/hooks/useMenu';
+import logo from './../assets/images/logo.png'
 
 const Header = () => {
 
@@ -16,8 +17,10 @@ const Header = () => {
         if (user) userRol = user.rol;
 
         return (
-                <header className='flex justify-between w-screen p-6 text-gray-100 font-bold text-md header z-10 fixed top-0 left-0'>
-                        <img src="" alt="Logo" />
+                <header className='flex justify-around items-center w-screen max-h-[80px] text-gray-100 font-bold text-md header z-10 fixed top-0 left-0'>
+                        <div className='flex items-center max-w-[100px]'>
+                                <img src={logo} alt="Logo" className='max-w-[100px] h-auto object-contain' />
+                        </div>
                         <div className='md:hidden' id='menu'>
                                 <i className="fa-solid fa-bars"></i>
                         </div>
