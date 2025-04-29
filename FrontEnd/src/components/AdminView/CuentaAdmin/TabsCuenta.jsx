@@ -11,15 +11,15 @@ const TabsCuenta = () => {
 
     return (
         <div className='flex flex-col'>
-            <div className="flex border-b justify-around">
+            <div className="flex border-b mt-6">
                 <button
-                    className={`px-4 py-2 text-xl font-medium transition-colors duration-200 w-[50%] ${activeTab === 1 ? 'border-b border-r border-yellow-950 text-yellow-700' : 'text-gray-700 hover:text-yellow-500'}`}
+                    className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 1 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(1)} // Cambiar a la pestaña 1
                 >
                     Historial de Acciones
                 </button>
                 <button
-                    className={`px-4 py-2 text-xl font-medium transition-colors duration-200 w-[50%] ${activeTab === 2 ? 'border-b border-l border-yellow-950 text-green-700' : 'text-gray-700 hover:text-green-500'}`}
+                    className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 2 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(2)} // Cambiar a la pestaña 2
                 >
                     Realizar Acción

@@ -130,7 +130,6 @@ const createSolicitud = async (req, res) => {
         renderField('Fecha de solicitud', new Date(body.fecha_solicitud || Date.now()).toLocaleDateString());
         renderField('ID del Usuario', body.id_usuario);
         renderField('ID de la Máquina', body.id_maquina);
-        renderField('Estado', body.estado);
 
         doc.moveDown(1.5);
 
@@ -148,7 +147,6 @@ const createSolicitud = async (req, res) => {
 
         doc.image(qrImageBuffer, x, doc.y, { width: qrSize });
 
-        // === Pie de página ===
         doc.moveDown(2);
         doc.fontSize(10).fillColor('gray').text('Este documento fue generado automáticamente.', {
             align: 'center',

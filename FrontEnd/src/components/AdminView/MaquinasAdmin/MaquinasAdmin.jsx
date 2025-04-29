@@ -1,8 +1,11 @@
 import React from 'react'
+import MaquinasTabs from './MaquinasTabs'
 
 const MaquinasAdmin = () => {
   return (
-    <div>MaquinasAdmin</div>
+    <div className='w-[90%] m-auto'>
+      <MaquinasTabs />
+    </div>
   )
 }
 

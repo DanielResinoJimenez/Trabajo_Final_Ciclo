@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import SolicitudesShow from './SolicitudesShow';
-import SolicitudesBody from './SolicitudesBody';
 
-const SolicitudesTabs = () => {
+const MaquinasTabs = () => {
     const [activeTab, setActiveTab] = useState(1); // Estado para controlar la pestaña activa
 
     return (
@@ -12,19 +10,25 @@ const SolicitudesTabs = () => {
                     className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 1 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(1)} // Cambiar a la pestaña 1
                 >
-                    Pendientes
+                    En Servicio
                 </button>
                 <button
                     className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 2 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(2)} // Cambiar a la pestaña 2
                 >
-                    Rechazadas
+                    En Stock
                 </button>
                 <button
                     className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 3 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(3)} // Cambiar a la pestaña 2
                 >
-                    Aceptadas
+                    En mantenimiento
+                </button>
+                <button
+                    className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 4 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
+                    onClick={() => setActiveTab(4)} // Cambiar a la pestaña 2
+                >
+                    Todas
                 </button>
             </div>
 
@@ -34,21 +38,19 @@ const SolicitudesTabs = () => {
             <div className="mt-4">
                 {activeTab === 1 && (
                     <div>
-                        <h2 className="text-3xl">Solicitudes Pendientes</h2>
-                        <SolicitudesBody activeTab={activeTab} />
+                        <p>1</p>
                     </div>
                 )}
                 {activeTab === 2 && (
                     <div>
-                        <h2 className="text-3xl">Solicitudes Rechazadas</h2>
-                        <SolicitudesBody activeTab={activeTab} />
+                        <p>2</p>
                     </div>
                 )}
                 {activeTab === 3 && (
-                    <div>
-                        <h2 className="text-3xl">Solicitudes Aceptadas</h2>
-                        <SolicitudesBody activeTab={activeTab} />
-                    </div>
+                    <p>3</p>
+                )}
+                {activeTab === 4 && (
+                    <p>4</p>
                 )}
             </div>
 
@@ -58,4 +60,4 @@ const SolicitudesTabs = () => {
     );
 }
 
-export default SolicitudesTabs
+export default MaquinasTabs
