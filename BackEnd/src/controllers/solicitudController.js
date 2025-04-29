@@ -1,5 +1,6 @@
 const Service = require('../services/solicitudService');
 const PDFDocument = require('pdfkit');
+const QRcode = require('qrcode');
 
 // Obtener todas las solicitudes
 const getAllSolicitudes = async (req, res) => {
@@ -70,10 +71,10 @@ const getSolicitudPDF = async (req, res) => {
 
 // Crear una nueva solicitud
 
+// Crear una nueva solicitud
 const createSolicitud = async (req, res) => {
     try {
         const { body } = req;
-
         const doc = new PDFDocument({ margin: 50 });
         const buffers = [];
 
@@ -87,10 +88,20 @@ const createSolicitud = async (req, res) => {
             };
 
             const solicitud = await Service.createSolicitud(solicitudData);
-            res.status(201).json(solicitud);
+
+            // Creamos el QR
+
+            const pdfUrl = `https://localhost:3000/api/solicitudes/${solicitud.id_solicitud}/pdf`;
+
+            const qrDataURL = await QRcode.toDataURL(pdfUrl);
+
+            res.status(201).json({
+                solicitud,
+                qrCode: qrDataURL,
+            });
         });
 
-        // Creación del PDF
+        // Contenido del PDF
 
         doc
             .fontSize(22)
@@ -121,19 +132,36 @@ const createSolicitud = async (req, res) => {
         renderField('ID de la Máquina', body.id_maquina);
         renderField('Estado', body.estado);
 
-        // Pie de página
+        doc.moveDown(1.5);
+
+        const pdfUrl = `https://localhost:3000/api/solicitudes/temp/pdf`;
+        const qrImageBuffer = await QRcode.toBuffer(pdfUrl);
+
+        doc.fontSize(12).text("Escanea el código QR para ver este documento en línea:", {
+            align: 'center',
+        });
+
+        doc.moveDown(0.5);
+
+        const qrSize = 150;
+        const x = (doc.page.width - qrSize) / 2;
+
+        doc.image(qrImageBuffer, x, doc.y, { width: qrSize });
+
+        // === Pie de página ===
         doc.moveDown(2);
         doc.fontSize(10).fillColor('gray').text('Este documento fue generado automáticamente.', {
             align: 'center',
         });
 
         doc.end();
-        
+
     } catch (error) {
         console.error("Error creando la solicitud:", error);
         res.status(500).json({ message: "Error al crear la solicitud" });
     }
 };
+
 
 
 // Actualizar una solicitud
