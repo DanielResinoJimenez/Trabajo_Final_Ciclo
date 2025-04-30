@@ -68,6 +68,7 @@ const MaquinasAdminBody = ({ filtro }) => {
     return (
         <div className=''>
             <h2 className='text-[50px]'>{`${filtro != "" ? filtro : "Todas"}`}</h2>
+            <button className={`w-56 ${filtro != "" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}>Añadir Nueva Máquina</button>
             <div className={`grid justify-center items-center mt-10 m-auto w-full gap-6 ${filtro === "En stock" || filtro === "En mantenimiento" || filtro === ""
                 ? 'min-xl:grid-cols-2 min-lg:grid-cols-1'
                 : 'min-xl:grid-cols-8 min-lg:grid-cols-8 min-md:grid-cols-6'
