@@ -11,26 +11,26 @@ const MaquinasShow = ({activeTab}) => {
         return (
             <div>
                 <MaquinasHeader navOptions={["General", "Sin Reponer", "Apuntar recaudación"]}/>
-                <MaquinasAdminBody filtro={estado}/>
+                <MaquinasAdminBody filtro={`${estado != "" ? estado : "General"}`}/>
             </div>
         )
     }
 
     if(activeTab === 2){
         return (
-            <p>Estamos mostrando las máquinas en stock</p>
+            <MaquinasAdminBody filtro={"En stock"}/>
         )
     }
 
     if(activeTab === 3){
         return (
-            <p>Estamos mostrando las máquinas en mantenimiento</p>
+            <MaquinasAdminBody filtro={"En mantenimiento"}/>
         )
     }
 
     if(activeTab === 4){
         return (
-            <p>Estamos mostrando todas las máquinas</p>
+            <MaquinasAdminBody filtro={""}/>
         )
     }
 

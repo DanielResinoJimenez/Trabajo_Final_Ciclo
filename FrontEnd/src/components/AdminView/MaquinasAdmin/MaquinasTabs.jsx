@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import MaquinasShow from './MaquinasShow';
 
 const MaquinasTabs = () => {
-    const [activeTab, setActiveTab] = useState(1); // Estado para controlar la pestaña activa
+    const [activeTab, setActiveTab] = useState(4); // Estado para controlar la pestaña activa
 
     return (
         <div className='flex flex-col'>
