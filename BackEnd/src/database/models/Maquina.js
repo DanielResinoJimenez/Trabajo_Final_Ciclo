@@ -35,6 +35,22 @@ Maquina.init({
         },
         allowNull: false
     },
+    reposicion: {
+        type: DataTypes.STRING,
+        validate: {
+            isIn: [["S", "N"]],
+            msg: "La reposición debe ser S (si) o N (no)",
+        },
+        allowNull: false
+    },
+    nombre_establecimiento: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    direccion_establecimiento:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     imagen: {
         type: DataTypes.BLOB.apply('long'),
         allowNull: true

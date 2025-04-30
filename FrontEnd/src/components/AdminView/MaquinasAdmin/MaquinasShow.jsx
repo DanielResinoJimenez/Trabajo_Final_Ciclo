@@ -1,12 +1,17 @@
 import React from 'react'
 import MaquinasHeader from './MaquinasHeader'
+import MaquinasAdminBody from './MaquinasAdminBody'
+import { useMaquinasContext } from '../../../services/hooks/maquinasContext'
 
 const MaquinasShow = ({activeTab}) => {
+
+    const {estado} = useMaquinasContext();
   
     if(activeTab === 1){
         return (
             <div>
                 <MaquinasHeader navOptions={["General", "Sin Reponer", "Apuntar recaudación"]}/>
+                <MaquinasAdminBody filtro={estado}/>
             </div>
         )
     }

@@ -5,10 +5,14 @@ const MaquinasContext = createContext();
 export const useMaquinasContext = () => useContext(MaquinasContext);
 
 export const MaquinasProvider = ({ children }) => {
+    // Estados
     const [maquinasOriginales, setMaquinasOriginales] = useState(null);
     const [maquinas, setMaquinas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Estados para filtrar
+    const [estado, setEstado] = useState('');
 
     const getMaquinas = async () => {
         try {
@@ -88,7 +92,7 @@ export const MaquinasProvider = ({ children }) => {
 
 
     return (
-        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud }}>
+        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud, estado, setEstado }}>
             {children}
         </MaquinasContext.Provider>
     );

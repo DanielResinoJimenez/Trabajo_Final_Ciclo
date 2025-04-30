@@ -34,7 +34,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
     sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
         console.log('Sincronizado con la base de datos MasCoffee');
     })
