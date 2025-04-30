@@ -28,7 +28,7 @@ const getMaquinasStock = async () => {
 const getMaquinaByMarca = async (marca) => {
     try {
         return await Maquina.findAll({
-            where: {marca: marca}
+            where: { marca: marca }
         })
     } catch (error) {
         console.log("Error en getProductByCategory:", error);
@@ -65,7 +65,12 @@ const createMaquinaImagen = async (imagenData) => {
 const putMaquina = async (newProducto, id_maquina) => {
     try {
         const updated = await Maquina.update(newProducto, { where: { id_maquina } });
-        return updated[0] ? "Maquina actualizada correctamente" : "No se encontró la maquina";
+        return {
+            success: updated > 0,
+            message: updated[0]
+                ? "Máquina modificada correctamente"
+                : "No se encontró la máquina"
+        };
     } catch (error) {
         console.error("Error actualizando el producto:", error);
         throw error;
@@ -77,11 +82,22 @@ const putMaquina = async (newProducto, id_maquina) => {
 const deleteMaquina = async (id) => {
     try {
         const deleted = await Maquina.destroy({ where: { id_maquina: id } });
-        return deleted ? "Máquina eliminada correctamente" : "No se encontró la máquina";
+
+        return {
+            success: deleted > 0,
+            message: deleted
+                ? "Máquina eliminada correctamente"
+                : "No se encontró la máquina"
+        };
     } catch (error) {
         console.error("Error eliminando el producto:", error);
-        throw error;
+        return {
+            success: false,
+            message: "Error eliminando la máquina",
+            error: error.message
+        };
     }
 };
+
 
 module.exports = { getAllMaquinas, getMaquinasStock, getMaquinaByMarca, createMaquina, createMaquinaImagen, putMaquina, deleteMaquina };

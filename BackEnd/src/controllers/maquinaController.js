@@ -62,9 +62,9 @@ const createMaquinaImagen = async (req, res) => {
 
 const putMaquina = async (req, res) => {
     try {
-        const { id_maquina } = req.params;
+        const { id } = req.params;
         const newMaquina = req.body;
-        const updated = await Service.putMaquina(newMaquina, id_maquina);
+        const updated = await Service.putMaquina(newMaquina, id);
         res.status(200).send(updated);
     } catch (error) {
         res.status(500).send(error.message);
@@ -75,8 +75,8 @@ const putMaquina = async (req, res) => {
 
 const deleteMaquina = async (req, res) => {
     try {
-        const { id_maquina } = req.params;
-        const deleted = await Service.deleteMaquina(id_maquina);
+        const { id } = req.params;
+        const deleted = await Service.deleteMaquina(id);
         res.status(200).send(deleted);
     } catch (error) {
         res.status(500).send(error.message);

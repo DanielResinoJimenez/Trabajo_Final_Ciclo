@@ -1,8 +1,8 @@
 const sequelize = require("../db");
 
-const {Model, DataTypes} = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
-class Maquina extends Model {}
+class Maquina extends Model { }
 
 Maquina.init({
     id_maquina: {
@@ -30,24 +30,26 @@ Maquina.init({
     estado: {
         type: DataTypes.STRING,
         validate: {
-            isIn: [["En mantenimiento", "En servicio", "En stock"]],
-            msg: "El estado debe ser En mantenimiento o En servicio o En stock",
-        },
-        allowNull: false
+            isIn: {
+                args: [['En stock', 'En servicio', 'En mantenimiento']],
+                msg: 'El estado debe ser En stock, En servicio o En mantenimiento'
+            }
+        }
     },
     reposicion: {
         type: DataTypes.STRING,
         validate: {
-            isIn: [["S", "N"]],
-            msg: "La reposición debe ser S (si) o N (no)",
-        },
-        allowNull: false
+            isIn: {
+                args: [['S', 'N']],
+                msg: 'La reposición debe ser S o N'
+            }
+        }
     },
     nombre_establecimiento: {
         type: DataTypes.STRING,
         allowNull: true
     },
-    direccion_establecimiento:{
+    direccion_establecimiento: {
         type: DataTypes.STRING,
         allowNull: true
     },
@@ -55,7 +57,7 @@ Maquina.init({
         type: DataTypes.BLOB.apply('long'),
         allowNull: true
     },
-    tipo:{
+    tipo: {
         type: DataTypes.STRING,
         allowNull: true,
     }

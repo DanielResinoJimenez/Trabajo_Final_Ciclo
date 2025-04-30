@@ -90,9 +90,50 @@ export const MaquinasProvider = ({ children }) => {
         }
     };
 
+    const modificarMaquina = async (id_maquina, maquina) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/maquinas/${id_maquina}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(maquina)
+            });
+            if (!response.ok) {
+                throw new Error('Error al modificar la máquina');
+            }
+            const data = await response.json();
+            setMaquinas(maquinas.map(maquina => (maquina.id_maquina === id_maquina ? data : maquina)));
+            setMaquinasOriginales(maquinasOriginales.map(maquina => (maquina.id_maquina === id_maquina ? data : maquina)));
+            alert("Se ha modificado la máquina correctamente");
+            return data;
+        } catch (error) {
+            console.error('Error al modificar la máquina:', error);
+            throw error;
+        }
+    }
+
+    const borrarMaquina = async (id_maquina) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/maquinas/${id_maquina}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error('Error al borrar la máquina');
+            }
+            const data = await response.json();
+            setMaquinas(maquinas.filter(maquina => maquina.id_maquina !== id_maquina));
+            setMaquinasOriginales(maquinasOriginales.filter(maquina => maquina.id_maquina !== id_maquina));
+            alert("Se ha borrado la máquina correctamente");
+            return data;
+        } catch (error) {
+            console.error('Error al borrar la máquina:', error);
+            throw error;
+        }
+    }
 
     return (
-        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud, estado, setEstado }}>
+        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud, estado, setEstado, modificarMaquina, borrarMaquina }}>
             {children}
         </MaquinasContext.Provider>
     );
