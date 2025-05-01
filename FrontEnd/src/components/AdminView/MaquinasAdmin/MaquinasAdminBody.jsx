@@ -76,6 +76,11 @@ const MaquinasAdminBody = ({ filtro }) => {
                 onClick={() => {openModalCrear()}}>
                     Añadir Nueva Máquina
             </button>
+            <button 
+                className={`w-56 ${filtro != "General" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
+                onClick={() => {openModalDarAlta()}}>
+                    Dar de alta máquina
+            </button>
             <div className={`grid justify-center items-center mt-10 m-auto w-full gap-6 ${filtro === "En stock" || filtro === "En mantenimiento" || filtro === ""
                 ? 'min-xl:grid-cols-2 min-lg:grid-cols-1'
                 : 'min-xl:grid-cols-8 min-lg:grid-cols-8 min-md:grid-cols-6'

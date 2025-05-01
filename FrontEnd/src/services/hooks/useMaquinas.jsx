@@ -27,7 +27,7 @@ const useMaquinas = () => {
     let fileInput = e.target.querySelector('#imagen_maquina'); // Asegúrate de que el input tiene este ID
     let file = fileInput?.files?.[0];
 
-    if(!fileInput){
+    if (!fileInput) {
       fileInput = e.target.parentElement.querySelector('#imagen_maquina');
       file = fileInput?.files?.[0];
     }
@@ -224,7 +224,7 @@ const useMaquinas = () => {
         id_maquina: id_maquina,
         id_usuario: id_usuario,
         nombre_solicitante: form.nombre.value,
-        direccion_establecimiento: form.direccion.value,
+        direccion_maquina: form.direccion.value,
         fecha_solicitud: new Date(),
         telefono_solicitante: form.telefono.value,
         estado: "pendiente"
@@ -636,13 +636,118 @@ const useMaquinas = () => {
     modal.classList.remove("hidden");
   }
 
+  // Función para mostrar un modal con formulario de edición
+  const openModalAlta = () => {
+    setArchivo(null);
+    const modal = document.getElementById("modalMaquinas");
+    const modalContent = document.getElementById("modalMaquinasContent");
+
+    // Limpiar contenido previo
+    modalContent.innerHTML = "";
+
+    // Crear el <form>
+    const form = document.createElement("form");
+    form.id = "formEditarmaquina";
+
+    // Helper para cada campo
+    const makeField = (labelText, type, name, value) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "mb-4";
+
+      const label = document.createElement("label");
+      label.htmlFor = name;
+      label.textContent = labelText;
+      label.className = "block text-gray-700 font-medium mb-1";
+
+      let input;
+      if (type === "textarea") {
+        input = document.createElement("textarea");
+        input.rows = 3;
+      } else {
+        input = document.createElement("input");
+        input.type = type;
+      }
+
+      input.id = name;
+      input.name = name;
+      input.value = value;
+      input.className = `
+      w-full
+      bg-yellow-50
+      border border-brown-300
+      text-brown-800
+      px-3 py-2
+      rounded-md
+      focus:outline-none focus:ring-2 focus:ring-green-400
+    `.trim().replace(/\s+/g, ' ');
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
+      return wrapper;
+    };
+
+    const select = document.createElement("select");
+    select.id = "nombre_maquina";
+    select.name = "nombre_maquina";
+
+    maquinasOriginales.forEach(maquina => {
+      const option = document.createElement("option");
+      option.value = maquina.id_maquina;
+      option.textContent = `${maquina.nombre} (${maquina.marca})`;
+      select.appendChild(option);
+    })
+
+    form.appendChild(select);
+
+    // Agregar campos
+    form.appendChild(makeField("Nombre del establecimiento", "text", "nombre_maquina"));
+    form.appendChild(makeField("Dirección del establecimiento", "text", "direccion_maquina"));
+
+    // Botón Modificar
+    const btnWrapper = document.createElement("div");
+    btnWrapper.className = "text-right";
+
+    const btnModificar = document.createElement("button");
+    btnModificar.type = "submit";
+    btnModificar.textContent = "Modificar";
+    btnModificar.className = `
+    bg-yellow-500 hover:bg-yellow-600
+    text-white font-bold
+    px-4 py-2 rounded-md
+    transition duration-150
+  `.trim().replace(/\s+/g, ' ');
+
+    btnWrapper.appendChild(btnModificar);
+    form.appendChild(btnWrapper);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const actualizado = {
+        
+        nombre: form.nombre.value,
+        nombre_establecimiento: form.nombre_establecimiento.value,
+        direccion_establecimiento: form.direccion_establecimiento.value,
+      };
+
+      modificarmaquina(maquina.id_maquina, actualizado);
+      modal.classList.add("hidden");
+    });
+
+    // Insertar form en el modal y mostrarlo
+    modalContent.appendChild(form);
+
+    modal.classList.remove("hidden");
+  }
+
+
   // Función para cerrar el modal
   const cerrarModal = (id) => {
     const modal = document.getElementById(id);
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, cerrarModal, handleSubmit }
+  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit }
 
 }
 
