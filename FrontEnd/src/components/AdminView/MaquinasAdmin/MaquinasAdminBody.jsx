@@ -13,7 +13,7 @@ const MaquinasAdminBody = ({ filtro }) => {
         error,
     } = useMaquinasContext();
 
-    const {cerrarModal} = useMaquinas();
+    const {cerrarModal, openModalCrear} = useMaquinas();
 
     // Obtener las máquinas solo una vez al montar
     useEffect(() => {
@@ -71,7 +71,11 @@ const MaquinasAdminBody = ({ filtro }) => {
     return (
         <div className=''>
             <h2 className='text-[50px]'>{`${filtro != "" ? filtro : "Todas"}`}</h2>
-            <button className={`w-56 ${filtro != "" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}>Añadir Nueva Máquina</button>
+            <button 
+                className={`w-56 ${filtro != "" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
+                onClick={() => {openModalCrear()}}>
+                    Añadir Nueva Máquina
+            </button>
             <div className={`grid justify-center items-center mt-10 m-auto w-full gap-6 ${filtro === "En stock" || filtro === "En mantenimiento" || filtro === ""
                 ? 'min-xl:grid-cols-2 min-lg:grid-cols-1'
                 : 'min-xl:grid-cols-8 min-lg:grid-cols-8 min-md:grid-cols-6'
@@ -89,7 +93,7 @@ const MaquinasAdminBody = ({ filtro }) => {
             <div className="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id='modalMaquinas'>
                 <div className="bg-white max-h-[60%] overflow-y-auto transition-all rounded-2xl shadow-2xl w-11/12 max-w-lg p-6 relative">
                     <button
-                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 sticky left-[100%] cursor-pointer"
                         onClick={() => cerrarModal("modalMaquinas")}
                     >
                         ✕

@@ -90,6 +90,32 @@ export const MaquinasProvider = ({ children }) => {
         }
     };
 
+    const aniadirNuevaMaquina = async (maquina) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/maquinas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(maquina),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al añadir el maquina');
+            }
+
+            const data = await response.json();
+            console.log('maquina añadido con éxito:', data);
+
+            // Actualiza estado:
+            setMaquinas(prev => [...prev, data]);
+            setMaquinasOriginales(prev => [...prev, data]);
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     const modificarMaquina = async (id_maquina, maquinaNueva) => {
         try {
             const response = await fetch(`http://localhost:3000/api/maquinas/${id_maquina}`, {
@@ -133,7 +159,7 @@ export const MaquinasProvider = ({ children }) => {
     }
 
     return (
-        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud, estado, setEstado, modificarMaquina, borrarMaquina }}>
+        <MaquinasContext.Provider value={{ maquinasOriginales, maquinas, setMaquinas, loading, error, getMaquinas, getMaquinasStock, getMaquinaByMarca, gestionarSolicitud, estado, setEstado, aniadirNuevaMaquina, modificarMaquina, borrarMaquina }}>
             {children}
         </MaquinasContext.Provider>
     );

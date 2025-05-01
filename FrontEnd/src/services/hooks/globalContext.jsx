@@ -68,10 +68,10 @@ export const GlobalProvider = ({ children }) => {
     const isLoggedIn = () => {
 
         const user = localStorage.getItem('user');
-        
-        if(user){
+
+        if (user) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -89,10 +89,22 @@ export const GlobalProvider = ({ children }) => {
         const mes = String(fecha.getMonth() + 1).padStart(2, '0');
         const año = fecha.getFullYear();
         return `${dia}/${mes}/${año}`;
-      };
+    };
+
+    const [isFileSelected, setIsFileSelected] = useState(false);
+
+    const handleChangeFile = (e) => {
+        const fileInput = e.target;
+        if (fileInput.files.length > 0) {
+            setIsFileSelected(true); // Cuando un archivo es seleccionado
+        } else {
+            setIsFileSelected(false); // Si no hay archivo
+        }
+    };
+
 
     return (
-        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha, handleChangeFile, isFileSelected }}>
             {children}
         </GlobalContext.Provider>
     );

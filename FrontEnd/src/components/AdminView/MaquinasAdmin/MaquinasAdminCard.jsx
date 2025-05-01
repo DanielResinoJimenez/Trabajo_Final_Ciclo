@@ -2,14 +2,17 @@ import React, { useEffect } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
+import { useGlobalContext } from '../../../services/hooks/globalContext';
 
 const MaquinasAdminCard = ({ maquina, filtro }) => {
 
     const { cargarImagen, imagen } = useProductos();
 
-    const {modificarMaquina, borrarMaquina} = useMaquinasContext();
+    const { modificarMaquina, borrarMaquina } = useMaquinasContext();
 
-    const {openModalModificar} = useMaquinas();
+    const { openModalModificar, handleSubmit, handleFileChange } = useMaquinas();
+
+    const { isFileSelected, handleChangeFile } = useGlobalContext();
 
     useEffect(() => {
         if (maquina.imagen) {
@@ -51,28 +54,49 @@ const MaquinasAdminCard = ({ maquina, filtro }) => {
         case "En mantenimiento":
 
             return (
-                <article className='flex max-xl:w-[800px] justify-between p-10 border border-gray-400 items-center'>
-                    <img src={imagen} alt="" className='h-[300px] w-[50%]' />
-                    <div className='flex flex-col w-[50%] text-center'>
-                        <h2 className='text-4xl'>{maquina.nombre}</h2>
-                        <p className='text-lg'>{maquina.descripcion}</p>
-                        <span className='text-xl'>{maquina.precio} €</span>
-                        <div className='flex gap-4 mt-4 items-center justify-center'>
-                            <button className='cursor-pointer w-[30%] px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white'
-                                onClick={() => {borrarMaquina(maquina.id_maquina)}}>
+                <article className="flex max-xl:w-[800px] h-[300px] justify-between p-10 border border-gray-400 items-center">
+                    {
+                        imagen.length === 0 ?
+                            <div className='flex items-center justify-around w-[50%]'>
+                                <label for="imagen_maquina" className="cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:bg-blue-500 hover:font-semibold text-white bg-blue-600 rounded-full p-4 flex items-center justify-center">
+                                    <i className="fas fa-file-upload text-xl"></i>
+                                </label>
+                                <input
+                                    type="file"
+                                    name="imagen"
+                                    id="imagen_maquina"
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                                <i
+                                    className="fas fa-check-circle cursor-pointer text-center text-3xl text-blue-600 hover:text-blue-500 transition-all duration-300 ease-in-out hover:scale-105"
+                                    onClick={(e) => { handleSubmit(e, maquina.id_maquina) }}
+                                ></i>
+                            </div>
+                            :
+                            <img src={imagen} alt="" className="object-contain max-w-full max-h-[300px] w-[50%] h-auto" />
+                    }
+                    <div className="flex flex-col w-[50%] text-center">
+                        <h2 className="text-4xl">{maquina.nombre}</h2>
+                        <p className="text-lg">{maquina.descripcion}</p>
+                        <span className="text-xl">{maquina.precio} €</span>
+                        <div className="flex gap-4 mt-4 items-center justify-center">
+                            <button className="cursor-pointer w-[30%] px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white"
+                                onClick={() => { borrarMaquina(maquina.id_maquina) }}>
                                 Borrar
                             </button>
-                            <button className={`w-[70%] ${filtro != "En stock" && 'hidden'} cursor-pointer px-6 py-3 bg-yellow-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:font-semibold text-white`}
-                                onClick={() => {openModalModificar(maquina)}}>
+                            <button className={`w-[70%] ${filtro !== "En stock" || filtro !== "" && 'hidden'} cursor-pointer px-6 py-3 bg-yellow-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:font-semibold text-white`}
+                                onClick={() => { openModalModificar(maquina) }}>
                                 Modificar Información
                             </button>
-                            <button className={`w-[70%] ${filtro != "En mantenimiento" && 'hidden'} cursor-pointer px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
-                                onClick={() => {modificarMaquina(maquina.id_maquina, { ...maquina, estado: "En stock" })}}>
+                            <button className={`w-[70%] ${filtro !== "En mantenimiento" && 'hidden'} cursor-pointer px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
+                                onClick={() => { modificarMaquina(maquina.id_maquina, { ...maquina, estado: "En stock" }) }}>
                                 Mantenimiento finalizado
                             </button>
                         </div>
                     </div>
                 </article>
+
             )
 
     }

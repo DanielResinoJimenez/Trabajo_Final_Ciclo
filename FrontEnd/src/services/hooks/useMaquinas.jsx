@@ -8,7 +8,7 @@ const useMaquinas = () => {
   const [marca, setMarca] = useState('');
   const [archivo, setArchivo] = useState(null);
   const [imagen, setImagen] = useState(null);
-  const { maquinasOriginales, setMaquinas, gestionarSolicitud, modificarMaquina } = useMaquinasContext();
+  const { getMaquinas, maquinasOriginales, setMaquinas, gestionarSolicitud, aniadirNuevaMaquina, modificarMaquina } = useMaquinasContext();
 
   // FUNCIONES PARA ADMINISTRAR LAS IMAGENES DE LAS MÁQUINAS
 
@@ -23,8 +23,14 @@ const useMaquinas = () => {
   const handleSubmit = async (e, id_maquina) => {
     e.preventDefault();
 
-    const fileInput = e.target.querySelector('#imagen_maquina'); // Asegúrate de que el input tiene este ID
-    const file = fileInput?.files?.[0];
+    console.log(e.target);
+    let fileInput = e.target.querySelector('#imagen_maquina'); // Asegúrate de que el input tiene este ID
+    let file = fileInput?.files?.[0];
+
+    if(!fileInput){
+      fileInput = e.target.parentElement.querySelector('#imagen_maquina');
+      file = fileInput?.files?.[0];
+    }
 
     if (!file) {
       return;
@@ -235,6 +241,180 @@ const useMaquinas = () => {
     modal.classList.remove("hidden");
   };
 
+  // Función para mostrar un modal de creación de máquinas
+  const openModalCrear = () => {
+    setArchivo(null);
+    const modal = document.getElementById("modalMaquinas");
+    const modalContent = document.getElementById("modalMaquinasContent");
+
+    // Limpiar contenido previo
+    modalContent.innerHTML = "";
+
+    // Crear el <form>
+    const form = document.createElement("form");
+    form.id = "formCrearMaquina";
+
+    // Helper para cada campo
+    const makeField = (labelText, type, name, value = "") => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "mb-4";
+
+      const label = document.createElement("label");
+      label.htmlFor = name;
+      label.textContent = labelText;
+      label.className = "block text-gray-700 font-medium mb-1";
+
+      let input;
+      if (type === "textarea") {
+        input = document.createElement("textarea");
+        input.rows = 3;
+      } else {
+        input = document.createElement("input");
+        input.type = type;
+      }
+
+      if (type === "number") {
+        input.step = "0.01";
+      }
+
+      input.id = name;
+      input.name = name;
+      input.value = value;
+      input.className = `
+      w-full
+      bg-yellow-50
+      border border-brown-300
+      text-brown-800
+      px-3 py-2
+      rounded-md
+      focus:outline-none focus:ring-2 focus:ring-green-400
+    `.trim().replace(/\s+/g, ' ');
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
+      return wrapper;
+    };
+
+    // Agregar campos vacíos
+    form.appendChild(makeField("Nombre", "text", "nombre"));
+    form.appendChild(makeField("Descripción", "textarea", "descripcion"));
+    form.appendChild(makeField("Precio (€)", "number", "precio"));
+
+    // Select de marca
+    const marcaDiv = document.createElement("div");
+    marcaDiv.className = "mb-4";
+
+    const marcaLabel = document.createElement("label");
+    marcaLabel.htmlFor = "marca_maquina";
+    marcaLabel.textContent = "Marca";
+    marcaLabel.className = "block text-gray-700 font-medium mb-1";
+
+    const marcaSelect = document.createElement("select");
+    marcaSelect.id = "marca_maquina";
+    marcaSelect.name = "marca_maquina";
+    marcaSelect.className = `
+    w-full
+    bg-yellow-50
+    border border-brown-300
+    text-brown-800
+    px-3 py-2
+    rounded-md
+    focus:outline-none focus:ring-2 focus:ring-green-400
+  `.trim().replace(/\s+/g, ' ');
+
+    const marcas = ["Saeco", "Nescafé", "Colibrí"];
+    marcas.forEach(cat => {
+      const option = document.createElement("option");
+      option.value = cat;
+      option.textContent = cat;
+      marcaSelect.appendChild(option);
+    });
+
+    marcaDiv.appendChild(marcaLabel);
+    marcaDiv.appendChild(marcaSelect);
+    form.appendChild(marcaDiv);
+
+    // Select de estado
+    const estadoDiv = document.createElement("div");
+    estadoDiv.className = "mb-4";
+
+    const estadoLabel = document.createElement("label");
+    estadoLabel.htmlFor = "estado_maquina";
+    estadoLabel.textContent = "Estado";
+    estadoLabel.className = "block text-gray-700 font-medium mb-1";
+
+    const estadoSelect = document.createElement("select");
+    estadoSelect.id = "estado_maquina";
+    estadoSelect.name = "estado_maquina";
+    estadoSelect.className = `
+    w-full
+    bg-yellow-50
+    border border-brown-300
+    text-brown-800
+    px-3 py-2
+    rounded-md
+    focus:outline-none focus:ring-2 focus:ring-green-400
+  `.trim().replace(/\s+/g, ' ');
+
+    const estados = ["En stock", "En mantenimiento", "En servicio"];
+    estados.forEach(cat => {
+      const option = document.createElement("option");
+      option.value = cat;
+      option.textContent = cat;
+      estadoSelect.appendChild(option);
+    });
+
+    estadoDiv.appendChild(estadoLabel);
+    estadoDiv.appendChild(estadoSelect);
+    form.appendChild(estadoDiv);
+
+    // Agregar botón "Añadir"
+    const addButtonDiv = document.createElement("div");
+    addButtonDiv.className = "mt-4 text-center";
+
+    const addButton = document.createElement("button");
+    addButton.type = "submit";
+    addButton.className = `
+    bg-green-500
+    text-white
+    px-4
+    py-2
+    rounded-md
+    font-medium
+    hover:bg-green-600
+  `;
+    addButton.textContent = "Añadir";
+
+    addButton.onclick = (e) => {
+      e.preventDefault();
+
+      // Referencias a los campos del formulario
+      const nuevaMaquina = {
+        nombre: form.nombre.value,
+        descripcion: form.descripcion.value,
+        precio: form.precio.value,
+        marca: form.marca_maquina.value,
+        estado: form.estado_maquina.value,
+      };
+
+      // Añadir nueva máquina
+      aniadirNuevaMaquina(nuevaMaquina);
+
+    };
+
+    addButtonDiv.appendChild(addButton);
+    form.appendChild(addButtonDiv);
+
+    // Agregar el formulario al modal
+    modalContent.appendChild(form);
+
+    modal.classList.remove("hidden");
+  };
+
+
+
+
+  // Función para mostrar un modal con formulario de edición
   const openModalModificar = (maquina) => {
     setArchivo(null);
     const modal = document.getElementById("modalMaquinas");
@@ -387,6 +567,7 @@ const useMaquinas = () => {
       newButton.onclick = (e) => {
         e.preventDefault();
         borrarImagen(maquina.id_maquina);
+        newImg.src = null;
       }
       newDiv.appendChild(newLabel);
       newDiv.appendChild(newImg);
@@ -461,7 +642,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalModificar, cerrarModal }
+  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, cerrarModal, handleSubmit }
 
 }
 

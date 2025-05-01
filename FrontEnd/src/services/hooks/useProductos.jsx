@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useProductosContext } from './productosContext';
+import { useMaquinasContext } from './maquinasContext';
 
 const useProductos = () => {
 
     const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
+    const { maquinas, setMaquinas, maquinasOriginales, setMaquinasOriginales } = useMaquinasContext();
 
     // Variable de estado que contiene la imagen
 
