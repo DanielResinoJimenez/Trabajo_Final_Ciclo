@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import MaquinasAdminCard from './MaquinasAdminCard';
+import useMaquinas from '../../../services/hooks/useMaquinas';
 
 const MaquinasAdminBody = ({ filtro }) => {
     const {
@@ -11,6 +12,8 @@ const MaquinasAdminBody = ({ filtro }) => {
         loading,
         error,
     } = useMaquinasContext();
+
+    const {cerrarModal} = useMaquinas();
 
     // Obtener las máquinas solo una vez al montar
     useEffect(() => {
@@ -80,6 +83,21 @@ const MaquinasAdminBody = ({ filtro }) => {
                 ) : (
                     <p className="col-span-full text-center">No hay máquinas en este estado actualmente</p>
                 )}
+            </div>
+
+            {/* Modal Editar/Crear máquina */}
+            <div className="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" id='modalMaquinas'>
+                <div className="bg-white max-h-[60%] overflow-y-auto transition-all rounded-2xl shadow-2xl w-11/12 max-w-lg p-6 relative">
+                    <button
+                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                        onClick={() => cerrarModal("modalMaquinas")}
+                    >
+                        ✕
+                    </button>
+                    <div className="mt-4" id='modalMaquinasContent'>
+
+                    </div>
+                </div>
             </div>
         </div>
     );

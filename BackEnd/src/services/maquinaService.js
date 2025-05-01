@@ -51,10 +51,12 @@ const createMaquina = async (body) => {
 
 const createMaquinaImagen = async (imagenData) => {
     try {
-        return await Maquina.update(
+        const result = await Maquina.update(
             { imagen: imagenData.imagen, tipo: imagenData.tipo }, // Valores a actualizar
-            { where: { id_producto: imagenData.id_producto } } // Condición para identificar el producto
+            { where: { id_maquina: imagenData.id_maquina } } // Condición para identificar la maquina
         );
+        console.log("Resultado del update:", result); // debería ser [1] si actualiza 1 fila
+        return result;
     } catch (error) {
         throw new Error("Error al actualizar la imagen: " + error.message);
     }

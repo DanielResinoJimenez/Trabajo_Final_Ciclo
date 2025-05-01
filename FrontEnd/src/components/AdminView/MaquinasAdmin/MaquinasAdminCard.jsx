@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
+import useMaquinas from '../../../services/hooks/useMaquinas';
 
 const MaquinasAdminCard = ({ maquina, filtro }) => {
 
     const { cargarImagen, imagen } = useProductos();
 
     const {modificarMaquina, borrarMaquina} = useMaquinasContext();
+
+    const {openModalModificar} = useMaquinas();
 
     useEffect(() => {
         if (maquina.imagen) {
@@ -55,12 +58,15 @@ const MaquinasAdminCard = ({ maquina, filtro }) => {
                         <p className='text-lg'>{maquina.descripcion}</p>
                         <span className='text-xl'>{maquina.precio} €</span>
                         <div className='flex gap-4 mt-4 items-center justify-center'>
-                            <button className='w-[30%] px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white'
+                            <button className='cursor-pointer w-[30%] px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white'
                                 onClick={() => {borrarMaquina(maquina.id_maquina)}}>
                                 Borrar
                             </button>
-                            <button className={`w-[70%] ${filtro != "En stock" && 'hidden'} px-6 py-3 bg-yellow-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:font-semibold text-white`}>Modificar Información</button>
-                            <button className={`w-[70%] ${filtro != "En mantenimiento" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
+                            <button className={`w-[70%] ${filtro != "En stock" && 'hidden'} cursor-pointer px-6 py-3 bg-yellow-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:font-semibold text-white`}
+                                onClick={() => {openModalModificar(maquina)}}>
+                                Modificar Información
+                            </button>
+                            <button className={`w-[70%] ${filtro != "En mantenimiento" && 'hidden'} cursor-pointer px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
                                 onClick={() => {modificarMaquina(maquina.id_maquina, { ...maquina, estado: "En stock" })}}>
                                 Mantenimiento finalizado
                             </button>

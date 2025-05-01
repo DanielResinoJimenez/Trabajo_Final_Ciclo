@@ -50,13 +50,30 @@ const createMaquina = async (req, res) => {
 
 const createMaquinaImagen = async (req, res) => {
     try {
-        const imagenData = req.body;
-        const maquina = await Service.createMaquinaImagen(imagenData);
+        const { id_maquina } = req.body;
+        const imagen = req.file;
+
+        if (!imagen) {
+            return res.status(400).json({ message: "No se recibió ninguna imagen." });
+        }
+
+        console.log(id_maquina, imagen)
+
+        const imagenBuffer = imagen.buffer;
+        const tipo = imagen.mimetype;
+
+        const maquina = await Service.createMaquinaImagen({
+            id_maquina,
+            imagen: imagenBuffer,
+            tipo,
+        });
+
         res.status(200).json(maquina);
     } catch (error) {
+        console.error("Error en createMaquinaImagen:", error);
         res.status(500).send(error.message);
     }
-}
+};
 
 // Modificar una máquina
 
