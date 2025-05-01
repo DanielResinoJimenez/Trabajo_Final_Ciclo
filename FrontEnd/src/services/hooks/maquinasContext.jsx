@@ -90,21 +90,21 @@ export const MaquinasProvider = ({ children }) => {
         }
     };
 
-    const modificarMaquina = async (id_maquina, maquina) => {
+    const modificarMaquina = async (id_maquina, maquinaNueva) => {
         try {
             const response = await fetch(`http://localhost:3000/api/maquinas/${id_maquina}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(maquina)
+                body: JSON.stringify(maquinaNueva)
             });
             if (!response.ok) {
                 throw new Error('Error al modificar la máquina');
             }
             const data = await response.json();
-            setMaquinas(maquinas.map(maquina => (maquina.id_maquina === id_maquina ? data : maquina)));
-            setMaquinasOriginales(maquinasOriginales.map(maquina => (maquina.id_maquina === id_maquina ? data : maquina)));
+            setMaquinas(maquinas.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
+            setMaquinasOriginales(maquinasOriginales.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
             alert("Se ha modificado la máquina correctamente");
             return data;
         } catch (error) {

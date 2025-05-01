@@ -27,7 +27,6 @@ const useMaquinas = () => {
     const file = fileInput?.files?.[0];
 
     if (!file) {
-      alert("No se ha seleccionado un archivo.");
       return;
     }
 
