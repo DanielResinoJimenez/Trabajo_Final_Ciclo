@@ -4,6 +4,7 @@ import MaquinasAdminCard from './MaquinasAdminCard';
 import useMaquinas from '../../../services/hooks/useMaquinas';
 import ModalAltaMaquina from './ModalAltaMáquina';
 import { useCuentaContext } from '../../../services/hooks/cuentaContext';
+import CreacionRutaMaquinas from './CreacionRutaMaquinas';
 
 const MaquinasAdminBody = ({ filtro }) => {
     const {
@@ -163,6 +164,14 @@ const MaquinasAdminBody = ({ filtro }) => {
                     </div>
                 </div>
             )}
+            
+            {/* Habilitar creación de ruta rápida */}
+
+            {
+                filtro === "Sin Reponer" && (
+                    <CreacionRutaMaquinas />
+                )
+            }
         </div>
     );
 };
