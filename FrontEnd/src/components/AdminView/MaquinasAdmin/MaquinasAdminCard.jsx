@@ -25,6 +25,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
                 <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8'>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
+                    <button onClick={() => {modificarMaquina(maquina.id_maquina, {...maquina, estado: "En stock"})}} className="min-w-[100px]  px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white">Dar de baja</button>
                 </article>
             )
 
