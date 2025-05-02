@@ -165,11 +165,10 @@ const useMaquinas = () => {
       const ultimaFecha = accionesPorMaquina.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
       const fechaUltimaRecaudacion = ultimaFecha[0]?.fecha;
 
-      if (fechaUltimaRecaudacion) {
+      if (fechaUltimaRecaudacion && maquina.reposicion === "S") {
         const fechaActual = new Date();
         const fechaRecaudacion = new Date(fechaUltimaRecaudacion);
         const diferenciaDias = (fechaActual - fechaRecaudacion) / (1000 * 60 * 60 * 24);
-
         if (diferenciaDias >= 13) {
           modificarMaquina(maquina.id_maquina, { ...maquina, reposicion: "N" });
           
@@ -424,6 +423,8 @@ const useMaquinas = () => {
     addButton.type = "submit";
     addButton.className = `
     bg-green-500
+    w-full
+    hover:bg-green-600
     text-white
     px-4
     py-2
@@ -447,6 +448,8 @@ const useMaquinas = () => {
 
       // Añadir nueva máquina
       aniadirNuevaMaquina(nuevaMaquina);
+
+      modal.classList.add("hidden");
 
     };
 
