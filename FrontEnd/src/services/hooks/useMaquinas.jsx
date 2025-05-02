@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useMaquinasContext } from './maquinasContext';
+import { useCuentaContext } from './cuentaContext';
 
 const useMaquinas = () => {
 
@@ -9,6 +10,7 @@ const useMaquinas = () => {
   const [archivo, setArchivo] = useState(null);
   const [imagen, setImagen] = useState(null);
   const { getMaquinas, maquinasOriginales, setMaquinas, gestionarSolicitud, aniadirNuevaMaquina, modificarMaquina } = useMaquinasContext();
+  const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion, aniadirIngresoMaquina } = useCuentaContext();
 
   // FUNCIONES PARA ADMINISTRAR LAS IMAGENES DE LAS MÁQUINAS
 
@@ -135,6 +137,27 @@ const useMaquinas = () => {
     );
     setMaquinas(filtered);
   };
+
+  // Función para insertar ganancia de máquina
+
+  const insertarGanancia = (e, maquina) => {
+    let fechaHoy = new Date();
+    const ingreso = e.target.parentElement.previousElementSibling.value;
+    const id_maquina = maquina.id_maquina;
+    const nuevoIngreso = {
+      id_cuenta: cuentas.id_cuenta,
+      id_maquina: id_maquina,
+      motivo: maquina.nombre,
+      monto: ingreso,
+      fecha: fechaHoy,
+    }
+
+    aniadirIngresoMaquina(nuevoIngreso)
+
+    modificarMaquina(maquina.id_maquina, { ...maquina, reposicion: "S" });
+
+  }
+
 
   // FUNCIONES PARA MANEJAR LOS MODALES DE LAS MÁQUINAS
 
@@ -756,7 +779,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit }
+  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia }
 
 }
 

@@ -10,7 +10,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
 
     const { modificarMaquina, borrarMaquina } = useMaquinasContext();
 
-    const { openModalModificar, openModalAlta, handleSubmit, handleFileChange } = useMaquinas();
+    const { openModalModificar, openModalAlta, handleSubmit, handleFileChange, insertarGanancia } = useMaquinas();
 
     useEffect(() => {
         if (maquina.imagen) {
@@ -42,9 +42,11 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
         case "Apuntar recaudación":
 
             return (
-                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8'>
+                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 px-4'>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
+                    <input type="number" step={0.01} className='w-full bg-yellow-50 border border-brown-300 text-brown-800 px-3 py-2 rounded-md'/>
+                    <button className='bg-green-600 py-1 px-2 rounded mt-2 transition duration-150 hover:bg-green-300 cursor-pointer'><i className="fas fa-check" onClick={(e) => {insertarGanancia(e, maquina)}}></i></button>
                 </article>
             )
 

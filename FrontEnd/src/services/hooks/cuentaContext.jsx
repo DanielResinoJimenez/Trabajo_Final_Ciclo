@@ -111,6 +111,34 @@ export const CuentaProvider = ({ children }) => {
             console.error('Error al modificar los datos:', error);
         }
     };
+
+    // Añadir nuevo ingreso de máquina
+
+    const aniadirIngresoMaquina = async (ingreso) => {
+        try {
+            const response = await fetch('http://localhost:3000/api/ganancias', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(ingreso),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al añadir el ingreso de máquina');
+            }
+
+            const data = await response.json();
+            console.log('Ingreso añadido con éxito:', data);
+
+            // Actualiza estado:
+            setAcciones(prev => [...prev, data]);
+            
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
     
 
     // Añadir un nuevo accion
@@ -195,7 +223,7 @@ export const CuentaProvider = ({ children }) => {
       };
 
     return (
-        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos, calcularSaldo, saldo, deleteAccion }}>
+        <CuentaContext.Provider value={{ getEmpresa, getCuentas, getDatos, acciones, empresa, cuentas, loading, aniadirNuevaAccion, modifyDatos, calcularSaldo, saldo, deleteAccion, aniadirIngresoMaquina }}>
             {children}
         </CuentaContext.Provider>
     );
