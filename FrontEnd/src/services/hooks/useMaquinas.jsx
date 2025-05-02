@@ -637,7 +637,7 @@ const useMaquinas = () => {
   }
 
   // Función para mostrar un modal con formulario de edición
-  const openModalAlta = () => {
+  const openModalAlta = (maquina) => {
     setArchivo(null);
     const modal = document.getElementById("modalMaquinas");
     const modalContent = document.getElementById("modalMaquinasContent");
@@ -650,7 +650,7 @@ const useMaquinas = () => {
     form.id = "formEditarmaquina";
 
     // Helper para cada campo
-    const makeField = (labelText, type, name, value) => {
+    const makeField = (labelText, type, name, value, disable) => {
       const wrapper = document.createElement("div");
       wrapper.className = "mb-4";
 
@@ -671,6 +671,7 @@ const useMaquinas = () => {
       input.id = name;
       input.name = name;
       input.value = value;
+      input.disabled = disable || false;
       input.className = `
       w-full
       bg-yellow-50
@@ -686,22 +687,10 @@ const useMaquinas = () => {
       return wrapper;
     };
 
-    const select = document.createElement("select");
-    select.id = "nombre_maquina";
-    select.name = "nombre_maquina";
-
-    maquinasOriginales.forEach(maquina => {
-      const option = document.createElement("option");
-      option.value = maquina.id_maquina;
-      option.textContent = `${maquina.nombre} (${maquina.marca})`;
-      select.appendChild(option);
-    })
-
-    form.appendChild(select);
-
     // Agregar campos
-    form.appendChild(makeField("Nombre del establecimiento", "text", "nombre_maquina"));
-    form.appendChild(makeField("Dirección del establecimiento", "text", "direccion_maquina"));
+    form.appendChild(makeField("Nombre", "text", "nombre_maquina", maquina.nombre, true));
+    form.appendChild(makeField("Nombre del establecimiento", "text", "nombre_establecimiento", ""));
+    form.appendChild(makeField("Dirección del establecimiento", "text", "direccion_establecimiento", ""));
 
     // Botón Modificar
     const btnWrapper = document.createElement("div");
@@ -724,13 +713,14 @@ const useMaquinas = () => {
       e.preventDefault();
 
       const actualizado = {
-        
-        nombre: form.nombre.value,
+        nombre: form.nombre_maquina.value,
         nombre_establecimiento: form.nombre_establecimiento.value,
         direccion_establecimiento: form.direccion_establecimiento.value,
+        estado: "En servicio",
+        reposicion: "N"
       };
 
-      modificarmaquina(maquina.id_maquina, actualizado);
+      modificarMaquina(maquina.id_maquina, actualizado);
       modal.classList.add("hidden");
     });
 
