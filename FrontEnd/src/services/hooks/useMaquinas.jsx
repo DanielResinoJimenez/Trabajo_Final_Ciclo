@@ -690,7 +690,26 @@ const useMaquinas = () => {
     // Agregar campos
     form.appendChild(makeField("Nombre", "text", "nombre_maquina", maquina.nombre, true));
     form.appendChild(makeField("Nombre del establecimiento", "text", "nombre_establecimiento", ""));
-    form.appendChild(makeField("Dirección del establecimiento", "text", "direccion_establecimiento", ""));
+
+    // Agregamos el campo para seleccionar una dirección real
+    const direccionField = makeField("Dirección del establecimiento", "text", "direccion_establecimiento", "");
+    form.appendChild(direccionField);
+
+    // Mapa
+    const mapaWrapper = document.createElement("div");
+    mapaWrapper.className = "mb-4";
+
+    const mapaLabel = document.createElement("label");
+    mapaLabel.textContent = "Selecciona ubicación en el mapa:";
+    mapaLabel.className = "block text-gray-700 font-medium mb-1";
+
+    const mapaDiv = document.createElement("div");
+    mapaDiv.id = "map";
+    mapaDiv.style = "height: 300px; width: 100%; border-radius: 8px;";
+
+    mapaWrapper.appendChild(mapaLabel);
+    mapaWrapper.appendChild(mapaDiv);
+    form.appendChild(mapaWrapper);
 
     // Botón Modificar
     const btnWrapper = document.createElement("div");

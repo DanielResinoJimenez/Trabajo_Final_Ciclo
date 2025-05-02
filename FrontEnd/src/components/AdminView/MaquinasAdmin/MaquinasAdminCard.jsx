@@ -4,7 +4,7 @@ import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
 import { useGlobalContext } from '../../../services/hooks/globalContext';
 
-const MaquinasAdminCard = ({ maquina, filtro }) => {
+const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
 
     const { cargarImagen, imagen } = useProductos();
 
@@ -94,8 +94,9 @@ const MaquinasAdminCard = ({ maquina, filtro }) => {
                                 Mantenimiento finalizado
                             </button>
 
-                            <button className={`w-full ${filtro != "En stock" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
-                                onClick={() => { openModalAlta(maquina) }}>
+                            <button
+                                className={`w-full ${filtro !== "En stock" && 'hidden'} px-6 py-3 bg-green-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-green-500 hover:font-semibold text-white`}
+                                onClick={() => abrirModal(maquina)}>
                                 Dar de alta máquina
                             </button>
                         </div>
