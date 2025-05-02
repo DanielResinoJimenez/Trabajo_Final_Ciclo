@@ -22,7 +22,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
         case "General":
 
             return (
-                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8'>
+                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 h-full'>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
                     <button onClick={() => {modificarMaquina(maquina.id_maquina, {...maquina, estado: "En stock"})}} className="min-w-[100px]  px-6 py-3 bg-red-600 rounded transition-all duration-300 ease-in-out hover:scale-105 hover:bg-red-300 hover:font-semibold text-white">Dar de baja</button>
@@ -32,7 +32,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
         case "Sin Reponer":
 
             return (
-                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8'>
+                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 h-full'>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
                     <p>{maquina.direccion_establecimiento}</p>
@@ -42,7 +42,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal }) => {
         case "Apuntar recaudación":
 
             return (
-                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 px-4'>
+                <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 px-4 h-full'>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
                     <input type="number" step={0.01} className='w-full bg-yellow-50 border border-brown-300 text-brown-800 px-3 py-2 rounded-md'/>
