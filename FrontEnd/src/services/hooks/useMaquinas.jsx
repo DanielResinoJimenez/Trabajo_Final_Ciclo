@@ -10,7 +10,7 @@ const useMaquinas = () => {
   const [archivo, setArchivo] = useState(null);
   const [imagen, setImagen] = useState(null);
   const { getMaquinas, maquinasOriginales, setMaquinas, gestionarSolicitud, aniadirNuevaMaquina, modificarMaquina } = useMaquinasContext();
-  const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion, aniadirIngresoMaquina } = useCuentaContext();
+  const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion, aniadirIngresoMaquina, acciones } = useCuentaContext();
 
   // FUNCIONES PARA ADMINISTRAR LAS IMAGENES DE LAS MÁQUINAS
 
@@ -155,6 +155,31 @@ const useMaquinas = () => {
     aniadirIngresoMaquina(nuevoIngreso)
 
     modificarMaquina(maquina.id_maquina, { ...maquina, reposicion: "S" });
+
+  }
+
+  // Función para comprobar que ya han pasado 13 días desde la última recaudación de máquina
+  const checkFechaIngreso = (maquina) => {
+    if (maquina.estado === "En servicio") {
+      const accionesPorMaquina = acciones.filter((accion) => accion.id_maquina === maquina.id_maquina)
+      const ultimaFecha = accionesPorMaquina.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      const fechaUltimaRecaudacion = ultimaFecha[0]?.fecha;
+
+      if (fechaUltimaRecaudacion) {
+        const fechaActual = new Date();
+        const fechaRecaudacion = new Date(fechaUltimaRecaudacion);
+        const diferenciaDias = (fechaActual - fechaRecaudacion) / (1000 * 60 * 60 * 24);
+
+        if (diferenciaDias >= 13) {
+          modificarMaquina(maquina.id_maquina, { ...maquina, reposicion: "N" });
+          
+        }
+      }
+    }else{
+      return;
+    }
+
+
 
   }
 
@@ -779,7 +804,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia }
+  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
 
 }
 

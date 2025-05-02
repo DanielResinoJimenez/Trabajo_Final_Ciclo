@@ -3,6 +3,7 @@ import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import MaquinasAdminCard from './MaquinasAdminCard';
 import useMaquinas from '../../../services/hooks/useMaquinas';
 import ModalAltaMaquina from './ModalAltaMáquina';
+import { useCuentaContext } from '../../../services/hooks/cuentaContext';
 
 const MaquinasAdminBody = ({ filtro }) => {
     const {
@@ -15,7 +16,9 @@ const MaquinasAdminBody = ({ filtro }) => {
         error,
     } = useMaquinasContext();
 
-    const { cerrarModal, openModalCrear } = useMaquinas();
+    const { cerrarModal, openModalCrear, checkFechaIngreso } = useMaquinas();
+
+    const { acciones } = useCuentaContext();
 
     const [modalAbierto, setModalAbierto] = useState(false);
     const [maquinaSeleccionada, setMaquinaSeleccionada] = useState(null);
@@ -74,6 +77,21 @@ const MaquinasAdminBody = ({ filtro }) => {
 
         setMaquinas(nuevasMaquinas);
     }, [filtro, maquinasOriginales, setMaquinas]);
+
+    const [yaActualizado, setYaActualizado] = useState(false);
+
+    useEffect(() => {
+        if (filtro === 'General' && acciones && !yaActualizado) {
+            let nuevasMaquinas = maquinasOriginales.filter(
+                (maquina) => maquina.estado === 'En servicio');
+            
+                nuevasMaquinas.forEach((maquina) => {
+                    checkFechaIngreso(maquina)
+                })
+
+                setYaActualizado(true);
+        }
+    }, [acciones, filtro]);
 
     if (loading) {
         return <p>Cargando...</p>;
