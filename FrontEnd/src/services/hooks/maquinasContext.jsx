@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { useGlobalContext } from './globalContext';
 
 const MaquinasContext = createContext();
 
@@ -13,6 +14,8 @@ export const MaquinasProvider = ({ children }) => {
 
     // Estados para filtrar
     const [estado, setEstado] = useState('');
+
+    const { mostrarAlerta } = useGlobalContext();
 
     const getMaquinas = async () => {
         try {
@@ -78,10 +81,10 @@ export const MaquinasProvider = ({ children }) => {
                 });
 
                 const dataCrear = await responseCrear.json();
-                alert("Se ha enviado la solicitud correctamente");
+                mostrarAlerta("Se ha enviado la solicitud correctamente")
                 return dataCrear;
             } else {
-                alert("Ya existe una solicitud similar, no se puede crear otra.");
+                mostrarAlerta("Ya existe una solicitud similar, no se puede crear otra.", "error")
                 return dataComprobar;
             }
         } catch (error) {
@@ -110,6 +113,7 @@ export const MaquinasProvider = ({ children }) => {
             // Actualiza estado:
             setMaquinas(prev => [...prev, data]);
             setMaquinasOriginales(prev => [...prev, data]);
+            mostrarAlerta("Se ha creado la máquina correctamente", "success")
 
         } catch (error) {
             console.error('Error:', error);
@@ -131,7 +135,7 @@ export const MaquinasProvider = ({ children }) => {
             const data = await response.json();
             setMaquinas(maquinas.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
             setMaquinasOriginales(maquinasOriginales.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
-            // alert("Se ha modificado la máquina correctamente");
+            mostrarAlerta("Se ha modificado la máquina correctamente", "success")
             return data;
         } catch (error) {
             console.error('Error al modificar la máquina:', error);
@@ -150,7 +154,7 @@ export const MaquinasProvider = ({ children }) => {
             const data = await response.json();
             setMaquinas(maquinas.filter(maquina => maquina.id_maquina !== id_maquina));
             setMaquinasOriginales(maquinasOriginales.filter(maquina => maquina.id_maquina !== id_maquina));
-            alert("Se ha borrado la máquina correctamente");
+            mostrarAlerta("Se ha borrado la máquina correctamente", "success")
             return data;
         } catch (error) {
             console.error('Error al borrar la máquina:', error);

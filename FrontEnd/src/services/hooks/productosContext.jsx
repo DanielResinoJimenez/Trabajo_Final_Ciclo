@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { useGlobalContext } from './globalContext';
 
 const ProductosContext = createContext();
 
@@ -13,6 +14,8 @@ export const ProductosProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectProd, setSelectProd] = useState([]);
+
+    const {mostrarAlerta} = useGlobalContext();
 
     const getProductos = async () => {
         try {
@@ -62,6 +65,7 @@ export const ProductosProvider = ({ children }) => {
                 // Actualizar la lista de productos después de eliminar uno
                 setProductos((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id));
                 setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id));
+                mostrarAlerta("Se han eliminado los productos seleccionados", "success")
             }
 
             // Aquí puedes limpiar el array o actualizar tu estado/UI si usas React/Vue/etc.
@@ -92,6 +96,7 @@ export const ProductosProvider = ({ children }) => {
             // Actualizar la lista de productos después de eliminar uno
             setProductos((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
             setProductosOriginales((prevProductos) => prevProductos.filter((producto) => producto.id_producto !== id_producto));
+            mostrarAlerta("Se ha eliminado el producto", "success")
 
         } catch (error) {
             console.error('Error:', error);
@@ -121,6 +126,8 @@ export const ProductosProvider = ({ children }) => {
             // Actualiza estado:
             setProductos(prev => [...prev, data]);
             setProductosOriginales(prev => [...prev, data]);
+
+            mostrarAlerta("Se ha creado un nuevo producto", "success")
 
         } catch (error) {
             console.error('Error:', error);
@@ -155,6 +162,8 @@ export const ProductosProvider = ({ children }) => {
             setProductosOriginales(prevProductosOriginales =>
                 prevProductosOriginales.map(p => p.id_producto === id_producto ? { ...p, ...producto } : p)
             );
+
+            mostrarAlerta("Se ha modificado el producto", "success")
 
         } catch (error) {
             console.error('Error:', error);

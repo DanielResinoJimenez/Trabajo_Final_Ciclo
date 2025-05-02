@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useGlobalContext } from './globalContext';
 
 const CuentaContext = createContext();
 
@@ -12,6 +13,8 @@ export const CuentaProvider = ({ children }) => {
     const [saldo, setSaldo] = useState(0);
     const [loading, setLoading] = useState(true);  // Mostrar loading hasta que todo esté cargado
     const [error, setError] = useState(null);
+
+    const { mostrarAlerta } = useGlobalContext();
 
     const getEmpresa = async () => {
         setLoading(true);
@@ -106,6 +109,7 @@ export const CuentaProvider = ({ children }) => {
             // Si la actualización fue exitosa, podemos manejar la respuesta si es necesario
             const data = await response.json();
             console.log('Datos actualizados correctamente:', data);
+            mostrarAlerta("Se han modificado los datos correctamente", "success")
     
         } catch (error) {
             console.error('Error al modificar los datos:', error);
@@ -133,6 +137,7 @@ export const CuentaProvider = ({ children }) => {
 
             // Actualiza estado:
             setAcciones(prev => [...prev, data]);
+            mostrarAlerta("Se ha añadido el ingreso correctamente", "success")
             
 
         } catch (error) {
@@ -162,7 +167,7 @@ export const CuentaProvider = ({ children }) => {
 
             // Actualiza estado:
             setAcciones(prev => [...prev, data]);
-            
+            mostrarAlerta("Se ha añadido la acción correctamente", "success")
 
         } catch (error) {
             console.error('Error:', error);
@@ -216,6 +221,8 @@ export const CuentaProvider = ({ children }) => {
           );
 
           calcularSaldo();
+
+          mostrarAlerta("Se ha borrado la acción correctamente", "success")
           
         } catch (error) {
           console.error("Error eliminando acción:", error);

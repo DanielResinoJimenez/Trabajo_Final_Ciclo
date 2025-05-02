@@ -8,6 +8,8 @@ import cuentaIcono from './../../assets/images/cuenta_panel_control.jpeg';
 import { ProductosProvider } from '../../services/hooks/productosContext';
 import { MaquinasProvider } from '../../services/hooks/maquinasContext';
 import { useSolicitudesContext } from '../../services/hooks/solicitudesContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PanelDeControl = () => {
 
@@ -108,6 +110,7 @@ const PanelDeControl = () => {
 
                     <div id='outlet_container'>
                         {mostrarOutlet && <Outlet />}
+                        <ToastContainer style={{ top: '100px', right: '20px' }}/>
                     </div>
                 </div>
             </MaquinasProvider>

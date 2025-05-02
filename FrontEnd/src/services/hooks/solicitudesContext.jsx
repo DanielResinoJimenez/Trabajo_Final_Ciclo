@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useGlobalContext } from './globalContext';
 
 const SolicitudesContext = createContext();
 
@@ -9,6 +10,8 @@ export const SolicitudesProvider = ({ children }) => {
     const [solicitudes, setSolicitudes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const { mostrarAlerta } = useGlobalContext();
 
     const getSolicitudesAceptadas = async () => {
         try {
@@ -69,6 +72,7 @@ export const SolicitudesProvider = ({ children }) => {
             const data = await response.json();
             const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id_solicitud !== id_solicitud);
             setSolicitudes(nuevasSolicitudes);
+            mostrarAlerta("Se ha modificado correctamente el estado de la solicitud", "success")
 
             return data;
         } catch (error) {
@@ -93,7 +97,7 @@ export const SolicitudesProvider = ({ children }) => {
             const data = await response.json();
             const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id_solicitud !== id_solicitud);
             setSolicitudes(nuevasSolicitudes);
-
+            mostrarAlerta("Se ha eliminado correctamente la solicitud", "success")
             return data;
         } catch (error) {
             console.error('Error en deleteSolicitud:', error);

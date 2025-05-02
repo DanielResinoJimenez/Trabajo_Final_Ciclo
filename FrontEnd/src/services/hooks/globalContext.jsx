@@ -1,4 +1,6 @@
 import { createContext, useContext, useRef, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalContext = createContext();
 
@@ -102,9 +104,33 @@ export const GlobalProvider = ({ children }) => {
         }
     };
 
+    const mostrarAlerta = (mensaje, tipo) => {
+        if (tipo === 'error') {
+            toast.error(mensaje, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            toast.success(mensaje, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
 
     return (
-        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha, handleChangeFile, isFileSelected }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha, handleChangeFile, isFileSelected, mostrarAlerta }}>
             {children}
         </GlobalContext.Provider>
     );

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import TabsCuenta from './CuentaAdmin/TabsCuenta';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CuentaAdmin = () => {
   
