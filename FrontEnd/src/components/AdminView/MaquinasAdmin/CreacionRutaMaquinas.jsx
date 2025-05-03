@@ -3,18 +3,32 @@ import MaquinasAdminCard from './MaquinasAdminCard'
 
 const CreacionRutaMaquinas = ({ maquinasSeleccionadas }) => {
 
+    console.log(maquinasSeleccionadas)
+
     return (
         <div className='flex flex-col w-full justify-between mt-10'>
             <h2 className='text-3xl'>Máquinas seleccionadas:</h2>
             <div className='w-full flex justify-between items-center'>
-                <section>
+                <section className='w-[40%]'>
                     {
-                        !maquinasSeleccionadas ?
+                        !maquinasSeleccionadas || maquinasSeleccionadas.length == 0 ?
                             <p className='text-center text-2xl font-bold'>No hay máquinas seleccionadas</p>
                             :
-                            maquinasSeleccionadas.map((maquina) => (
-                                <MaquinasAdminCard key={maquina.id_maquina} maquina={maquina} filtro="Sin reponer" abrirModal={false} />
-                            ))
+                            <ul className='w-full'>
+                                {
+                                    maquinasSeleccionadas
+                                    .sort((a, b) => a.id_maquina - b.id_maquina)
+                                    .map((maquina) => (
+                                        <li key={maquina.id_maquina} className='flex flex-col w-full'>
+                                            <div className='flex w-full gap-2 text-xl font-bold'>
+                                                <span className=''>{maquina.id_maquina}</span>
+                                                <span className=''>{maquina.nombre_establecimiento}</span>
+                                            </div>
+                                            <span className=''>{maquina.direccion_establecimiento.substring(0, 40)} ...</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
 
                     }
                 </section>

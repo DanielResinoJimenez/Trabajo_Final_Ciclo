@@ -17,7 +17,7 @@ const MaquinasAdminBody = ({ filtro }) => {
         error,
     } = useMaquinasContext();
 
-    const { cerrarModal, openModalCrear, checkFechaIngreso } = useMaquinas();
+    const { cerrarModal, openModalCrear, checkFechaIngreso, maquinasSeleccionadas, aniadirRuta } = useMaquinas();
 
     const { acciones } = useCuentaContext();
 
@@ -119,7 +119,8 @@ const MaquinasAdminBody = ({ filtro }) => {
                         <MaquinasAdminCard key={maquina.id_maquina} maquina={maquina} filtro={filtro} abrirModal={(maquina) => {
                             setMaquinaSeleccionada(maquina);
                             setModalAbierto(true);
-                        }} />
+                        }} 
+                        aniadirRuta={aniadirRuta}/>
                     ))
                 ) : (
                     <p className="col-span-full text-center">No hay máquinas en este estado actualmente</p>
@@ -168,8 +169,9 @@ const MaquinasAdminBody = ({ filtro }) => {
             {/* Habilitar creación de ruta rápida */}
 
             {
+                
                 filtro === "Sin Reponer" && (
-                    <CreacionRutaMaquinas />
+                    <CreacionRutaMaquinas maquinasSeleccionadas={maquinasSeleccionadas}/>
                 )
             }
         </div>

@@ -171,10 +171,10 @@ const useMaquinas = () => {
         const diferenciaDias = (fechaActual - fechaRecaudacion) / (1000 * 60 * 60 * 24);
         if (diferenciaDias >= 13) {
           modificarMaquina(maquina.id_maquina, { ...maquina, reposicion: "N" });
-          
+
         }
       }
-    }else{
+    } else {
       return;
     }
 
@@ -182,6 +182,25 @@ const useMaquinas = () => {
 
   }
 
+  // Función para añadir máquinas a una ruta
+
+  const [maquinasSeleccionadas, setMaquinasSeleccionadas] = useState([]);
+
+  const aniadirRuta = (e, maquina) => {
+    setMaquinasSeleccionadas((prev) => {
+      const yaSeleccionada = prev.some((m) => m.id_maquina === maquina.id_maquina);
+  
+      if (!yaSeleccionada) {
+        e.target.closest("article")?.classList.add("shadow-lg", "shadow-green-500");
+        return [...prev, maquina];
+      } else {
+        e.target.closest("article")?.classList.remove("shadow-lg", "shadow-green-500");
+        return prev.filter((m) => m.id_maquina !== maquina.id_maquina);
+      }
+    });
+
+    
+  };
 
   // FUNCIONES PARA MANEJAR LOS MODALES DE LAS MÁQUINAS
 
@@ -807,7 +826,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
+  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, maquinasSeleccionadas, aniadirRuta, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
 
 }
 
