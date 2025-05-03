@@ -35,7 +35,6 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
                 <article key={maquina.id_maquina} className='flex flex-col items-center justify-center border rounded-xl text-center py-8 h-full cursor-pointer hover:shadow-lg hover:shadow-yellow-950' onClick={(e) => {aniadirRuta(e, maquina)}}>
                     <span className='font-bold text-xl'>{maquina.id_maquina}</span>
                     <p>{maquina.nombre_establecimiento}</p>
-                    <p>{maquina.direccion_establecimiento}</p>
                 </article>
             )
 
@@ -55,7 +54,8 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
         case "En mantenimiento":
 
             return (
-                <article className="flex max-xl:w-[800px] h-[300px] justify-between p-10 border border-gray-400 items-center max-lg:flex-col max-lg:h-full max-lg:w-full">
+                <article className="flex max-xl:w-[800px] h-[300px] relative justify-between p-10 border border-gray-400 items-center max-lg:flex-col max-lg:h-full max-lg:w-full">
+                    <span className='absolute top-4 right-4 font-bold'>{maquina.estado}</span>
                     {
                         imagen.length === 0 ?
                             <div className='flex items-center justify-around w-[50%]'>

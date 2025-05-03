@@ -18,6 +18,7 @@ import { ProductosProvider } from './services/hooks/productosContext.jsx'
 import { MaquinasProvider } from './services/hooks/maquinasContext.jsx'
 import { SolicitudesProvider } from './services/hooks/solicitudesContext.jsx'
 import { CuentaProvider } from './services/hooks/cuentaContext.jsx'
+import "leaflet/dist/leaflet.css";
 
 
 createRoot(document.getElementById('root')).render(

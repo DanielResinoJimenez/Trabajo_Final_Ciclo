@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 const ModalAltaMaquina = ({ maquina, onClose, modificarMaquina }) => {
     const [nombreEstablecimiento, setNombreEstablecimiento] = useState("");

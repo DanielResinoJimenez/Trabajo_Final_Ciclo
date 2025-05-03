@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 const useLocalizacion = () => {
 
@@ -74,11 +73,32 @@ const useLocalizacion = () => {
         }
     };
 
+    // Función para geoCodificar la dirección de una máquina
+    const geocodeDireccion = async (direccion) => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&limit=1`;
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'MasCoffee/1.0 (thedan296@gmail.com)'
+            }
+        });
+        const data = await response.json();
+
+        if (data.length > 0) {
+            return {
+                lat: parseFloat(data[0].lat),
+                lng: parseFloat(data[0].lon),
+            };
+        } else {
+            return null;
+        }
+    }
+
     return {
         coordenadas,
         direccion,
         mapSelection,
         actualizarDesdeMapa,
+        geocodeDireccion,
         cargando,
         error,
     };

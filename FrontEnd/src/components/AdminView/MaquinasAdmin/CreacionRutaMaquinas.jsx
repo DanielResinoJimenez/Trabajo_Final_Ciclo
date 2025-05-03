@@ -1,5 +1,6 @@
 import React from 'react'
 import MaquinasAdminCard from './MaquinasAdminCard'
+import RutaRapidaMapa from './RutaRapidaMapa'
 
 const CreacionRutaMaquinas = ({ maquinasSeleccionadas }) => {
 
@@ -32,8 +33,8 @@ const CreacionRutaMaquinas = ({ maquinasSeleccionadas }) => {
 
                     }
                 </section>
-                <section>
-                    <p>Aquí va a estar el mapa</p>
+                <section className='h-full w-[60%] flex justify-center items-center'>
+                    <RutaRapidaMapa maquinasSeleccionadas={maquinasSeleccionadas}/>
                 </section>
             </div>
         </div>
