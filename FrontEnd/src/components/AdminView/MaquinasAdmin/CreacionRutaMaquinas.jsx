@@ -18,23 +18,23 @@ const CreacionRutaMaquinas = ({ maquinasSeleccionadas }) => {
                             <ul className='w-full'>
                                 {
                                     maquinasSeleccionadas
-                                    .sort((a, b) => a.id_maquina - b.id_maquina)
-                                    .map((maquina) => (
-                                        <li key={maquina.id_maquina} className='flex flex-col w-full'>
-                                            <div className='flex w-full gap-2 text-xl font-bold'>
-                                                <span className=''>{maquina.id_maquina}</span>
-                                                <span className=''>{maquina.nombre_establecimiento}</span>
-                                            </div>
-                                            <span className=''>{maquina.direccion_establecimiento.substring(0, 40)} ...</span>
-                                        </li>
-                                    ))
+                                        .sort((a, b) => a.id_maquina - b.id_maquina)
+                                        .map((maquina) => (
+                                            <li key={maquina.id_maquina} className='flex flex-col w-full'>
+                                                <div className='flex w-full gap-2 text-xl font-bold'>
+                                                    <span className=''>{maquina.id_maquina}</span>
+                                                    <span className=''>{maquina.nombre_establecimiento}</span>
+                                                </div>
+                                                <span className=''>{maquina.direccion_establecimiento.substring(0, 40)} ...</span>
+                                            </li>
+                                        ))
                                 }
                             </ul>
 
                     }
                 </section>
                 <section className='h-full w-[60%] flex justify-center items-center'>
-                    <RutaRapidaMapa maquinasSeleccionadas={maquinasSeleccionadas}/>
+                    <RutaRapidaMapa maquinasSeleccionadas={maquinasSeleccionadas} />
                 </section>
             </div>
         </div>
