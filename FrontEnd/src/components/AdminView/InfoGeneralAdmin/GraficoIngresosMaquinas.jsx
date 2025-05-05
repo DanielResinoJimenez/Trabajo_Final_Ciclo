@@ -33,7 +33,7 @@ const GraficoIngresosMaquinas = () => {
                 const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
 
                 // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
-                if (fecha.getMonth() === mes && fecha.getFullYear() == selectedYear) {
+                if (fecha.getMonth() == mes && fecha.getFullYear() == selectedYear.getFullYear()) {
                     total += parseFloat(accion.monto); // Sumamos el monto de la acción
                 }
             }

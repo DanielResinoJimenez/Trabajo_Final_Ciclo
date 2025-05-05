@@ -29,19 +29,18 @@ const GraficoIngresosGastos = () => {
         if (tipoAcciones != "") {
             tipoAcciones.forEach((accion) => {
                 const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
-                
 
                 // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
-                if (fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && tipoAcciones != "") {
+                if (fecha.getMonth() == mes && fecha.getFullYear() == selectedYear.getFullYear()) {
                     total += parseFloat(accion.monto); // Sumamos el monto de la acción
                 }
             });
         }else{
             acciones.forEach((accion) => {
                 const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
-                if(fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_ganancia != null){
+                if(fecha.getMonth() == mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_ganancia != null){
                     total += parseFloat(accion.monto); // Sumamos el monto de la acción
-                }else if(fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_perdida != null){
+                }else if(fecha.getMonth() == mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_perdida != null){
                     total -= parseFloat(accion.monto); // Restamos el monto de la acción
                 }
             })
@@ -56,21 +55,27 @@ const GraficoIngresosGastos = () => {
         datasets: [
             {
                 label: 'Dinero Generado',
-                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes(ingresos, meses.indexOf(mes)))) : calcularTotalMes(ingresos, selectedMonth)],
+                data: selectedMonth === "" 
+                ? meses.map((_, i) => calcularTotalMes(ingresos, i)) 
+                : [calcularTotalMes(ingresos, selectedMonth)],
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
             {
                 label: 'Dinero Perdido',
-                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes(gastos, meses.indexOf(mes)))) : calcularTotalMes(gastos, selectedMonth)],
+                data: selectedMonth === "" 
+                ? meses.map((_, i) => calcularTotalMes(gastos, i)) 
+                : [calcularTotalMes(gastos, selectedMonth)],
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
             },
             {
                 label: 'Beneficio Mensual',
-                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes("", meses.indexOf(mes)))) : calcularTotalMes("", selectedMonth)],
+                data: selectedMonth === "" 
+                ? meses.map((_, i) => calcularTotalMes("", i)) 
+                : [calcularTotalMes("", selectedMonth)],
                 backgroundColor: 'rgba(255, 206, 86, 0.6)',
                 borderColor: 'rgba(255, 206, 86, 1)',
                 borderWidth: 1,

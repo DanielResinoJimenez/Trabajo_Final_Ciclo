@@ -25,13 +25,13 @@ const InfoTabs = () => {
                     {activeTab === 1 && (
                         <div>
                             <h2 className="text-3xl">Ingresos y Gastos: </h2>
-                            <ApartadoGeneral />
+                            <ApartadoGeneral activeTab={activeTab}/>
                         </div>
                     )}
                     {activeTab === 2 && (
                         <div>
                             <h2 className="text-3xl">Ingresos de Máquinas: </h2>
-                            <ApartadoMaquinas />
+                            <ApartadoMaquinas activeTab={activeTab}/>
                         </div>
                     )}
                 </div>

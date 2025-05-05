@@ -2,11 +2,11 @@ import React from 'react'
 import GraficoIngresosMaquinas from './GraficoIngresosMaquinas'
 import FiltrosInformacion from './FiltrosInformacion'
 
-const ApartadoMaquinas = () => {
+const ApartadoMaquinas = ({activeTab}) => {
   return (
     <div>
         <header>
-            <FiltrosInformacion />
+            <FiltrosInformacion activeTab={activeTab}/>
         </header>
         <div>
             <GraficoIngresosMaquinas />
