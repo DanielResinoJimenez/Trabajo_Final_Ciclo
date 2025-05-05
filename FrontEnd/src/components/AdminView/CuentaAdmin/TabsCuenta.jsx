@@ -16,13 +16,13 @@ const TabsCuenta = () => {
                     className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 1 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(1)} // Cambiar a la pestaña 1
                 >
-                    Historial de Acciones
+                    Historial de movimientos
                 </button>
                 <button
                     className={`py-3 px-6 text-xl rounded-tr-xl border ${activeTab === 2 ? 'text-black font-bold bg-yellow-100' : 'hover:font-bold hover:bg-yellow-100'}`}
                     onClick={() => setActiveTab(2)} // Cambiar a la pestaña 2
                 >
-                    Realizar Acción
+                    Realizar movimiento
                 </button>
             </div>
 
@@ -32,13 +32,13 @@ const TabsCuenta = () => {
                 <div className="mt-4">
                     {activeTab === 1 && (
                         <div>
-                            <h2 className="text-3xl">Historial de Acciones</h2>
+                            <h2 className="text-3xl">Historial de movimientos</h2>
                             <HistorialAcciones activeTab={activeTab}/>
                         </div>
                     )}
                     {activeTab === 2 && (
                         <div>
-                            <h2 className="text-3xl">Realizar Acción</h2>
+                            <h2 className="text-3xl">Realizar movimiento</h2>
                             <RealizarAccion activeTab={activeTab}/>
                         </div>
                     )}
