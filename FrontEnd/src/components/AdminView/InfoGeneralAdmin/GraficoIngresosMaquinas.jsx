@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import { useCuentaContext } from '../../../services/hooks/cuentaContext';
+import { useFiltrosContext } from '../../../services/hooks/useFiltrosContext';
 
 // Registramos los componentes de Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -11,6 +12,7 @@ const GraficoIngresosMaquinas = () => {
 
     const { maquinas, maquinasOriginales, getMaquinas } = useMaquinasContext();
     const { acciones } = useCuentaContext();
+    const { selectedYear, selectedMonth } = useFiltrosContext();
 
     useEffect(() => {
         getMaquinas();
@@ -31,7 +33,7 @@ const GraficoIngresosMaquinas = () => {
                 const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
 
                 // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
-                if (fecha.getMonth() === mes) {
+                if (fecha.getMonth() === mes && fecha.getFullYear() == selectedYear) {
                     total += parseFloat(accion.monto); // Sumamos el monto de la acción
                 }
             }
@@ -46,7 +48,7 @@ const GraficoIngresosMaquinas = () => {
         datasets: [
             {
                 label: 'Dinero Generado por Mes',
-                data: maquinas.map(maquina => calcularTotalMes(maquina, 4)), // Dinero generado por cada máquina
+                data: maquinas.map(maquina => calcularTotalMes(maquina, selectedMonth)), // Dinero generado por cada máquina
                 backgroundColor: 'rgba(54, 162, 235, 0.6)', // Color de las barras
                 borderColor: 'rgba(54, 162, 235, 1)', // Borde de las barras
                 borderWidth: 1,

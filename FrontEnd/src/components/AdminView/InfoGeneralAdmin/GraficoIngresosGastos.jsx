@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { useCuentaContext } from '../../../services/hooks/cuentaContext';
+import { useFiltrosContext } from '../../../services/hooks/useFiltrosContext';
 
 
 // Registramos los componentes de Chart.js
@@ -11,6 +12,8 @@ const GraficoIngresosGastos = () => {
 
     // Recogemos las acciones de la cuenta
     const { acciones } = useCuentaContext();
+
+    const { meses, selectedYear, selectedMonth } = useFiltrosContext();
 
     let ingresos = acciones.filter((accion) => accion.id_ganancia != null);
     let gastos = acciones.filter((accion) => accion.id_perdida != null);
@@ -23,34 +26,53 @@ const GraficoIngresosGastos = () => {
     // Función para calcular el total de un mes dado
     const calcularTotalMes = (tipoAcciones, mes) => {
         let total = 0;
-        tipoAcciones.forEach((accion) => {
-            const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
+        if (tipoAcciones != "") {
+            tipoAcciones.forEach((accion) => {
+                const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
+                
 
-            // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
-            if (fecha.getMonth() === mes) {
-                console.log(accion)
-                total += parseFloat(accion.monto); // Sumamos el monto de la acción
-            }
-        });
+                // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
+                if (fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && tipoAcciones != "") {
+                    total += parseFloat(accion.monto); // Sumamos el monto de la acción
+                }
+            });
+        }else{
+            acciones.forEach((accion) => {
+                const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
+                if(fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_ganancia != null){
+                    total += parseFloat(accion.monto); // Sumamos el monto de la acción
+                }else if(fecha.getMonth() === mes && fecha.getFullYear() == selectedYear.getFullYear() && accion.id_perdida != null){
+                    total -= parseFloat(accion.monto); // Restamos el monto de la acción
+                }
+            })
+            
+        }
         return total;
     }
 
     // Aquí definimos los datos que vamos a mostrar en el gráfico
     const data = {
-        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'], // Los meses del año
+        labels: selectedMonth === "" ? meses : [meses[selectedMonth]], // Etiquetas de los meses
         datasets: [
             {
                 label: 'Dinero Generado',
-                data: [calcularTotalMes(ingresos, 0), calcularTotalMes(ingresos, 1), calcularTotalMes(ingresos, 2), calcularTotalMes(ingresos, 3), calcularTotalMes(ingresos, 4), calcularTotalMes(ingresos, 5)],
+                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes(ingresos, meses.indexOf(mes)))) : calcularTotalMes(ingresos, selectedMonth)],
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
             {
                 label: 'Dinero Perdido',
-                data: [calcularTotalMes(gastos, 1), calcularTotalMes(gastos, 2), calcularTotalMes(gastos, 3), calcularTotalMes(gastos, 4), calcularTotalMes(gastos, 5), calcularTotalMes(gastos, 6)],
+                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes(gastos, meses.indexOf(mes)))) : calcularTotalMes(gastos, selectedMonth)],
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+            },
+            {
+                label: 'Beneficio Mensual',
+                data: [selectedMonth === "" ? meses.map((mes) => (calcularTotalMes("", meses.indexOf(mes)))) : calcularTotalMes("", selectedMonth)],
+                backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                borderColor: 'rgba(255, 206, 86, 1)',
                 borderWidth: 1,
             }
         ],
