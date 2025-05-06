@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { createContext, useContext } from 'react'
 
 import { useState } from 'react';
 
 const API_URL = 'http://localhost:3000/api'; // Cambia esto si tu backend está en otro puerto o dominio
 
-const useLogin = () => {
+const LoginContext = createContext();
+
+export const useLoginContext = () => useContext(LoginContext);
+
+export const LoginProvider = ({ children }) => {
 
     const [login, setLogin] = useState(true);
     const [formError, setFormError] = useState('');
@@ -13,14 +17,14 @@ const useLogin = () => {
 
     // Estado para login
     const [loginData, setLoginData] = useState({
-        email: '',
-        password: '',
+        email_login: '',
+        password_login: '',
     });
 
     // Estado para registro
     const [registerData, setRegisterData] = useState({
-        email_user: '',
-        password_user: '',
+        email_register: '',
+        password_register: '',
         // Puedes agregar más campos si tu API los necesita, ej: nombre, rol, etc.
     });
 
@@ -97,7 +101,9 @@ const useLogin = () => {
     };
 
     const validateLogin = () => {
-        if (!loginData.email || !loginData.password) {
+
+        console.log(loginData)
+        if (!loginData.email_login || !loginData.password_login) {
             setFormError('Todos los campos son obligatorios para iniciar sesión.');
             return false;
         }
@@ -105,8 +111,9 @@ const useLogin = () => {
     };
 
     const validateRegister = () => {
-        const { email_user, password_user, nombre, apellidos, direccion, telefono } = registerData;
-        if (!email_user || !password_user || !nombre || !apellidos || !direccion || !telefono) {
+        console.log(registerData)
+        const { email_register, password_register, nombre, apellidos, direccion, telefono } = registerData;
+        if (!email_register || !password_register || !nombre || !apellidos || !direccion || !telefono) {
             setFormError('Todos los campos son obligatorios para registrarse.');
             return false;
         }
@@ -120,8 +127,8 @@ const useLogin = () => {
         if (!validateLogin()) return;
 
         const result = await loginUser({
-            email: loginData.email,
-            password: loginData.password
+            email: loginData.email_login,
+            password: loginData.password_login
         });
 
         if (result) {
@@ -139,8 +146,8 @@ const useLogin = () => {
         if (!validateRegister()) return;
 
         const newUser = {
-            email_user: registerData.email_user,
-            password_user: registerData.password_user,
+            email_user: registerData.email_register,
+            password_user: registerData.password_register,
             nombre: registerData.nombre,
             apellidos: registerData.apellidos,
             direccion: registerData.direccion,
@@ -152,30 +159,34 @@ const useLogin = () => {
         if (result) {
             console.log('Registro exitoso:', result);
             setLogin(true);
+            window.location.href = '/login';
 
         } else {
             setFormError('Error al registrar. Intenta de nuevo.');
         }
     };
 
-    return {
-        loginUser,
-        registerUser,
-        loading,
-        error,
-        handleLoginChange,
-        handleRegisterChange,
-        loginData,
-        registerData,
-        validateLogin,
-        validateRegister,
-        handleLogin,
-        handleRegister,
-        formError,
-        setFormError,
-        login,
-        setLogin,
-    };
+    return (
+        <LoginContext.Provider value={{
+            loginUser,
+            registerUser,
+            loading,
+            error,
+            handleLoginChange,
+            handleRegisterChange,
+            loginData,
+            registerData,
+            validateLogin,
+            validateRegister,
+            handleLogin,
+            handleRegister,
+            formError,
+            setFormError,
+            login,
+            setLogin
+        }}>
+            {children}
+        </LoginContext.Provider>
+    )
 };
 
-export default useLogin;
