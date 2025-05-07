@@ -3,6 +3,7 @@ import Header from './Header'
 import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
 import { GlobalProvider } from '../services/hooks/globalContext'
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   return (

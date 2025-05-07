@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 
 import { useState } from 'react';
+import { useGlobalContext } from './globalContext';
 
 const API_URL = 'http://localhost:3000/api'; // Cambia esto si tu backend está en otro puerto o dominio
 
@@ -14,6 +15,8 @@ export const LoginProvider = ({ children }) => {
     const [formError, setFormError] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const { mostrarAlerta } = useGlobalContext();
 
     // Estado para login
     const [loginData, setLoginData] = useState({
@@ -157,6 +160,7 @@ export const LoginProvider = ({ children }) => {
         const result = await registerUser(newUser);
 
         if (result) {
+            mostrarAlerta("Te has registrado correctamente")
             console.log('Registro exitoso:', result);
             setLogin(true);
             window.location.href = '/login';
@@ -195,8 +199,7 @@ export const LoginProvider = ({ children }) => {
                 throw new Error(data.message || 'Error al enviar la solicitud.');
             }
 
-            // Puedes manejar una respuesta exitosa aquí, como mostrar un mensaje
-            console.log('Respuesta del servidor:', data);
+            mostrarAlerta("Se ha enviado el correo correctamente, mira tu bandeja");
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -227,6 +230,9 @@ export const LoginProvider = ({ children }) => {
             if (!response.ok) {
                 throw new Error(data.error || 'Error al actualizar la contraseña.');
             }
+
+            mostrarAlerta("La contraseña se ha cambiado con exito")
+            window.location.href = "http://localhost:5173/login";
 
         } catch (error) {
             setFormError(error.message);

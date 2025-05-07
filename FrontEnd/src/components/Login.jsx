@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import loginPhoto from './../assets/images/login.png';
 import { Link, Outlet } from 'react-router-dom';
 import { useLoginContext } from '../services/hooks/loginContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
@@ -24,6 +26,7 @@ const Login = () => {
             <div className='w-[40%]'>
                 <Outlet />
             </div>
+            <ToastContainer />
         </div>
     );
 };
