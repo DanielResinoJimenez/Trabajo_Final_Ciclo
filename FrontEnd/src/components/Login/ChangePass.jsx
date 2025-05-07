@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 const ChangePass = () => {
     const {
         formError,
-        loading
+        loading,
+        requestChangePass
     } = useLoginContext();
 
     return (
@@ -13,19 +14,20 @@ const ChangePass = () => {
         <form
             noValidate
             className='login__form flex flex-col items-center justify-center gap-4'
+            onSubmit={(e) => {requestChangePass(e)}}
         >
             <h2 className='text-2xl'>
                 Recuperar contraseña
             </h2>
 
             <div className='flex flex-col gap-2 w-[60%] text-center'>
-                <label htmlFor="emailLose" className='text-center text-xl'>
+                <label htmlFor="email" className='text-center text-xl'>
                     Correo electrónico:
                 </label>
                 <input
                     type="text"
-                    id="emailLose"
-                    name={"emailLose"}
+                    id="email"
+                    name={"email"}
                     required
                     className='border-b focus:outline-none focus:ring-0 text-center'
                 />

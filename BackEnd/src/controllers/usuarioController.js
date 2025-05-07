@@ -21,16 +21,6 @@ const getUnUserEmail = async (req, res) => {
     }
 };
 
-// Generar contraseña
-// const getGeneratedPassword = (req, res) => {
-//     try {
-//         const password = Services.generateUserPassword();
-//         res.status(200).json({ password });
-//     } catch (error) {
-//         res.status(500).json({ error: "Error al generar la contraseña" });
-//     }
-// };
-
 // Registro de usuario
 const register = async (req, res) => {
     try {
@@ -59,14 +49,14 @@ const login = async (req, res) => {
 
 
 // Solicitar reseteo de contraseña
-// const requestPasswordReset = async (req, res) => {
-//     try {
-//         const result = await Services.resetUserPassword(req.body.email_user);
-//         res.status(200).json(result);
-//     } catch (error) {
-//         res.status(500).json({ error: "Error al intentar actualizar la contraseña y enviar el correo." });
-//     }
-// };
+const requestPasswordReset = async (req, res) => {
+    try {
+        const result = await Services.resetUserPassword(req.body.email);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: "Error al intentar actualizar la contraseña y enviar el correo." });
+    }
+};
 
 // Actualizar usuario
 const updateUser = async (req, res) => {
@@ -123,6 +113,7 @@ module.exports = {
     getUnUserEmail,
     register,
     login,
+    requestPasswordReset,
     updateUser,
     updateRolUser,
     updatePassUser,

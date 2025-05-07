@@ -167,6 +167,43 @@ export const LoginProvider = ({ children }) => {
         }
     };
 
+    const requestChangePass = async (e) => {
+        e.preventDefault(); 
+        setLoading(true);   
+
+        const email = e.target.email.value; 
+
+        if (!email || !email.includes('@')) {
+            setFormError('Por favor, introduce un correo válido.');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/usuarios/reset-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Error al enviar la solicitud.');
+            }
+
+            // Puedes manejar una respuesta exitosa aquí, como mostrar un mensaje
+            console.log('Respuesta del servidor:', data);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <LoginContext.Provider value={{
             loginUser,
@@ -185,8 +222,9 @@ export const LoginProvider = ({ children }) => {
             setFormError,
             login,
             setLogin,
-            changePass, 
-            setChangePass
+            changePass,
+            setChangePass,
+            requestChangePass
         }}>
             {children}
         </LoginContext.Provider>

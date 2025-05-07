@@ -20,7 +20,7 @@ const resetUserPassword = async (email) => {
 
     try {
         // Buscar al usuario por correo
-        const user = await Usuario.findOne({ where: { email_user: email } });
+        const user = await Usuario.findOne({ where: { email: email } });
 
         if (!user) {
             throw new Error('Usuario no encontrado.');
@@ -163,6 +163,7 @@ module.exports = {
     getUnUserEmail,
     register,
     login,
+    resetUserPassword,
     updateUser,
     updateRolUser,
     updatePassUser,
