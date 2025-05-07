@@ -16,7 +16,7 @@ const getUnUserEmail = async (email) => {
 
 // ENVIAR CORREO CAMBIO CONTRASEÑA
 
-const resetUserPassword = async (email) => {
+const resetUserPassword = async (email, password) => {
 
     try {
         // Buscar al usuario por correo
@@ -26,15 +26,23 @@ const resetUserPassword = async (email) => {
             throw new Error('Usuario no encontrado.');
         }
 
-        // Enviar el correo con la nueva contraseña
-        const emailSent = await emailService.sendPasswordResetEmail(email);
+        if(!password){
+            const emailSent = await emailService.sendPasswordResetEmail(email);
+            if (emailSent) {
+                return { success: true, message: 'Correo enviado exitosamente.' };
+            } else {
+                throw new Error('No se pudo enviar el correo.');
+            }
+        }else{
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await Usuario.update(
+                { password: hashedPassword },
+                { where: { email } } 
+            );
 
-        if (emailSent) {
-            return { success: true, message: 'Correo enviado exitosamente.' };
-        } else {
-            throw new Error('No se pudo enviar el correo.');
+            return { success: true, message: 'Contraseña actualizada correctamente.' };
         }
-
+        
     } catch (error) {
         throw error;
     }

@@ -50,8 +50,9 @@ const login = async (req, res) => {
 
 // Solicitar reseteo de contraseña
 const requestPasswordReset = async (req, res) => {
+    console.log(req.body)
     try {
-        const result = await Services.resetUserPassword(req.body.email);
+        const result = await Services.resetUserPassword(req.body.email, req.body.password);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: "Error al intentar actualizar la contraseña y enviar el correo." });

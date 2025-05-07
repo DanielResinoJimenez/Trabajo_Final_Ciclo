@@ -10,7 +10,6 @@ export const useLoginContext = () => useContext(LoginContext);
 
 export const LoginProvider = ({ children }) => {
 
-    const [changePass, setChangePass] = useState(false);
     const [login, setLogin] = useState(true);
     const [formError, setFormError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -168,15 +167,17 @@ export const LoginProvider = ({ children }) => {
     };
 
     const requestChangePass = async (e) => {
-        e.preventDefault(); 
-        setLoading(true);   
+        e.preventDefault();
+        setLoading(true);
 
-        const email = e.target.email.value; 
+        const email = e.target.email.value;
 
         if (!email || !email.includes('@')) {
             setFormError('Por favor, introduce un correo válido.');
             setLoading(false);
             return;
+        } else {
+            setFormError("");
         }
 
         try {
@@ -204,30 +205,63 @@ export const LoginProvider = ({ children }) => {
         }
     };
 
-    return (
-        <LoginContext.Provider value={{
-            loginUser,
-            registerUser,
-            loading,
-            error,
-            handleLoginChange,
-            handleRegisterChange,
-            loginData,
-            registerData,
-            validateLogin,
-            validateRegister,
-            handleLogin,
-            handleRegister,
-            formError,
-            setFormError,
-            login,
-            setLogin,
-            changePass,
-            setChangePass,
-            requestChangePass
-        }}>
-            {children}
-        </LoginContext.Provider>
-    )
+    const changeOldPass = async (email, newPassword) => {
+        setLoading(true);
+        setFormError(null);
+
+
+        try {
+            const response = await fetch(`${API_URL}/usuarios/reset-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password: newPassword
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Error al actualizar la contraseña.');
+            }
+
+        } catch (error) {
+            setFormError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+
+
+
+return (
+    <LoginContext.Provider value={{
+        loginUser,
+        registerUser,
+        loading,
+        error,
+        handleLoginChange,
+        handleRegisterChange,
+        loginData,
+        registerData,
+        validateLogin,
+        validateRegister,
+        handleLogin,
+        handleRegister,
+        formError,
+        setFormError,
+        login,
+        setLogin,
+        requestChangePass,
+        changeOldPass
+    }}>
+        {children}
+    </LoginContext.Provider>
+)
 };
 
