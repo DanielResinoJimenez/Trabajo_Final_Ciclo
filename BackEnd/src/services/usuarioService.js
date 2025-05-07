@@ -2,8 +2,7 @@ const Usuario = require('../database/models/Usuario');
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const jwt = require("jwt-simple");
-// const generatePassword = require("generate-password-browser");
-// const emailService = require('./emailService');
+const emailService = require('./emailService');
 
 // OBTENER TODOS LOS USUARIOS
 const getAllUsers = async () => {
@@ -17,50 +16,29 @@ const getUnUserEmail = async (email) => {
 
 // ENVIAR CORREO CAMBIO CONTRASEÑA
 
-// const resetUserPassword = async (email) => {
-//     console.log('Generando nueva contraseña para:', email);
+const resetUserPassword = async (email) => {
 
-//     // Generar nueva contraseña
-//     const newPassword = generatePassword.generate({
-//         length: 10,
-//         numbers: true,
-//         symbols: true,
-//         uppercase: true,
-//         lowercase: true,
-//         strict: true
-//     });
+    try {
+        // Buscar al usuario por correo
+        const user = await Usuario.findOne({ where: { email_user: email } });
 
-//     console.log('Nueva contraseña generada:', newPassword);
+        if (!user) {
+            throw new Error('Usuario no encontrado.');
+        }
 
-//     try {
-//         // Buscar al usuario por correo
-//         const user = await User.findOne({ where: { email_user: email } });
+        // Enviar el correo con la nueva contraseña
+        const emailSent = await emailService.sendPasswordResetEmail(email);
 
-//         if (!user) {
-//             throw new Error('Usuario no encontrado.');
-//         }
+        if (emailSent) {
+            return { success: true, message: 'Correo enviado exitosamente.' };
+        } else {
+            throw new Error('No se pudo enviar el correo.');
+        }
 
-//         // Encriptar la nueva contraseña
-//         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        
-//         // Actualizar la contraseña en la base de datos
-//         await user.update({ password_user: hashedPassword});
-
-//         console.log('Contraseña actualizada en la base de datos.');
-
-//         // Enviar el correo con la nueva contraseña
-//         const emailSent = await emailService.sendPasswordResetEmail(email, newPassword);
-//         if (emailSent) {
-//             return { success: true, message: 'Contraseña actualizada y correo enviado exitosamente.' };
-//         } else {
-//             throw new Error('No se pudo enviar el correo.');
-//         }
-
-//     } catch (error) {
-//         console.error('Error al resetear la contraseña:', error);
-//         throw error;
-//     }
-// };
+    } catch (error) {
+        throw error;
+    }
+};
 
 // CREAR TOKEN DE AUTENTICACIÓN
 const createToken = (usuario) => {
