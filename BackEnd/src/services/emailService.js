@@ -15,7 +15,7 @@ const sendPasswordResetEmail = async (toEmail, newPassword) => {
         from: '"Tu Aplicación" <danielresinojimenez@gmail.com>',  // Remitente
         to: toEmail,  // Destinatario
         subject: '🔐 Restablecimiento de Contraseña',
-        text: `Tu nueva contraseña temporal es: ${newPassword}. Puedes cambiarla accediendo al siguiente enlace: http://localhost:5173/login/change-password`,
+        text: `Puedes cambiar tu contraseña accediendo al siguiente enlace: http://localhost:5173/login/change-password`,
         html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
           <h2 style="color: #4a90e2;">Restablecimiento de Contraseña</h2>
