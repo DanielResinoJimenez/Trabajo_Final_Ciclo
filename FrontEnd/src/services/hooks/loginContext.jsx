@@ -10,6 +10,7 @@ export const useLoginContext = () => useContext(LoginContext);
 
 export const LoginProvider = ({ children }) => {
 
+    const [changePass, setChangePass] = useState(false);
     const [login, setLogin] = useState(true);
     const [formError, setFormError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -183,7 +184,9 @@ export const LoginProvider = ({ children }) => {
             formError,
             setFormError,
             login,
-            setLogin
+            setLogin,
+            changePass, 
+            setChangePass
         }}>
             {children}
         </LoginContext.Provider>

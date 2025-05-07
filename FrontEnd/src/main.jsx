@@ -64,6 +64,8 @@ createRoot(document.getElementById('root')).render(
                           <Route path='forgot-password' element={<ChangePass />} />
                           <Route path='change-password' element={<ChangePassForm />} />
                         </Route>
+                        
+                        
                       </Routes>
                     </BrowserRouter>
                   </Auth0Provider>
