@@ -58,15 +58,13 @@ const LoginForm = () => {
 
             </div>
 
-
-            <Link to={"/"} className='underline text-yellow-950'>Continuar sin iniciar sesión</Link>
-
-
             {formError && (
                 <span id='error__login' className='text-red-500 text-sm'>
                     {formError}
                 </span>
             )}
+
+            <Link to={"/"} className='underline text-yellow-950'>Continuar sin iniciar sesión</Link>
 
             <div className='flex gap-4'>
                 <Link to={"register"} className='cursor-pointer text-blue-600 underline'>

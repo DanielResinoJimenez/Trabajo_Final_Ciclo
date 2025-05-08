@@ -106,6 +106,7 @@ const RegisterForm = () => {
                     onChange={handleRegisterChange}
                 />
             </div>
+            
             {formError && (
                 <span id='error__login' className='text-red-500 text-sm'>
                     {formError}
