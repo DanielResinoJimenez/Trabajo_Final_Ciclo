@@ -8,8 +8,9 @@ const MaquinasNav = () => {
 
   return (
     <nav className='h-[100%] nav__maquinas pt-40'>
-      <ul className='flex flex-col gap-20 text-center items-center justify-center'>
-        <li>
+      <ul className='flex flex-col gap-20 text-center items-center justify-center sticky top-30 left-0'>
+        <li className='flex flex-col gap-2'>
+          <label htmlFor="">Nombre de la máquina:</label>
           <input
             type="search"
             className='bg-yellow-200 border rounded p-2'
@@ -28,10 +29,12 @@ const MaquinasNav = () => {
           />
           <span>{price}€</span>
         </li>
-        <li>
+        <li className='flex flex-col gap-2'>
+          <label htmlFor="" >Marca: </label>
           <select
             name="select__marca"
             id="select__marca"
+            className='bg-yellow-200 border rounded p-2'
             onChange={filterByMarca}
           >
             <option value="">Todas</option>

@@ -20,7 +20,7 @@ const ProductosCard = ({ producto }) => {
   return (
     <article className='flex flex-col w-[300px] h-[500px] p-4 border border-yellow-800 rounded-sm shadow-md shadow-yellow-800 m-auto card'>
       {
-        producto.image ? <img ref={imgRef} src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
+        imagen ? <img ref={imgRef} src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
           :
           <p className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply'>No hay imagen disponible</p>
       }

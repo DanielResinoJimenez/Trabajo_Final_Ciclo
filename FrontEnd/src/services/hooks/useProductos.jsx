@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useProductosContext } from './productosContext';
 import { useMaquinasContext } from './maquinasContext';
+import { useGlobalContext } from './globalContext';
 
 const useProductos = () => {
 
     const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
     const { maquinas, setMaquinas, maquinasOriginales, setMaquinasOriginales } = useMaquinasContext();
+    const {mostrarAlerta} = useGlobalContext();
 
-    // Variable de estado que contiene la imagen
-
-    const [archivo, setArchivo] = useState(null); // Estado para el archivo
+    const [ archivo, setArchivo ] = useState(null)
 
     // Función que adjunta un archivo cuando se hace evento change en el input
     const handleFileChange = (e) => {
@@ -24,11 +24,13 @@ const useProductos = () => {
 
         let id_producto_buscado = "";
 
+        let archivo1 = document.getElementById("imagen_producto");
+
         if (!id_producto) {
             id_producto_buscado = e.target.parentElement.firstChild.textContent;
         }
 
-        if (!archivo) {
+        if (!archivo1) {
             return;
         }
 
@@ -39,7 +41,7 @@ const useProductos = () => {
             formData.append('id_producto', id_producto);
         }
 
-        formData.append('imagen', archivo); // Adjunta la imagen con el nombre del campo 'imagen'
+        formData.append('imagen', archivo1.files[0]); // Adjunta la imagen con el nombre del campo 'imagen'
 
         try {
             const response = await fetch('http://localhost:3000/api/productos/create', {
@@ -54,10 +56,10 @@ const useProductos = () => {
             const data = await response.json();
             console.log('Imagen subida con éxito:', data);
 
-            alert("Imagen subida con éxito!");
+            mostrarAlerta("Se ha subido la imagen correctamente")
         } catch (error) {
             console.error('Error:', error);
-            alert("Hubo un error al subir la imagen");
+            mostrarAlerta("Error al subir la imagen", "error");
         }
     }
 
@@ -263,6 +265,8 @@ const useProductos = () => {
         modalContent.appendChild(marca);
         modalContent.appendChild(stock);
         modalContent.appendChild(categoria);
+
+        console.log("Imagen del producto: ", producto.imagen)
 
         if (producto.imagen) {
             cargarImagen(producto);

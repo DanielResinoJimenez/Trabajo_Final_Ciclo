@@ -28,10 +28,9 @@ const GraficoIngresosMaquinas = () => {
     const calcularTotalMes = (maquina, mes) => {
         let total = 0;
         ingresos.forEach((accion) => {
-
             if (accion.id_maquina == maquina.id_maquina) {
                 const fecha = new Date(accion.fecha); // Creamos el objeto de fecha
-
+                console.log(accion)
                 // Verificamos si la fecha de la acción está dentro del mes que estamos buscando
                 if (fecha.getMonth() == mes && fecha.getFullYear() == selectedYear.getFullYear()) {
                     total += parseFloat(accion.monto); // Sumamos el monto de la acción
@@ -48,7 +47,7 @@ const GraficoIngresosMaquinas = () => {
         datasets: [
             {
                 label: 'Dinero Generado por Mes',
-                data: maquinas.map(maquina => calcularTotalMes(maquina, selectedMonth)), // Dinero generado por cada máquina
+                data: maquinas.filter(maquina => maquina.estado === "En servicio").map(maquina => calcularTotalMes(maquina, selectedMonth)), // Dinero generado por cada máquina
                 backgroundColor: 'rgba(54, 162, 235, 0.6)', // Color de las barras
                 borderColor: 'rgba(54, 162, 235, 1)', // Borde de las barras
                 borderWidth: 1,

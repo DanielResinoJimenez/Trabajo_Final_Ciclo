@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useMaquinasContext } from './maquinasContext';
 import { useCuentaContext } from './cuentaContext';
+import { useGlobalContext } from './globalContext';
 
 const useMaquinas = () => {
 
@@ -11,6 +12,7 @@ const useMaquinas = () => {
   const [imagen, setImagen] = useState(null);
   const { getMaquinas, maquinasOriginales, setMaquinas, gestionarSolicitud, aniadirNuevaMaquina, modificarMaquina } = useMaquinasContext();
   const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion, aniadirIngresoMaquina, acciones } = useCuentaContext();
+  const {mostrarAlerta} = useGlobalContext();
 
   // FUNCIONES PARA ADMINISTRAR LAS IMAGENES DE LAS MÁQUINAS
 
@@ -26,11 +28,11 @@ const useMaquinas = () => {
     e.preventDefault();
 
     console.log(e.target);
-    let fileInput = e.target.querySelector('#imagen_maquina'); // Asegúrate de que el input tiene este ID
+    let fileInput = document.getElementById('imagen_maquina'); // Asegúrate de que el input tiene este ID
     let file = fileInput?.files?.[0];
 
     if (!fileInput) {
-      fileInput = e.target.parentElement.querySelector('#imagen_maquina');
+      fileInput = e.target.parentElement.querySelector('imagen_maquina');
       file = fileInput?.files?.[0];
     }
 
@@ -53,10 +55,10 @@ const useMaquinas = () => {
       }
 
       const data = await response.json();
-      console.log('Imagen subida con éxito:', data);
+      mostrarAlerta("La imagen se ha subido correctamente")
     } catch (error) {
       console.error('Error:', error);
-      alert("Hubo un error al subir la imagen");
+      mostrarAlerta("Ha habido un error al subir la imagen", "error");
     }
   }
 
@@ -290,7 +292,7 @@ const useMaquinas = () => {
         id_maquina: id_maquina,
         id_usuario: id_usuario,
         nombre_solicitante: form.nombre.value,
-        direccion_maquina: form.direccion.value,
+        direccion_establecimiento: form.direccion.value,
         fecha_solicitud: new Date(),
         telefono_solicitante: form.telefono.value,
         estado: "pendiente"
@@ -826,7 +828,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, price, openModalSolicitud, openModalCrear, maquinasSeleccionadas, aniadirRuta, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
+  return { filterByMarca, filterByNombre, filterByPrice, cargarImagen, imagen, price, openModalSolicitud, openModalCrear, maquinasSeleccionadas, aniadirRuta, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
 
 }
 

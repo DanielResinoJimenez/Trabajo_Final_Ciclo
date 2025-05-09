@@ -75,7 +75,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
                                 ></i>
                             </div>
                             :
-                            <img src={imagen} alt="" className="object-contain max-w-full max-h-[300px] w-[50%] h-auto" />
+                            <img src={imagen} alt="" className="object-contain max-h-[300px] w-[50%] h-auto mix-blend-multiply" />
                     }
                     <div className="flex flex-col w-[50%] text-center">
                         <h2 className="text-4xl">{maquina.nombre}</h2>

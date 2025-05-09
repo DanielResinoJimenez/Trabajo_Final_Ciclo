@@ -19,7 +19,7 @@ const MaquinasCard = ({ maquina }) => {
   // Si la máquina no tiene imagen se muestra un mensaje de que está máquina no tiene imagen.
   if (!maquina.imagen) {
     return (
-      <article className='flex xl:w-[800px] justify-between p-10 border-y border-r border-gray-400 items-center' ref={imgRef}>
+      <article className='flex xl:w-[800px] h-[400px] justify-between p-10 border-y border-r border-gray-400 items-center' ref={imgRef}>
         <p>No hay imagen de la máquina</p>
         <div className='flex flex-col'>
           <h2 className='text-4xl'>{maquina.nombre}</h2>
@@ -61,8 +61,13 @@ const MaquinasCard = ({ maquina }) => {
     }, []);
 
     return (
-      <article className='flex xl:w-[800px] justify-between p-10 border-y border-r border-gray-400 items-center'>
-        <img src={imagen} ref={imgRef} alt="" className='h-[300px] relative left-[-70px]' />
+      <article className='flex xl:w-[800px] h-[400px] justify-between p-10 border-y border-r border-gray-400 items-center'>
+        <img
+          src={imagen}
+          ref={imgRef}
+          alt=""
+          className='h-full object-contain relative left-[-70px]'
+        />
         <div className='flex flex-col'>
           <h2 className='text-4xl'>{maquina.nombre}</h2>
           <p className='text-lg'>{maquina.descripcion}</p>
