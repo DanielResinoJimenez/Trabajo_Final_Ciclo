@@ -10,7 +10,6 @@ const ProductosCard = ({ producto }) => {
 
   const imgRef = useRef(null);
 
-
   // UseEffect para convertir las imagenes y hacerlas visibles
 
   useEffect(() => {
@@ -26,8 +25,8 @@ const ProductosCard = ({ producto }) => {
       }
       <div className='flex flex-col justify-between h-[30%]'>
         <h2 className='text-2xl text-center'>{producto.nombre}</h2>
+        <span className='text-right'>{producto.descripcion}</span>
         <span className='text-right text-xl'>{producto.precio} €</span>
-        <span className='text-lg text-right hover:text-yellow-600 font-normal hover:font-bold transition duration-300 ease-in-out cursor-pointer'>Mostrar más</span>
       </div>
       {
 

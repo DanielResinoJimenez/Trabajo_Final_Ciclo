@@ -26,6 +26,7 @@ import RegisterForm from './components/Login/RegisterForm.jsx'
 import ChangePass from './components/Login/ChangePass.jsx'
 import ChangePassForm from './components/Login/ChangePassForm.jsx'
 import { LoginProvider } from './services/hooks/loginContext.jsx'
+import ContactoBody from './components/ClientView/Contacto/ContactoBody.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -49,6 +50,7 @@ createRoot(document.getElementById('root')).render(
                           <Route index element={<Home />} />
                           <Route path='productos' element={<Productos />} />
                           <Route path='maquinas' element={<Maquinas />} />
+                          <Route path='contacto' element={<ContactoBody />}/>
                           <Route path='panelControl' element={<PanelDeControl />}>
                             <Route path='productosAdmin' element={<ProductosAdmin />} />
                             <Route path='maquinasAdmin' element={<MaquinasAdmin />} />
