@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { useGlobalContext } from './globalContext';
+import Swal from "sweetalert2";
 
 const ProductosContext = createContext();
 
@@ -28,6 +29,7 @@ export const ProductosProvider = ({ children }) => {
             setError(error.message);
         } finally {
             setLoading(false);
+            Swal.close(); // Cierra el loading  
         }
     }
 

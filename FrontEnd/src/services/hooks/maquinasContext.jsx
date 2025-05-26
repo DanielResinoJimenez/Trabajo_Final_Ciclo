@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { useGlobalContext } from './globalContext';
+import Swal from "sweetalert2";
 
 const MaquinasContext = createContext();
 
@@ -28,6 +29,7 @@ export const MaquinasProvider = ({ children }) => {
             setError(error.message);
         } finally {
             setLoading(false);
+            Swal.close(); // Cierra el loading 
         }
     }
 
@@ -42,6 +44,7 @@ export const MaquinasProvider = ({ children }) => {
             setError(error.message);
         } finally {
             setLoading(false);
+            Swal.close(); // Cierra el loading 
         }
     }
 
@@ -55,6 +58,7 @@ export const MaquinasProvider = ({ children }) => {
             setError(error.message);
         } finally {
             setLoading(false);
+            Swal.close(); // Cierra el loading 
         }
     }
 

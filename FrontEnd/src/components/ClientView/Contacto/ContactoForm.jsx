@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import emailjs from "emailjs-com";
+import Swal from 'sweetalert2';
+
 
 const ContactoForm = () => {
   const form = useRef();
@@ -14,13 +16,21 @@ const ContactoForm = () => {
       "55kIaKUJsisR8Gesh"
     ).then(
       (result) => {
-        console.log(result.text);
-        alert("Mensaje enviado correctamente");
+        Swal.fire({
+          icon: 'success',
+          title: 'Mensaje enviado',
+          text: 'Gracias por contactarnos. Te responderemos pronto.',
+          confirmButtonColor: '#4a2d1f'
+        });
         form.current.reset();
       },
       (error) => {
-        console.log(error.text);
-        alert("Error al enviar el mensaje");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al enviar el mensaje. Intenta más tarde.',
+          confirmButtonColor: '#4a2d1f'
+        });
       }
     );
   };

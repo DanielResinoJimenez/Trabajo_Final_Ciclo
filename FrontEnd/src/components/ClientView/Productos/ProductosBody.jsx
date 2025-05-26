@@ -2,17 +2,27 @@ import React, { useEffect } from 'react'
 import useProductos from '../../../services/hooks/useProductos';
 import ProductosCard from './ProductosCard';
 import { useProductosContext } from '../../../services/hooks/productosContext';
+import Swal from "sweetalert2";
 
 const ProductosBody = () => {
     const { productos, loading, error, getProductos } = useProductosContext();
 
     useEffect(() => {
+        Swal.fire({
+            title: "Cargando productos...",
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+            background: '#fff8e1',
+            color: '#4a2d1f'
+          });
         getProductos();
     }, []);
 
     console.log(productos);
 
-    if (loading) return <p>Cargando...</p>
+    if (loading) return null
 
     if (error) return <p>Ha ocurrido un error: {error}</p>
 

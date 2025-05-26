@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import MaquinasCard from './MaquinasCard';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
+import Swal from "sweetalert2";
 
 const MaquinasBody = () => {
   const { maquinas, loading, error, getMaquinasStock } = useMaquinasContext();
@@ -9,6 +10,15 @@ const MaquinasBody = () => {
   const {openModalSolicitud, cerrarModal} = useMaquinas();
 
   useEffect(() => {
+    Swal.fire({
+      title: "Cargando maquinas...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      background: '#fff8e1',
+      color: '#4a2d1f'
+    });
     getMaquinasStock();
   }, [])
 
@@ -17,7 +27,7 @@ const MaquinasBody = () => {
   }
 
   if (loading) {
-    return <p>Cargando...</p>
+    return null
   }
 
   if (maquinas.length === 0) {
