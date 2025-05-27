@@ -8,7 +8,8 @@ const LoginForm = () => {
         handleLogin,
         handleLoginChange,
         formError,
-        loading
+        loading,
+        setFormError
     } = useLoginContext();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +68,7 @@ const LoginForm = () => {
             <Link to={"/"} className='underline text-yellow-950'>Continuar sin iniciar sesión</Link>
 
             <div className='flex gap-4'>
-                <Link to={"register"} className='cursor-pointer text-blue-600 underline'>
+                <Link to={"register"} onClick={() => {setFormError(null)}} className='cursor-pointer text-blue-600 underline'>
                     Registrarse
                 </Link>
 

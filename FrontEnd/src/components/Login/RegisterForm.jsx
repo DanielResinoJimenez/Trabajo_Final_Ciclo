@@ -10,7 +10,8 @@ const RegisterForm = () => {
         handleRegister,
         handleRegisterChange,
         formError,
-        loading
+        loading,
+        setFormError
     } = useLoginContext();
 
     return (
@@ -21,7 +22,7 @@ const RegisterForm = () => {
             onSubmit={handleRegister}
         >
             <h2 className='text-2xl'>
-                Iniciar Sesion
+                Registrar cuenta
             </h2>
             <div className='flex flex-col gap-2 w-[60%] text-center'>
                 <label htmlFor="email_register" className='text-center text-xl'>
@@ -114,7 +115,7 @@ const RegisterForm = () => {
             )}
 
             <div className='flex gap-4'>
-                <Link to={"/login"} className='cursor-pointer text-blue-600 underline'>
+                <Link to={"/login"} onClick={() => {setFormError(null)}} className='cursor-pointer text-blue-600 underline'>
                     Ya tengo cuenta
                 </Link>
             </div>

@@ -23,6 +23,11 @@ const ChangePassForm = () => {
         const password = e.target.password.value;
         const passwordRepeat = e.target.passwordRepeat.value;
 
+        if( !password || !passwordRepeat) {
+            setFormError("Todos los campos son obligatorios");
+            return;
+        }
+
         if (password !== passwordRepeat) {
             setFormError("Las contraseñas deben ser iguales");
             return;
