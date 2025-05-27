@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useGlobalContext } from '../../../services/hooks/globalContext';
+import Swal from 'sweetalert2';
 
 const ProductosCard = ({ producto }) => {
 
@@ -34,7 +35,12 @@ const ProductosCard = ({ producto }) => {
           className="h-[10%] border border-yellow-800 bg-yellow-800 button__productos"
           onClick={() => {
             if (!isLoggedIn()) {
-              alert('Debes iniciar sesión para añadir un producto al carrito');
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Debes iniciar sesión para añadir productos al carrito.',
+                confirmButtonColor: '#4a2d1f'
+              });
             } else {
               handleAddToCart({ cartRef, imgElement: imgRef.current, producto: producto });
             }

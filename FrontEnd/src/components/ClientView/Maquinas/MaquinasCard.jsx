@@ -3,6 +3,8 @@ import useProductos from '../../../services/hooks/useProductos'
 import { useGlobalContext } from '../../../services/hooks/globalContext';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
+import Swal from 'sweetalert2';
+
 
 const MaquinasCard = ({ maquina }) => {
 
@@ -30,7 +32,12 @@ const MaquinasCard = ({ maquina }) => {
               className="button__productos w-[50%]"
               onClick={() => {
                 if (!isLoggedIn()) {
-                  alert('Debes iniciar sesión para solicitar una máquina');
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para solicitar una máquina.',
+                    confirmButtonColor: '#4a2d1f'
+                  });
                 } else {
                   openModalSolicitud(maquina.id_maquina)
                 }
@@ -42,7 +49,12 @@ const MaquinasCard = ({ maquina }) => {
               className="button__productos w-[50%]"
               onClick={() => {
                 if (!isLoggedIn()) {
-                  alert('Debes iniciar sesión para añadir una máquina al carrito');
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para añadir máquinas al carrito.',
+                    confirmButtonColor: '#4a2d1f'
+                  });
                 } else {
                   handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina });
                 }
@@ -78,7 +90,12 @@ const MaquinasCard = ({ maquina }) => {
               className="button__productos w-[50%]"
               onClick={() => {
                 if (!isLoggedIn()) {
-                  alert('Debes iniciar sesión para solicitar una máquina');
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para solicitar una máquina.',
+                    confirmButtonColor: '#4a2d1f'
+                  });
                 } else {
                   openModalSolicitud(maquina.id_maquina)
                 }
@@ -90,7 +107,12 @@ const MaquinasCard = ({ maquina }) => {
               className="button__productos w-[50%]"
               onClick={() => {
                 if (!isLoggedIn()) {
-                  alert('Debes iniciar sesión para añadir una máquina al carrito');
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debes iniciar sesión para añadir máquinas al carrito.',
+                    confirmButtonColor: '#4a2d1f'
+                  });
                 } else {
                   handleAddToCart({ cartRef, imgElement: imgRef.current, maquina: maquina });
                 }
