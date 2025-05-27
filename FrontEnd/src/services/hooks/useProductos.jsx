@@ -5,7 +5,7 @@ import { useGlobalContext } from './globalContext';
 
 const useProductos = () => {
 
-    const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales } = useProductosContext();
+    const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales, nuevoProductoEnCurso, setNuevoProductoEnCurso } = useProductosContext();
     const { maquinas, setMaquinas, maquinasOriginales, setMaquinasOriginales } = useMaquinasContext();
     const {mostrarAlerta} = useGlobalContext();
 
@@ -196,7 +196,7 @@ const useProductos = () => {
 
         // Validar que los campos no estén vacíos
         if (!nombre_producto || !desc_prod || !precio_producto || !marca_producto || !stock_producto) {
-            alert("Por favor, completa todos los campos.");
+            mostrarAlerta("Por favor, completa todos los campos antes de añadir un producto.", "error");
             return;
         }
 

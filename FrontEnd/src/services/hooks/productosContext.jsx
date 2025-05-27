@@ -15,6 +15,7 @@ export const ProductosProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectProd, setSelectProd] = useState([]);
+    const [nuevoProductoEnCurso, setNuevoProductoEnCurso] = useState(false);
 
     const {mostrarAlerta} = useGlobalContext();
 
@@ -130,6 +131,7 @@ export const ProductosProvider = ({ children }) => {
             setProductosOriginales(prev => [...prev, data]);
 
             mostrarAlerta("Se ha creado un nuevo producto", "success")
+            setNuevoProductoEnCurso(false);
 
         } catch (error) {
             console.error('Error:', error);
@@ -186,7 +188,9 @@ export const ProductosProvider = ({ children }) => {
             eliminarProductosSeleccionados,
             aniadirNuevoProd,
             modificarProducto,
-            aniadirNuevoProd
+            aniadirNuevoProd,
+            nuevoProductoEnCurso, 
+            setNuevoProductoEnCurso
         }}>
             {children}
         </ProductosContext.Provider>

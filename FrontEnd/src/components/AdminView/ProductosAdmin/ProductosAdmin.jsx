@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProductosAdmin = () => {
 
-  const { productos, loading, error, getProductos, eliminarProductosSeleccionados } = useProductosContext();
+  const { productos, loading, error, getProductos, eliminarProductosSeleccionados, nuevoProductoEnCurso, setNuevoProductoEnCurso } = useProductosContext();
 
   const { nuevoProducto, mostrarModal, cerrarModal } = useProductos();
 
@@ -44,7 +44,12 @@ const ProductosAdmin = () => {
           }
           <tr className='' id='fila-boton'>
             <td colSpan={8} className='text-center p-6 text-white text-2xl font-bold border-t border-gray-400'>
-              <span onClick={nuevoProducto} className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>
+              <span onClick={() => {
+                if(!nuevoProductoEnCurso){
+                  nuevoProducto();
+                  setNuevoProductoEnCurso(true);
+                }
+              }} className='hover:bg-green-300 transition-colors cursor-pointer bg-green-500 px-20 py-2'>+</span>
             </td>
           </tr>
         </tbody>

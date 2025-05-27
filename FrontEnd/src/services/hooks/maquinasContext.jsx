@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import { useGlobalContext } from './globalContext';
 import Swal from "sweetalert2";
 
+
 const MaquinasContext = createContext();
 
 export const useMaquinasContext = () => useContext(MaquinasContext);
@@ -85,7 +86,12 @@ export const MaquinasProvider = ({ children }) => {
                 });
 
                 const dataCrear = await responseCrear.json();
-                mostrarAlerta("Se ha enviado la solicitud correctamente")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Mensaje enviado',
+                    text: 'Solicitud enviada correctamente. Nos pondremos en contacto contigo pronto.',
+                    confirmButtonColor: '#4a2d1f'
+                  });
                 return dataCrear;
             } else {
                 mostrarAlerta("Ya existe una solicitud similar, no se puede crear otra.", "error")

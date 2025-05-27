@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMaquinasContext } from './maquinasContext';
 import { useCuentaContext } from './cuentaContext';
 import { useGlobalContext } from './globalContext';
+import Swal from 'sweetalert2';
 
 const useMaquinas = () => {
 
@@ -286,6 +287,16 @@ const useMaquinas = () => {
     // Manejador submit
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+
+      if(!form.nombre.value || !form.direccion.value || !form.telefono.value) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Debes rellenar todos los campos para enviar la solicitud',
+          confirmButtonColor: '#4a2d1f'
+        });
+        return;
+      }
 
 
       const nuevaSolicitud = {
