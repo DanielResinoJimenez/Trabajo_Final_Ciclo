@@ -3,6 +3,7 @@ import useProductos from '../../../services/hooks/useProductos'
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
 import { useGlobalContext } from '../../../services/hooks/globalContext';
+import noImage from "../../../assets/images/noimage.png";
 
 const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
 
@@ -58,22 +59,7 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
                     <span className='absolute top-4 right-4 font-bold'>{maquina.estado}</span>
                     {
                         imagen.length === 0 ?
-                            <div className='flex items-center justify-around w-[50%]'>
-                                <label for="imagen_maquina" className="cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:bg-blue-500 hover:font-semibold text-white bg-blue-600 rounded-full p-4 flex items-center justify-center">
-                                    <i className="fas fa-file-upload text-xl"></i>
-                                </label>
-                                <input
-                                    type="file"
-                                    name="imagen"
-                                    id="imagen_maquina"
-                                    onChange={handleFileChange}
-                                    className="hidden"
-                                />
-                                <i
-                                    className="fas fa-check-circle cursor-pointer text-center text-3xl text-blue-600 hover:text-blue-500 transition-all duration-300 ease-in-out hover:scale-105"
-                                    onClick={(e) => { handleSubmit(e, maquina.id_maquina) }}
-                                ></i>
-                            </div>
+                            <img src={noImage} alt="" className="object-contain max-h-[200px] w-[50%] h-auto mix-blend-multiply" />
                             :
                             <img src={imagen} alt="" className="object-contain max-h-[300px] w-[50%] h-auto mix-blend-multiply" />
                     }

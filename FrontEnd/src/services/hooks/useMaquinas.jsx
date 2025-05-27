@@ -469,6 +469,11 @@ const useMaquinas = () => {
     addButton.onclick = (e) => {
       e.preventDefault();
 
+      if(!form.nombre.value || !form.descripcion.value || !form.precio.value || !form.marca_maquina.value || !form.estado_maquina.value) {
+        mostrarAlerta("Debes rellenar todos los campos para añadir una nueva máquina", "error");
+        return;
+      };
+
       // Referencias a los campos del formulario
       const nuevaMaquina = {
         nombre: form.nombre.value,

@@ -89,10 +89,7 @@ const createSolicitud = async (req, res) => {
 
             const solicitud = await Service.createSolicitud(solicitudData);
 
-            // Creamos el QR
-
             const pdfUrl = `https://localhost:3000/api/solicitudes/${solicitud.id_solicitud}/pdf`;
-
             const qrDataURL = await QRcode.toDataURL(pdfUrl);
 
             res.status(201).json({
@@ -101,56 +98,59 @@ const createSolicitud = async (req, res) => {
             });
         });
 
-        // Contenido del PDF
+        // Encabezado
+        doc
+            .fontSize(14)
+            .text('SOLICITUD', { align: 'center', underline: true })
+            .fontSize(10)
+            .moveDown(0.5)
+            .text('PARA SOLICITAR SERVICIOS DE MÁQUINA', { align: 'center' })
+            .moveDown(1)
+            .fontSize(11)
+
+        // Título de solicitud
+        doc
+            .fontSize(12)
+            .text('SOLICITA: Servicios de máquina expendedora')
+            .moveDown(1);
+
+        // Dirigido a
+        doc
+            .fontSize(12)
+            .text('Sr. David Resino')
+            .text('Jefe de la Empresa MasCoffee')
+            .moveDown(2);
+
+        // Cuerpo de la solicitud
+        const {
+            nombre_solicitante,
+            direccion_establecimiento,
+            telefono_solicitante,
+            fecha_solicitud,
+        } = body;
 
         doc
-            .fontSize(22)
-            .fillColor('#2c3e50')
-            .text('Formulario de Solicitud de Máquina', { align: 'center' })
-            .moveDown(0.5);
+            .text(`YO ${nombre_solicitante}, con telefono de contacto: ${telefono_solicitante}, en la dirección:`, { align: 'justify' })
+            .text(`${direccion_establecimiento}, de Talavera de la Reina o alrededores,`, { align: 'justify' })
+            .text(`Ante Ud. con el debido respeto me presento y expongo lo siguiente:`)
+            .moveDown(1)
+            .text(`Que, deseando obtener los servicios de la máquina solicitada, le SOLICITO a usted los servicios de la máquina expendedora de café, con el fin de poder ofrecer a mis clientes un servicio de calidad.`)
+            .moveDown(2);
+
+        // Lugar y fecha
+        const date = new Date(fecha_solicitud || Date.now());
+        const dia = date.getDate();
+        const mes = date.toLocaleString('es-PE', { month: 'long' });
+        const anio = date.getFullYear();
 
         doc
-            .strokeColor('#aaaaaa')
-            .lineWidth(1)
-            .moveTo(doc.page.margins.left, doc.y)
-            .lineTo(doc.page.width - doc.page.margins.right, doc.y)
-            .stroke()
-            .moveDown();
+            .text(`Talavera de la reina, ${dia} de ${mes} del ${anio}`)
+            .moveDown(4);
 
-        doc.fontSize(12).fillColor('black');
-
-        const renderField = (label, value) => {
-            doc.font('Helvetica-Bold').text(`${label}:`, { continued: true });
-            doc.font('Helvetica').text(` ${value || 'N/A'}`);
-        };
-
-        renderField('Nombre del solicitante', body.nombre_solicitante);
-        renderField('Dirección del establecimiento', body.direccion_establecimiento);
-        renderField('Teléfono', body.telefono_solicitante);
-        renderField('Fecha de solicitud', new Date(body.fecha_solicitud || Date.now()).toLocaleDateString());
-        renderField('ID del Usuario', body.id_usuario);
-        renderField('ID de la Máquina', body.id_maquina);
-
-        doc.moveDown(1.5);
-
-        const pdfUrl = `https://localhost:3000/api/solicitudes/temp/pdf`;
-        const qrImageBuffer = await QRcode.toBuffer(pdfUrl);
-
-        doc.fontSize(12).text("Escanea el código QR para ver este documento en línea:", {
-            align: 'center',
-        });
-
-        doc.moveDown(0.5);
-
-        const qrSize = 150;
-        const x = (doc.page.width - qrSize) / 2;
-
-        doc.image(qrImageBuffer, x, doc.y, { width: qrSize });
-
-        doc.moveDown(2);
-        doc.fontSize(10).fillColor('gray').text('Este documento fue generado automáticamente.', {
-            align: 'center',
-        });
+        // Firma
+        doc
+            .text('_____________________________', { align: 'center' })
+            .text(`${nombre_solicitante}`, { align: 'center' });
 
         doc.end();
 

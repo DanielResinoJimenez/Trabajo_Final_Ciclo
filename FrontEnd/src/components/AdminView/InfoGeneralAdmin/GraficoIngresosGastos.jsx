@@ -89,7 +89,7 @@ const GraficoIngresosGastos = () => {
         plugins: {
             title: {
                 display: true,
-                text: 'Dinero Generado y Perdido Mensualmente',
+                text: `Dinero Generado y Perdido ${selectedMonth === "" ? "Anualmente" : "Mensualmente"}`,
             },
             tooltip: {
                 mode: 'index',
@@ -104,7 +104,7 @@ const GraficoIngresosGastos = () => {
     };
 
     return (
-        <div>
+        <div className='w-[100%] m-auto h-[1000px]'>
             <h2>Gráfico de Dinero Generado y Perdido</h2>
             <Bar data={data} options={options} />
         </div>

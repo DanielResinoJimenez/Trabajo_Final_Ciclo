@@ -1,9 +1,11 @@
 import React from 'react'
 import { useCuentaContext } from './cuentaContext';
+import { useGlobalContext } from './globalContext';
 
 const useCuenta = () => {
 
     const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion } = useCuentaContext();
+    const {mostrarAlerta} = useGlobalContext();
 
      window.turnToModify = function(e) {
         const fila = e.target.closest('tr');
@@ -237,7 +239,7 @@ const useCuenta = () => {
 
         // Validar que los campos no estén vacíos
         if (!tipo_accion || !fecha_accion || !motivo_accion || !monto_accion) {
-            alert("Por favor, completa todos los campos.");
+            mostrarAlerta("Todos los campos son obligatorios", "error");
             return;
         }
 
