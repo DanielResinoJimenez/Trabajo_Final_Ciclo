@@ -10,6 +10,8 @@ export const GlobalProvider = ({ children }) => {
 
     const [cartContent, setCartContent] = useState([]);
 
+    const [mostrarOutlet, setMostrarOutlet] = useState(false); // Estado para manejar la visibilidad del <Outlet> del panel de control
+
     // Función para animar la introducción de un nuevo producto o máquina al carrito
 
     const cartRef = useRef(null);
@@ -131,7 +133,7 @@ export const GlobalProvider = ({ children }) => {
 
 
     return (
-        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha, handleChangeFile, isFileSelected, mostrarAlerta }}>
+        <GlobalContext.Provider value={{ cartRef, cartContent, handleAddToCart, isLoggedIn, logOut, formatearFecha, handleChangeFile, isFileSelected, mostrarAlerta, mostrarOutlet, setMostrarOutlet }}>
             {children}
         </GlobalContext.Provider>
     );

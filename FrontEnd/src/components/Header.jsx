@@ -6,7 +6,7 @@ import logo from './../assets/images/logo.png'
 
 const Header = () => {
 
-        const { cartRef, cartContent } = useGlobalContext();
+        const { cartRef, cartContent, setMostrarOutlet } = useGlobalContext();
 
         const { userMenu, cartMenu, closeMenu } = useMenu();
 
@@ -52,7 +52,7 @@ const Header = () => {
                                         </Link>
                                         {
                                                 userRol == 'admin' ? (
-                                                        <Link to={"panelControl"}>
+                                                        <Link to={"panelControl"} onClick={() => setMostrarOutlet(false)}>
                                                                 <li className='relative group'>
                                                                         Panel de Control
                                                                         <span className='absolute bottom-0 left-0 w-0 h-[2px] bg-gray-100 transition-all duration-300 group-hover:w-full'></span>

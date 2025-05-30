@@ -10,13 +10,15 @@ import { MaquinasProvider } from '../../services/hooks/maquinasContext';
 import { useSolicitudesContext } from '../../services/hooks/solicitudesContext';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useGlobalContext } from '../../services/hooks/globalContext';
 
 const PanelDeControl = () => {
 
     const [panelOpen, setPanelOpen] = useState(true);
 
     const navigate = useNavigate(); // Hook para navegar programáticamente
-    const [mostrarOutlet, setMostrarOutlet] = useState(false); // Estado para manejar la visibilidad del <Outlet>
+    
+    const { mostrarOutlet, setMostrarOutlet } = useGlobalContext();
 
     const { solicitudes, getSolicitudesPendientes } = useSolicitudesContext();
 
@@ -28,10 +30,9 @@ const PanelDeControl = () => {
     // Función para manejar el clic en el botón "Volver"
     const volverPanel = () => {
         const btnVolver = document.getElementById("volverPanel");
-        btnVolver.classList.add("hidden"); // Mostrar el botón "Volver"
-        // Navegar a la ruta inicial (o a la ruta que quieras)
-        navigate('/panelControl'); // Redirige a la ruta principal
-        setMostrarOutlet(false); // Opcionalmente, puedes ocultar el outlet también
+        btnVolver.classList.add("hidden"); 
+        navigate('/panelControl'); 
+        setMostrarOutlet(false); 
     };
 
     // Función para mostrar el <Outlet> si es necesario
@@ -45,7 +46,7 @@ const PanelDeControl = () => {
         <ProductosProvider>
             <MaquinasProvider>
                 <div className='mb-10'>
-                    <button onClick={volverPanel} className='hidden fixed top-26 right-4 z-50 bg-green-500 hover:bg-green-700 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-all' id='volverPanel'>Volver</button>
+                    <button onClick={() => {volverPanel()}} className={`${!mostrarOutlet && 'hidden'} fixed top-26 right-4 z-50 bg-green-500 hover:bg-green-700 text-white font-semibold px-5 py-3 rounded-full shadow-lg transition-all`} id='volverPanel'>Volver</button>
 
                     {!mostrarOutlet && (
                         <div className='max-w-[1200px] max-lg:grid-cols-1 grid grid-cols-4 gap-4 m-auto p-10 panel__control rounded-lg shadow-lg shadow-yellow-950' id='panelControl'>
