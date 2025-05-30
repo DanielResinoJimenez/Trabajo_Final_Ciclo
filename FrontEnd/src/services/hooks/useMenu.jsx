@@ -23,7 +23,6 @@ const useMenu = () => {
                                         userMenu.innerHTML = '';
                                         const newSpan = document.createElement('span');
                                         const newUl = document.createElement('ul');
-                                        const newLi = document.createElement('li');
                                         const newLi2 = document.createElement('li');
                                         const newLi3 = document.createElement('li');
                                         const newLi4 = document.createElement('li');
@@ -31,11 +30,12 @@ const useMenu = () => {
                                         newSpan.textContent = 'x';
                                         newSpan.addEventListener('click', closeMenu);
                                         userMenu.appendChild(newSpan);
-                                        newLi.textContent = 'Dark Mode';
-                                        newLi2.textContent = 'Perfil';
+                                        newLi2.textContent = 'Cambiar Contraseña';
+                                        newLi2.addEventListener('click', () => {
+                                                window.location.href = '/login/change-password?email=' + localStorage.getItem('recoveryEmail');
+                                        });
                                         newLi3.textContent = 'Pedidos';
                                         newLi4.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i>';
-                                        newLi.classList.add('hover:text-yellow-400', 'cursor-pointer');
                                         newLi2.classList.add('hover:text-yellow-400', 'cursor-pointer');
                                         newLi3.classList.add('hover:text-yellow-400', 'cursor-pointer');
                                         newLi4.classList.add('hover:text-yellow-400', 'cursor-pointer');
@@ -43,7 +43,6 @@ const useMenu = () => {
                                                 logOut();
                                         });
                                         newUl.classList.add('text-lg', 'text-center', 'flex', 'flex-col', 'gap-10');
-                                        newUl.appendChild(newLi);
                                         newUl.appendChild(newLi2);
                                         newUl.appendChild(newLi3);
                                         newUl.appendChild(newLi4);

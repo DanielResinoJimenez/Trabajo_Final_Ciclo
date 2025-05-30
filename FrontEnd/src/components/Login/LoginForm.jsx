@@ -73,7 +73,7 @@ const LoginForm = () => {
                 </Link>
 
 
-                <Link to={"forgot-password"} className='underline text-blue-600 cursor-pointer'>
+                <Link to={"forgot-password"} onClick={() => {setFormError(null)}} className='underline text-blue-600 cursor-pointer'>
                     <span>
                         Olvidé mi contraseña
                     </span>

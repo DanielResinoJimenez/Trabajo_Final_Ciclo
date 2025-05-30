@@ -80,6 +80,7 @@ export const GlobalProvider = ({ children }) => {
 
     const logOut = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('recoveryEmail');
         window.location.href = '/login';
     }
 
