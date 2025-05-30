@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import useProductos from '../../../services/hooks/useProductos'
 import { useGlobalContext } from '../../../services/hooks/globalContext';
 import Swal from 'sweetalert2';
+import noImage from "../../../assets/images/noimage.png";
 
 const ProductosCard = ({ producto }) => {
 
@@ -22,7 +23,7 @@ const ProductosCard = ({ producto }) => {
       {
         imagen ? <img ref={imgRef} src={imagen} alt={producto.nombre} className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply' />
           :
-          <p className='p-4 border border-yellow-800 h-[60%] mix-blend-multiply'>No hay imagen disponible</p>
+          <img src={noImage} alt="" className="object-contain max-h-[200px] w-[50%] h-auto mix-blend-multiply" />
       }
       <div className='flex flex-col justify-between h-[30%]'>
         <h2 className='text-2xl text-center'>{producto.nombre}</h2>

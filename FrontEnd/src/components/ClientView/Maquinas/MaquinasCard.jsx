@@ -4,6 +4,7 @@ import { useGlobalContext } from '../../../services/hooks/globalContext';
 import { useMaquinasContext } from '../../../services/hooks/maquinasContext';
 import useMaquinas from '../../../services/hooks/useMaquinas';
 import Swal from 'sweetalert2';
+import noImage from "../../../assets/images/noimage.png";
 
 
 const MaquinasCard = ({ maquina }) => {
@@ -22,7 +23,7 @@ const MaquinasCard = ({ maquina }) => {
   if (!maquina.imagen) {
     return (
       <article className='flex xl:w-[800px] h-[400px] justify-between p-10 border-y border-r border-gray-400 items-center' ref={imgRef}>
-        <p>No hay imagen de la máquina</p>
+        <img src={noImage} alt="" className="object-contain max-h-[200px] w-[50%] h-auto mix-blend-multiply" />
         <div className='flex flex-col'>
           <h2 className='text-4xl'>{maquina.nombre}</h2>
           <p className='text-lg'>{maquina.descripcion}</p>
