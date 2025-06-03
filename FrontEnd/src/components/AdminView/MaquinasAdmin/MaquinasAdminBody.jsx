@@ -39,11 +39,14 @@ const MaquinasAdminBody = ({ filtro }) => {
         getMaquinas();
     }, []);
 
-    // Filtrar las máquinas cuando cambie el filtro o las originales
     useEffect(() => {
-
+        if (!Array.isArray(maquinasOriginales)) {
+            setMaquinas([]);
+            return;
+        }
+    
         let nuevasMaquinas = maquinasOriginales;
-
+    
         switch (filtro) {
             case 'General':
                 nuevasMaquinas = maquinasOriginales.filter(
@@ -70,17 +73,17 @@ const MaquinasAdminBody = ({ filtro }) => {
                 break;
             case '':
                 nuevasMaquinas = maquinasOriginales.filter(
-                    (maquina) =>
-                        maquina.estado != 'Eliminada'
+                    (maquina) => maquina.estado !== 'Eliminada'
                 );
                 break;
             default:
-
+                nuevasMaquinas = maquinasOriginales;
                 break;
         }
-
+    
         setMaquinas(nuevasMaquinas);
     }, [filtro, maquinasOriginales, setMaquinas]);
+    
 
     const [yaActualizado, setYaActualizado] = useState(false);
 

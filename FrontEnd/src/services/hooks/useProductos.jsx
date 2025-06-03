@@ -5,11 +5,11 @@ import { useGlobalContext } from './globalContext';
 
 const useProductos = () => {
 
-    const { aniadirNuevoProd, modificarProducto, productos, setProductos, productosOriginales, setProductosOriginales, nuevoProductoEnCurso, setNuevoProductoEnCurso } = useProductosContext();
+    const { aniadirNuevoProd, modificarProducto, getProductos, productos, setProductos, productosOriginales, setProductosOriginales, nuevoProductoEnCurso, setNuevoProductoEnCurso } = useProductosContext();
     const { maquinas, setMaquinas, maquinasOriginales, setMaquinasOriginales } = useMaquinasContext();
-    const {mostrarAlerta} = useGlobalContext();
+    const { mostrarAlerta } = useGlobalContext();
 
-    const [ archivo, setArchivo ] = useState(null)
+    const [archivo, setArchivo] = useState(null)
 
     // Función que adjunta un archivo cuando se hace evento change en el input
     const handleFileChange = (e) => {
@@ -57,6 +57,9 @@ const useProductos = () => {
             console.log('Imagen subida con éxito:', data);
 
             mostrarAlerta("Se ha subido la imagen correctamente")
+
+            getProductos();
+
         } catch (error) {
             console.error('Error:', error);
             mostrarAlerta("Error al subir la imagen", "error");
@@ -71,12 +74,13 @@ const useProductos = () => {
     // Función para cargar las imágenes desde la API
     const cargarImagen = (producto) => {
         try {
-            const buffer = new Uint8Array(producto.imagen.data); // Convertir Buffer a Uint8Array
-            const blob = new Blob([buffer], { type: producto.tipo }); // Crear un Blob
-            const imageUrl = URL.createObjectURL(blob); // Generar URL del Blob
-            setImagen(imageUrl); // Actualizar estado con las URLs generadas
+            const buffer = new Uint8Array(producto.imagen.data);
+            const blob = new Blob([buffer], { type: producto.tipo });
+            const imageUrl = URL.createObjectURL(blob);
+            return imageUrl; // ¡Esto es lo que necesitas!
         } catch (error) {
             console.error("Error al cargar la imagen:", error);
+            return null;
         }
     };
 
@@ -93,9 +97,9 @@ const useProductos = () => {
             const response = await fetch(`http://localhost:3000/api/productos/${id_producto}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',  // Asegúrate de enviar los datos como JSON
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(delImg), // Envía los datos con los campos null
+                body: JSON.stringify(delImg),
             });
 
             if (!response.ok) {
@@ -105,7 +109,10 @@ const useProductos = () => {
             const data = await response.json();
             console.log('Imagen borrada con éxito:', data);
 
-            alert("Imagen borrada con éxito!");
+            mostrarAlerta("Se ha borrado la imagen correctamente", "success");
+
+            getProductos();
+
         } catch (error) {
             console.error("Error al borrar la imagen:", error);
         }
@@ -224,7 +231,7 @@ const useProductos = () => {
 
     // Función para mostrar un modal con información del producto
 
-    const mostrarModalInfo = (producto) => {
+    const mostrarModalInfo = async (producto) => {
         const modal = document.getElementById("modalProductos");
         const modalContent = document.getElementById("modalProductosContent");
 
@@ -266,12 +273,11 @@ const useProductos = () => {
         modalContent.appendChild(stock);
         modalContent.appendChild(categoria);
 
-        console.log("Imagen del producto: ", producto.imagen)
-
         if (producto.imagen) {
-            cargarImagen(producto);
+            let imageUrl = cargarImagen(producto);
             const newImg = document.createElement("img");
-            newImg.src = imagen;
+            newImg.className = "w-32 h-32 object-cover rounded mb-2 border";
+            newImg.src = imageUrl;
             modalContent.appendChild(newImg)
         } else {
             const newP = document.createElement("p");
@@ -285,7 +291,7 @@ const useProductos = () => {
     }
 
     // Función para mostrar un modal con formulario de edición
-    const mostrarModalEditar = (producto) => {
+    const mostrarModalEditar = async (producto) => {
         const modal = document.getElementById("modalProductos");
         const modalContent = document.getElementById("modalProductosContent");
 
@@ -389,40 +395,82 @@ const useProductos = () => {
         form.appendChild(newDiv);
 
         if (producto.imagen) {
-            cargarImagen(producto);
+            let imageUrl = cargarImagen(producto);
+
             const newDiv = document.createElement("div");
             newDiv.className = "mb-4";
+
+            // Etiqueta
             const newLabel = document.createElement("label");
             newLabel.htmlFor = "imagen_producto";
             newLabel.textContent = "Imagen";
             newLabel.className = "block text-gray-700 font-medium mb-1";
+
+            // Imagen
             const newImg = document.createElement("img");
-            newImg.src = imagen;
+            newImg.src = imageUrl;
+            newImg.alt = "Imagen del producto";
+            newImg.className = "w-32 h-32 object-cover rounded mb-2 border";
+
+            // Botón "Borrar imagen"
             const newButton = document.createElement("button");
             newButton.textContent = "Borrar imagen";
+            newButton.className =
+                "bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded transition duration-200 shadow";
             newButton.onclick = (e) => {
                 e.preventDefault();
                 borrarImagen(producto.id_producto);
-            }
+                modal.classList.add("hidden");
+            };
+
+            // Añadir elementos al contenedor
             newDiv.appendChild(newLabel);
             newDiv.appendChild(newImg);
             newDiv.appendChild(newButton);
+
+            // Añadir al formulario
             form.appendChild(newDiv);
         } else {
             const newDiv = document.createElement("div");
             newDiv.className = "mb-4";
-            const newLabel = document.createElement("label");
-            newLabel.htmlFor = "imagen_producto";
-            newLabel.textContent = "Imagen";
-            newLabel.className = "block text-gray-700 font-medium mb-1";
+
+            // Input oculto de tipo file
             const newInput = document.createElement("input");
             newInput.type = "file";
             newInput.id = "imagen_producto";
             newInput.name = "imagen_producto";
-            newInput.accept = "image/*"; // Aceptar solo imágenes
-            newInput.onchange = handleFileChange;
-            newDiv.appendChild(newLabel);
+            newInput.accept = "image/*";
+            newInput.className = "hidden";
+
+            // Texto para mostrar si hay imagen seleccionada
+            const fileStatus = document.createElement("span");
+            fileStatus.className = "block mt-2 text-sm text-gray-600";
+            fileStatus.textContent = "No hay imagen seleccionada";
+
+            // Botón para subir imagen
+            const newButton = document.createElement("button");
+            newButton.type = "button";
+            newButton.textContent = "Subir imagen";
+            newButton.className =
+                "bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition duration-200 shadow";
+
+            // Evento para abrir el input
+            newButton.onclick = () => newInput.click();
+
+            // Evento para cambiar el texto cuando se selecciona archivo
+            newInput.onchange = (e) => {
+                handleFileChange(e); // Llamada a tu función existente
+                if (newInput.files.length > 0) {
+                    fileStatus.textContent = `Imagen seleccionada: ${newInput.files[0].name}`;
+                } else {
+                    fileStatus.textContent = "No hay imagen seleccionada";
+                }
+            };
+
+            // Añadir al contenedor
             newDiv.appendChild(newInput);
+            newDiv.appendChild(newButton);
+            newDiv.appendChild(fileStatus);
             form.appendChild(newDiv);
         }
 
