@@ -112,38 +112,42 @@ const useMaquinas = () => {
 
   // FUNCIONES DE FILTRADO DE MÁQUINAS
 
+  const applyFilters = (nombreVal, precioVal, marcaVal) => {
+    if(precioVal != 0 ){
+      const filtered = maquinasOriginales.filter(maquina =>
+        maquina.nombre.toLowerCase().includes(nombreVal.toLowerCase()) &&
+        maquina.precio <= precioVal &&
+        (marcaVal ? maquina.marca.toLowerCase() === marcaVal.toLowerCase() : true)
+      );
+      setMaquinas(filtered);
+    }else{
+      const filtered = maquinasOriginales.filter(maquina =>
+        maquina.nombre.toLowerCase().includes(nombreVal.toLowerCase()) &&
+        (marcaVal ? maquina.marca.toLowerCase() === marcaVal.toLowerCase() : true)
+      );
+      setMaquinas(filtered);
+    }
+    
+  };
+
   const filterByPrice = (e) => {
     const value = e.target.value;
     setPrice(value);
-    const filtered = maquinasOriginales.filter(maquina =>
-      maquina.precio <= value &&
-      maquina.nombre.toLowerCase().includes(nombre.toLowerCase()) &&
-      (marca ? maquina.marca.toLowerCase() === marca.toLowerCase() : true)
-    );
-    setMaquinas(filtered);
+    applyFilters(nombre, value, marca);
   };
-
+  
   const filterByNombre = (e) => {
     const value = e.target.value;
     setNombre(value);
-    const filtered = maquinasOriginales.filter(maquina =>
-      maquina.nombre.toLowerCase().includes(value.toLowerCase()) &&
-      maquina.precio <= price &&
-      (marca ? maquina.marca.toLowerCase() === marca.toLowerCase() : true)
-    );
-    setMaquinas(filtered);
+    applyFilters(value, price, marca);
   };
-
+  
   const filterByMarca = (e) => {
     const value = e.target.value;
     setMarca(value);
-    const filtered = maquinasOriginales.filter(maquina =>
-      (value ? maquina.marca.toLowerCase() === value.toLowerCase() : true) &&
-      maquina.precio <= price &&
-      maquina.nombre.toLowerCase().includes(nombre.toLowerCase())
-    );
-    setMaquinas(filtered);
+    applyFilters(nombre, price, value);
   };
+  
 
   // Función para insertar ganancia de máquina
 
@@ -884,7 +888,7 @@ const useMaquinas = () => {
     modal.classList.add("hidden"); // Ocultar el modal
   }
 
-  return { filterByMarca, filterByNombre, filterByPrice, cargarImagen, imagen, price, openModalSolicitud, openModalCrear, maquinasSeleccionadas, aniadirRuta, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso }
+  return { filterByMarca, filterByNombre, filterByPrice, cargarImagen, imagen, price, openModalSolicitud, openModalCrear, maquinasSeleccionadas, aniadirRuta, openModalModificar, openModalAlta, cerrarModal, handleSubmit, insertarGanancia, checkFechaIngreso, applyFilters }
 
 }
 

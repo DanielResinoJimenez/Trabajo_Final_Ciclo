@@ -69,14 +69,10 @@ const MaquinasCard = ({ maquina }) => {
     )
   } else {
 
-    useEffect(() => {
-      cargarImagen(maquina);
-    }, []);
-
     return (
       <article className='flex xl:w-[800px] h-[400px] justify-between p-10 border-y border-r border-gray-400 items-center'>
         <img
-          src={imagen}
+          src={cargarImagen(maquina)}
           ref={imgRef}
           alt=""
           className='h-full object-contain relative left-[-70px]'

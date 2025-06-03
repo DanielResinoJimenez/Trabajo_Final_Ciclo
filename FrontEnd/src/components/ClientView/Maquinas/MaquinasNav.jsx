@@ -24,7 +24,7 @@ const MaquinasNav = () => {
             type="range"
             onChange={filterByPrice}
             min={10}
-            max={2000}
+            max={5000}
             step={5}
           />
           <span>{price}€</span>
@@ -40,6 +40,7 @@ const MaquinasNav = () => {
             <option value="">Todas</option>
             <option value="saeco">Saeco</option>
             <option value="Nespresso">Nespresso</option>
+            <option value="Colibrí">Colibrí</option>
           </select>
         </li>
       </ul>

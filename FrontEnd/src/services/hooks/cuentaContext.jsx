@@ -77,6 +77,8 @@ export const CuentaProvider = ({ children }) => {
 
             setAcciones(accionesCombinadas);  // Guarda las acciones combinadas
 
+            calcularSaldo();
+
         } catch (error) {
             console.error('Error en getDatos:', error);  // Verifica si hay algún error
             setError(error);
@@ -110,6 +112,7 @@ export const CuentaProvider = ({ children }) => {
             const data = await response.json();
             console.log('Datos actualizados correctamente:', data);
             mostrarAlerta("Se han modificado los datos correctamente", "success")
+            calcularSaldo();
     
         } catch (error) {
             console.error('Error al modificar los datos:', error);
@@ -138,7 +141,7 @@ export const CuentaProvider = ({ children }) => {
             // Actualiza estado:
             setAcciones(prev => [...prev, data]);
             mostrarAlerta("Se ha añadido el ingreso correctamente", "success")
-            
+            calcularSaldo();
 
         } catch (error) {
             console.error('Error:', error);
@@ -168,6 +171,7 @@ export const CuentaProvider = ({ children }) => {
             // Actualiza estado:
             setAcciones(prev => [...prev, data]);
             mostrarAlerta("Se ha añadido la acción correctamente", "success")
+            calcularSaldo();
 
         } catch (error) {
             console.error('Error:', error);
@@ -220,9 +224,10 @@ export const CuentaProvider = ({ children }) => {
             )
           );
 
-          calcularSaldo();
+          
 
           mostrarAlerta("Se ha borrado la acción correctamente", "success")
+          calcularSaldo();
           
         } catch (error) {
           console.error("Error eliminando acción:", error);

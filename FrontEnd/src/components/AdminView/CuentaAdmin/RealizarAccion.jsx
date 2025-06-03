@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import RealizarAccionShow from './RealizarAccionShow'
 import { useCuentaContext } from '../../../services/hooks/cuentaContext'
 import useCuenta from '../../../services/hooks/useCuenta';
@@ -8,9 +8,11 @@ import FooterTable from './../FooterTable';
 
 const RealizarAccion = ({activeTab}) => {
 
-  const {acciones, loading, saldo} = useCuentaContext();
+  const {acciones, loading, saldo, calcularSaldo} = useCuentaContext();
 
-  
+  useEffect(() => {
+    calcularSaldo();  // Calcular el saldo al montar el componente
+  }, [acciones])
 
   // Comprobar si aún se están cargando los datos
   if (loading) {
