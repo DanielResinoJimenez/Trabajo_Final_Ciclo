@@ -23,32 +23,6 @@ const ModalAltaMaquina = ({ maquina, onClose, modificarMaquina }) => {
         }
     };
 
-    // const buscarDireccion = async (query) => {
-    //     try {
-    //         const res = await fetch(
-    //             `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`
-    //         );
-    //         const data = await res.json();
-    //         if (data && data.length > 0) {
-    //             const { lat, lon } = data[0];
-    //             const coords = { lat: parseFloat(lat), lng: parseFloat(lon) };
-    //             setLatlng(coords);
-    //             setDireccion(data[0].display_name);
-
-    //             if (mapInstance.current) {
-    //                 mapInstance.current.setView(coords, 16);
-    //                 if (markerRef.current) {
-    //                     markerRef.current.setLatLng(coords);
-    //                 } else {
-    //                     markerRef.current = L.marker(coords).addTo(mapInstance.current);
-    //                 }
-    //             }
-    //         }
-    //     } catch (e) {
-    //         console.error("Error buscando dirección", e);
-    //     }
-    // };
-
     useEffect(() => {
         if (!mapContainerRef.current || mapInstance.current) return;
 
@@ -123,8 +97,8 @@ const ModalAltaMaquina = ({ maquina, onClose, modificarMaquina }) => {
                         <input
                             type="text"
                             value={direccion}
-                            // onChange={(e) => buscarDireccion(e.target.value)}
-                            placeholder="Buscar dirección o clic en el mapa"
+                            readOnly
+                            placeholder="Selecciona la dirección en el mapa"
                             className="w-full bg-yellow-50 border border-brown-300 text-brown-800 px-3 py-2 rounded-md"
                         />
                     </div>
