@@ -79,11 +79,11 @@ const putMaquina = async (newProducto, id_maquina) => {
     }
 };
 
-// Eliminar un producto
+// La máquina no se borra como tal, sino que se actualiza su estado a "Eliminada" para mantener la integridad de los datos y evitar problemas de referencia en la base de datos.
 
 const deleteMaquina = async (id) => {
     try {
-        const deleted = await Maquina.destroy({ where: { id_maquina: id } });
+        const deleted = await Maquina.update({ estado: "Eliminada" }, { where: { id_maquina: id } });
 
         return {
             success: deleted > 0,

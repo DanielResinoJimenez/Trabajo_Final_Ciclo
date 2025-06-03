@@ -31,8 +31,8 @@ Maquina.init({
         type: DataTypes.STRING,
         validate: {
             isIn: {
-                args: [['En stock', 'En servicio', 'En mantenimiento']],
-                msg: 'El estado debe ser En stock, En servicio o En mantenimiento'
+                args: [['En stock', 'En servicio', 'En mantenimiento', 'Eliminada']],
+                msg: 'El estado debe ser En stock, En servicio o En mantenimiento o Eliminada'
             }
         }
     },

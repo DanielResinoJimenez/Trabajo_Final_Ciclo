@@ -15,7 +15,7 @@ const HistorialAcciones = ({ activeTab }) => {
 
   // Comprobar si aún se están cargando los datos
   if (loading) {
-    return <div>Loading...</div>;  // Mostrar un mensaje de carga mientras los datos se obtienen
+    return <div>Cargando...</div>;  // Mostrar un mensaje de carga mientras los datos se obtienen
   }
 
   return (

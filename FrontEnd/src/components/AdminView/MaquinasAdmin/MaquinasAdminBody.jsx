@@ -69,7 +69,10 @@ const MaquinasAdminBody = ({ filtro }) => {
                 );
                 break;
             case '':
-                nuevasMaquinas = maquinasOriginales;
+                nuevasMaquinas = maquinasOriginales.filter(
+                    (maquina) =>
+                        maquina.estado != 'Eliminada'
+                );
                 break;
             default:
 
