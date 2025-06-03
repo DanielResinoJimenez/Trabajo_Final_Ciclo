@@ -13,7 +13,7 @@ const useMaquinas = () => {
   const [imagen, setImagen] = useState(null);
   const { getMaquinas, maquinasOriginales, setMaquinas, gestionarSolicitud, aniadirNuevaMaquina, modificarMaquina } = useMaquinasContext();
   const { cuentas, aniadirNuevaAccion, modifyDatos, deleteAccion, aniadirIngresoMaquina, acciones } = useCuentaContext();
-  const {mostrarAlerta} = useGlobalContext();
+  const { mostrarAlerta } = useGlobalContext();
 
   // FUNCIONES PARA ADMINISTRAR LAS IMAGENES DE LAS MÁQUINAS
 
@@ -57,6 +57,7 @@ const useMaquinas = () => {
 
       const data = await response.json();
       mostrarAlerta("La imagen se ha subido correctamente")
+      getMaquinas();
     } catch (error) {
       console.error('Error:', error);
       mostrarAlerta("Ha habido un error al subir la imagen", "error");
@@ -69,7 +70,7 @@ const useMaquinas = () => {
       const buffer = new Uint8Array(maquina.imagen.data); // Convertir Buffer a Uint8Array
       const blob = new Blob([buffer], { type: maquina.tipo }); // Crear un Blob
       const imageUrl = URL.createObjectURL(blob); // Generar URL del Blob
-      setImagen(imageUrl); // Actualizar estado con las URLs generadas
+      return imageUrl;
     } catch (error) {
       console.error("Error al cargar la imagen:", error);
     }
@@ -100,7 +101,10 @@ const useMaquinas = () => {
       const data = await response.json();
       console.log('Imagen borrada con éxito:', data);
 
-      alert("Imagen borrada con éxito!");
+      mostrarAlerta("Se ha borrado la imagen correctamente", "success");
+
+      getMaquinas();
+
     } catch (error) {
       console.error("Error al borrar la imagen:", error);
     }
@@ -192,7 +196,7 @@ const useMaquinas = () => {
   const aniadirRuta = (e, maquina) => {
     setMaquinasSeleccionadas((prev) => {
       const yaSeleccionada = prev.some((m) => m.id_maquina === maquina.id_maquina);
-  
+
       if (!yaSeleccionada) {
         e.target.closest("article")?.classList.add("shadow-lg", "shadow-green-500");
         return [...prev, maquina];
@@ -202,7 +206,7 @@ const useMaquinas = () => {
       }
     });
 
-    
+
   };
 
   // FUNCIONES PARA MANEJAR LOS MODALES DE LAS MÁQUINAS
@@ -288,7 +292,7 @@ const useMaquinas = () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      if(!form.nombre.value || !form.direccion.value || !form.telefono.value) {
+      if (!form.nombre.value || !form.direccion.value || !form.telefono.value) {
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -401,7 +405,7 @@ const useMaquinas = () => {
     focus:outline-none focus:ring-2 focus:ring-green-400
   `.trim().replace(/\s+/g, ' ');
 
-    const marcas = ["Saeco", "Nescafé", "Colibrí"];
+    const marcas = ["SAECO", "NESCAFÉ", "COLIBRÍ"];
     marcas.forEach(cat => {
       const option = document.createElement("option");
       option.value = cat;
@@ -469,7 +473,7 @@ const useMaquinas = () => {
     addButton.onclick = (e) => {
       e.preventDefault();
 
-      if(!form.nombre.value || !form.descripcion.value || !form.precio.value || !form.marca_maquina.value || !form.estado_maquina.value) {
+      if (!form.nombre.value || !form.descripcion.value || !form.precio.value || !form.marca_maquina.value || !form.estado_maquina.value) {
         mostrarAlerta("Debes rellenar todos los campos para añadir una nueva máquina", "error");
         return;
       };
@@ -503,7 +507,7 @@ const useMaquinas = () => {
 
 
   // Función para mostrar un modal con formulario de edición
-  const openModalModificar = (maquina) => {
+  const openModalModificar = async (maquina) => {
     setArchivo(null);
     const modal = document.getElementById("modalMaquinas");
     const modalContent = document.getElementById("modalMaquinasContent");
@@ -582,9 +586,9 @@ const useMaquinas = () => {
     focus:outline-none focus:ring-2 focus:ring-green-400`;
 
     const marcas = [
-      "Saeco",
-      "Nescafé",
-      "Colibrí",
+      "SAECO",
+      "NESCAFÉ",
+      "COLIBRÍ",
     ];
 
     marcas.forEach(cat => {
@@ -641,44 +645,80 @@ const useMaquinas = () => {
     form.appendChild(newDiv2);
 
     if (maquina.imagen) {
-      cargarImagen(maquina);
+      let imageUrl = cargarImagen(maquina)
+
       const newDiv = document.createElement("div");
       newDiv.className = "mb-4";
+
+      // Etiqueta
       const newLabel = document.createElement("label");
       newLabel.htmlFor = "imagen_maquina";
       newLabel.textContent = "Imagen";
       newLabel.className = "block text-gray-700 font-medium mb-1";
+
+      // Imagen
       const newImg = document.createElement("img");
-      newImg.src = imagen;
+      newImg.src = imageUrl;
+      newImg.alt = "Imagen de la máquina";
+      newImg.className = "w-32 h-32 object-cover rounded mb-2 border";
+
+      // Botón "Borrar imagen"
       const newButton = document.createElement("button");
       newButton.textContent = "Borrar imagen";
+      newButton.className =
+        "bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded transition duration-200 shadow";
       newButton.onclick = (e) => {
         e.preventDefault();
         borrarImagen(maquina.id_maquina);
-        newImg.src = null;
-      }
+        modal.classList.add("hidden");
+      };
+
+      // Añadir elementos al contenedor
       newDiv.appendChild(newLabel);
       newDiv.appendChild(newImg);
       newDiv.appendChild(newButton);
-      form.appendChild(newDiv);
+      form.appendChild(newDiv)
     } else {
       const newDiv = document.createElement("div");
       newDiv.className = "mb-4";
-      const newLabel = document.createElement("label");
-      newLabel.htmlFor = "imagen_maquina";
-      newLabel.textContent = "Imagen";
-      newLabel.className = "block text-gray-700 font-medium mb-1";
+
+      // Input oculto de tipo file
       const newInput = document.createElement("input");
       newInput.type = "file";
       newInput.id = "imagen_maquina";
       newInput.name = "imagen_maquina";
-      newInput.accept = "image/*"; // Aceptar solo imágenes
+      newInput.accept = "image/*";
+      newInput.className = "hidden";
+
+      // Texto para mostrar si hay imagen seleccionada
+      const fileStatus = document.createElement("span");
+      fileStatus.className = "block mt-2 text-sm text-gray-600";
+      fileStatus.textContent = "No hay imagen seleccionada";
+
+      // Botón para subir imagen
+      const newButton = document.createElement("button");
+      newButton.type = "button";
+      newButton.textContent = "Subir imagen";
+      newButton.className =
+        "bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition duration-200 shadow";
+
+      // Evento para abrir el input
+      newButton.onclick = () => newInput.click();
+
+      // Evento para cambiar el texto cuando se selecciona archivo
       newInput.onchange = (e) => {
-        e.preventDefault();
-        handleFileChange(e);
-      }
-      newDiv.appendChild(newLabel);
+        handleFileChange(e); // Llamada a tu función existente
+        if (newInput.files.length > 0) {
+          fileStatus.textContent = `Imagen seleccionada: ${newInput.files[0].name}`;
+        } else {
+          fileStatus.textContent = "No hay imagen seleccionada";
+        }
+      };
+
+      // Añadir al contenedor
       newDiv.appendChild(newInput);
+      newDiv.appendChild(newButton);
+      newDiv.appendChild(fileStatus);
       form.appendChild(newDiv);
     }
 

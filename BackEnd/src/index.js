@@ -15,8 +15,8 @@ require('./database/associations');
 
 // Conversión a JSON indispensable para el funcionamiento correcto de nuestra api
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors());
 
 // Importamos el enrutador de la API

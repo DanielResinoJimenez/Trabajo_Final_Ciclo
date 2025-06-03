@@ -146,6 +146,7 @@ export const MaquinasProvider = ({ children }) => {
             setMaquinas(maquinas.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
             setMaquinasOriginales(maquinasOriginales.map(maquina => (maquina.id_maquina === id_maquina ? maquinaNueva : maquina)));
             mostrarAlerta("Se ha modificado la máquina correctamente", "success")
+            getMaquinas();
             return data;
         } catch (error) {
             console.error('Error al modificar la máquina:', error);

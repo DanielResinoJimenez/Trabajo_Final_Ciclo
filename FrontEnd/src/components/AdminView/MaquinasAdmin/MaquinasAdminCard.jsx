@@ -58,10 +58,10 @@ const MaquinasAdminCard = ({ maquina, filtro, abrirModal, aniadirRuta }) => {
                 <article className="flex max-xl:w-[800px] h-[300px] relative justify-between p-10 border border-gray-400 items-center max-lg:flex-col max-lg:h-full max-lg:w-full">
                     <span className='absolute top-4 right-4 font-bold'>{maquina.estado}</span>
                     {
-                        imagen.length === 0 ?
+                        !maquina.imagen ?
                             <img src={noImage} alt="" className="object-contain max-h-[200px] w-[50%] h-auto mix-blend-multiply" />
                             :
-                            <img src={imagen} alt="" className="object-contain max-h-[300px] w-[50%] h-auto mix-blend-multiply" />
+                            <img src={cargarImagen(maquina)} alt="" className="object-contain max-h-[300px] w-[50%] h-auto mix-blend-multiply" />
                     }
                     <div className="flex flex-col w-[50%] text-center">
                         <h2 className="text-4xl">{maquina.nombre}</h2>
