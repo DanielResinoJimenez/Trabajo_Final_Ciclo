@@ -497,7 +497,6 @@ const useProductos = () => {
 
 
             const actualizado = {
-                ...producto,
                 nombre: form.nombre.value,
                 descripcion: form.descripcion.value,
                 precio: form.precio.value,
@@ -505,10 +504,6 @@ const useProductos = () => {
                 stock: form.stock.value,
                 categoria: form.categoria_producto.value,
             };
-
-            if (archivo) {
-                actualizado.imagen = archivo;
-            }
 
             handleSubmit(e, producto.id_producto);
 

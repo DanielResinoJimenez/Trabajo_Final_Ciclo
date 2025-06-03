@@ -747,7 +747,6 @@ const useMaquinas = () => {
       e.preventDefault();
 
       const actualizado = {
-        ...maquina,
         nombre: form.nombre.value,
         descripcion: form.descripcion.value,
         precio: form.precio.value,
