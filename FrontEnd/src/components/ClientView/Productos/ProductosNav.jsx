@@ -30,9 +30,9 @@ const ProductosNav = () => {
 
   return (
     <nav className='w-[100%] justify-center items-center flex'>
-      <ul className='flex w-[80%] m-auto text-center justify-around'>
+      <ul className='flex w-[80%] m-auto text-center justify-around max-md:flex-col'>
         <li className='font-bold'>Filtrar por: </li>
-        <li className='flex gap-2'>
+        <li className='flex gap-2 max-md:flex-col'>
           <label htmlFor="select__categoria">Categoría: </label>
           <select id="select__categoria" className='border-b border-black' onChange={handleCategoriaChange}>
             <option value="">Todas</option>
@@ -45,7 +45,7 @@ const ProductosNav = () => {
             <option value="Accesorios">Accesorios</option>
           </select>
         </li>
-        <li className='flex gap-2'>
+        <li className='flex gap-2 max-md:flex-col'>
           <label htmlFor="select__marca">Marca: </label>
           <select id="select__marca" className='border-b border-black' onChange={handleMarcaChange}>
             <option value="">Todas</option>

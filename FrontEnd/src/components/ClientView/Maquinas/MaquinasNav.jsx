@@ -9,7 +9,7 @@ const MaquinasNav = () => {
   return (
     <nav className='h-[100%] nav__maquinas pt-40'>
       <ul className='flex flex-col gap-20 text-center items-center justify-center sticky top-30 left-0'>
-        <li className='flex flex-col gap-2'>
+        <li className='flex flex-col gap-2 w-[80%] m-10'>
           <label htmlFor="">Nombre de la máquina:</label>
           <input
             type="search"
