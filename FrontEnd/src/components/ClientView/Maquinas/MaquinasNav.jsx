@@ -9,7 +9,7 @@ const MaquinasNav = () => {
   return (
     <nav className='h-[100%] nav__maquinas pt-40'>
       <ul className='flex flex-col gap-20 text-center items-center justify-center sticky top-30 left-0'>
-        <li className='flex flex-col gap-2 w-[80%] m-10'>
+        <li className='flex flex-col gap-2 w-[80%]'>
           <label htmlFor="">Nombre de la máquina:</label>
           <input
             type="search"
@@ -18,7 +18,7 @@ const MaquinasNav = () => {
             onChange={filterByNombre}
           />
         </li>
-        <li className='flex flex-col gap-2'>
+        <li className='flex flex-col gap-2 w-[80&] max-md:hidden'>
           <label htmlFor="precio">Precio</label>
           <input
             type="range"
@@ -29,7 +29,7 @@ const MaquinasNav = () => {
           />
           <span>{price}€</span>
         </li>
-        <li className='flex flex-col gap-2'>
+        <li className='flex flex-col gap-2 w-[80%]'>
           <label htmlFor="" >Marca: </label>
           <select
             name="select__marca"

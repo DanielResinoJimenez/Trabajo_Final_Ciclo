@@ -86,7 +86,7 @@ const Header = () => {
             </nav>
 
 
-            <div className='hidden w-[50px] justify-center md:flex' id='icons'>
+            <div className='hidden w-[50px] justify-center md:flex mr-10' id='icons'>
                 <ul className='flex justify-between w-full'>
                     <li className='hover:shadow-lg hover:text-yellow-400 transition-all duration-300' ref={cartRef}>
                         <i className="fa-solid fa-cart-shopping text-xl" onClick={cartMenu}></i>
