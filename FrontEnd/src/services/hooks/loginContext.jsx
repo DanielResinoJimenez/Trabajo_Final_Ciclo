@@ -195,8 +195,9 @@ export const LoginProvider = ({ children }) => {
 
             const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message || 'Error al enviar la solicitud.');
+            if(data.error){
+                setFormError("Error al enviar el correo, revisa que el email sea correcto");
+                return;
             }
 
             mostrarAlerta("Se ha enviado el correo correctamente, mira tu bandeja");

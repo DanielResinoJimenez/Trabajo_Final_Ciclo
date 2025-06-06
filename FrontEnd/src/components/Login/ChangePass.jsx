@@ -6,7 +6,8 @@ const ChangePass = () => {
     const {
         formError,
         loading,
-        requestChangePass
+        requestChangePass,
+        setFormError
     } = useLoginContext();
 
     return (
@@ -40,7 +41,7 @@ const ChangePass = () => {
             )}
 
             <div className='flex gap-4'>
-                <Link to={"/login"} className='cursor-pointer text-blue-600 underline'>
+                <Link to={"/login"} className='cursor-pointer text-blue-600 underline' onClick={setFormError(null)}>
                     Volver
                 </Link>
             </div>

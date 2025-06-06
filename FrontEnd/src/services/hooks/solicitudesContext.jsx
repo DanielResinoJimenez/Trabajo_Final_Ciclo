@@ -73,7 +73,7 @@ export const SolicitudesProvider = ({ children }) => {
             const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id_solicitud !== id_solicitud);
             setSolicitudes(nuevasSolicitudes);
             mostrarAlerta("Se ha modificado correctamente el estado de la solicitud", "success")
-
+            getSolicitudesPendientes();
             return data;
         } catch (error) {
             console.error('Error en modifyEstadoSolicitud:', error);
